@@ -36,6 +36,8 @@ public class SecurityConfiguration {
                 .permitAll()
               .requestMatchers(HttpMethod.POST, "/users")
                 .permitAll()
+              .requestMatchers(HttpMethod.POST, "/users/authGoogle")
+                .permitAll()
               .requestMatchers("/api-docs/**", "api-docs.yaml")
                 .permitAll()
               .requestMatchers("/swagger-ui-custom.html", "/swagger-ui/**", "/swagger-ui/")

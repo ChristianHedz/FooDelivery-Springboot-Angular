@@ -1,9 +1,6 @@
 package com.example.app.controller;
 
-import com.example.app.dto.user.LoggedUserDto;
-import com.example.app.dto.user.SignedUserDTO;
-import com.example.app.dto.user.UserToLoginDto;
-import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.dto.user.*;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
+
 
 @Tag(name = "Users", description = "Manage all endpoints about Users")
 @RestController
@@ -116,4 +115,14 @@ public class UserController {
           .status(HttpStatus.OK)
           .body(userService.getUser(request));
     }
+
+
+    @PostMapping("/authGoogle")
+    public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
+        SignedUserGoogleDto userGoogleDto = userService.loginGoogle(tokenDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userGoogleDto);
+    }
+
 }
