@@ -28,7 +28,7 @@ public class SecurityConfiguration {
         return httpSecurity
           .csrf(AbstractHttpConfigurer::disable)
           .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-          .authorizeRequests(authorizeRequests ->
+          .authorizeHttpRequests(authorizeRequests ->
             authorizeRequests
               .requestMatchers(HttpMethod.GET, "/users/me")
                 .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
@@ -37,6 +37,12 @@ public class SecurityConfiguration {
               .requestMatchers(HttpMethod.POST, "/users")
                 .permitAll()
               .requestMatchers(HttpMethod.POST, "/users/authGoogle")
+                .permitAll()
+              .requestMatchers(HttpMethod.POST, "/api/payments")
+                .permitAll()
+              .requestMatchers(HttpMethod.GET, "/api/payments/success")
+                .permitAll()
+              .requestMatchers(HttpMethod.GET, "/api/payments/cancel")
                 .permitAll()
               .requestMatchers("/api-docs/**", "api-docs.yaml")
                 .permitAll()
