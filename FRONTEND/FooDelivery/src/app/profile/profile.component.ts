@@ -61,15 +61,15 @@ export class ProfileComponent implements OnInit {
         email: this.editedEmail
       };
 
-      this.authService.updateUserProfile(this.user).subscribe(
-        () => {
-          console.log('Perfil de usuario actualizado con éxito');
-          this.isEditing = false;
-        },
-        (error) => {
-          console.error('Error updating user profile:', error);
-        }
-      );
+this.authService.updateUserProfile(this.user).subscribe({
+  next: () => {
+    console.log('Perfil de usuario actualizado con éxito');
+    this.isEditing = false;
+  },
+  error: (error) => {
+    console.error('Error updating user profile:', error);
+  }
+});
     }
   }
 }

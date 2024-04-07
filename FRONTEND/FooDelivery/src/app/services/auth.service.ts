@@ -60,8 +60,9 @@ export class AuthService {
   }
 
   updateUserProfile(user: User): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/users/me`, user, { headers: this.addTokenToHeaders() });
+    return this.http.put<any>(`${this.baseUrl}/users`, user, { headers: this.addTokenToHeaders() });
   }
+
 
   private getStorage(): Storage | null {
     if (typeof window !== 'undefined') {
