@@ -1,0 +1,97 @@
+*{
+    text-align: center;
+
+
+}
+form{
+    margin: 100px;
+/*     background-color: rgb(240, 244, 244); */
+
+    text-align: center; 
+}
+
+img{ 
+    border-radius: 24px;
+    max-width: 700px;
+    min-height: 816px;
+             
+
+
+
+}
+#logoimg{
+    max-width: 103.17px;
+    min-height: 108.12px;
+}
+
+.btn-color{
+    background-color: #EE9B01;
+    color: white;
+    width: 400px;
+    height: Fixed (10,140px)px;
+    padding: 32px 0px 0px 0px;
+    gap: 32px;
+    opacity: 0px;
+    border-radius: 12px;
+    
+
+  }
+ 
+
+  .input-group {
+    width: 100%; /* Ajusta el ancho del campo de entrada al 100% del contenedor */
+  }
+  
+  .col-md-12 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .col-form-label {
+    align-self: flex-start; /* Alinea la etiqueta de "Email" a la izquierda */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el campo de entrada */
+  }
+  .input-group {
+    width: 100%; /* Ajusta el ancho del campo de contraseña al 100% del contenedor */
+  }
+  
+  .col-md-12 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .col-form-label {
+    align-self: flex-start; /* Alinea la etiqueta de "Password" a la izquierda */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el campo de contraseña */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: black;
+  }
+  
+  .circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+  }
+  
+  .logo {
+    width: 24px; /* Ajusta el tamaño del logo según sea necesario */
+    margin-right: 8px; /* Añade un pequeño espacio entre el logo y el texto del botón */
+  }
+  
