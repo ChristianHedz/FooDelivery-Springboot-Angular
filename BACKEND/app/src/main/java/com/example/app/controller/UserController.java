@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 
 @Tag(name = "Users", description = "Manage all endpoints about Users")
@@ -165,5 +166,13 @@ public class UserController {
           .status(HttpStatus.OK)
           .body(userService.changePassword(userChangePasswordDTO, request));
 
+    }
+
+    @PostMapping("/authGoogle")
+    public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
+        SignedUserGoogleDto userGoogleDto = userService.loginGoogle(tokenDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userGoogleDto);
     }
 }
