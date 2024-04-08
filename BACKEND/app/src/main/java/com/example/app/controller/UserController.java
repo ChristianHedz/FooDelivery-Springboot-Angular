@@ -1,5 +1,6 @@
 package com.example.app.controller;
 
+import com.example.app.dto.GeneralResponseDTO;
 import com.example.app.dto.user.*;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
-
 
 @Tag(name = "Users", description = "Manage all endpoints about Users")
 @RestController
@@ -116,6 +116,42 @@ public class UserController {
           .body(userService.getUser(request));
     }
 
+    @Operation(
+      summary = "Update data user using token.",
+      description = "Let a User update data using the Token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User updated successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @PutMapping
+    @Transactional
+    public ResponseEntity<SignedUserDTO> updateUser(
+      @RequestBody @Valid UserToUpdateDto userToUpdateDto, HttpServletRequest request) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.updateUser(userToUpdateDto, request));
+
+    }
+
+    @PutMapping("/auth")
+    @Transactional
+    public ResponseEntity<GeneralResponseDTO> updateUser(
+      @RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.changePassword(userChangePasswordDTO, request));
+
+    }
 
     @PostMapping("/authGoogle")
     public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
@@ -124,5 +160,4 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userGoogleDto);
     }
-
 }

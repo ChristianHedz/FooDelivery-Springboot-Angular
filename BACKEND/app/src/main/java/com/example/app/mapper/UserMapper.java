@@ -29,4 +29,8 @@ public interface UserMapper {
 
     LoggedUserDto userToLoggedUserDto(User user);
 
+    User toEntity(UserToUpdateDto userToUpdateDto);
+
+    UserToUpdateDto userToUserToUpdateDto(User user);
+
 }

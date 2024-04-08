@@ -8,8 +8,7 @@ import java.io.Serializable;
 public record LoggedUserDto(
   boolean isError,
   Long id,
-  String firstName,
-  String lastName,
+  String fullName,
   String email,
   String token
 

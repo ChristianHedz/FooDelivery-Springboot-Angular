@@ -11,19 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-@Order(2)
 public class ApplicationExceptionHandler {
 
     // Validations errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApplicationExceptionResponse> methodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest req) {
-        Map<String, String> errors = ex.getFieldErrors().stream().collect(
-          Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
-        );
+        Map<String, String> errors = getErrorsMap(ex);
 
         ApplicationExceptionResponse errorResponse = ExceptionUtils.createResponse(HttpStatus.BAD_REQUEST, req, errors);
         return ResponseEntity.status(400).body(errorResponse);
@@ -43,6 +41,27 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+    }
+
+    private Map<String, String> getErrorsMap(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new LinkedHashMap<>();
+
+        // Iteramos sobre los errores de los campos
+        for (FieldError fieldError : ex.getFieldErrors()) {
+            String fieldName = fieldError.getField();
+            String errorMessage = fieldError.getDefaultMessage();
+
+            // Verificamos si ya hay un mensaje de error para el mismo campo
+            if (errors.containsKey(fieldName)) {
+                // Si ya hay un mensaje de error, lo concatenamos al mensaje existente
+                errorMessage = errors.get(fieldName) + ". " + errorMessage;
+            }
+
+            // Agregamos el mensaje de error al mapa
+            errors.put(fieldName, errorMessage);
+        }
+
+        return errors;
     }
 
 }

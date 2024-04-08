@@ -35,4 +35,13 @@ public class UserExceptionHandler {
 
     }
 
+    // User password is incorrect when trying to login
+    @ExceptionHandler(UserDataLoginException.class)
+    public ResponseEntity<ApplicationExceptionResponse> userDataLoginException(UserDataLoginException ex, HttpServletRequest req) {
+        Map<String, String> errors = new HashMap<>(Map.of(ex.getClass().getSimpleName(), ex.getMessage()));
+        ApplicationExceptionResponse errorResponse = ExceptionUtils.createResponse(HttpStatus.BAD_REQUEST, req, errors);
+
+        return ResponseEntity.status(400).body(errorResponse);
+    }
+
 }

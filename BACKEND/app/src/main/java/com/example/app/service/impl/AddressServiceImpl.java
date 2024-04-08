@@ -3,6 +3,7 @@ package com.example.app.service.impl;
 import com.example.app.dto.address.AddressDTO;
 import com.example.app.dto.address.AddressPublicDataDTO;
 import com.example.app.dto.address.AddressUpdateDataDTO;
+import com.example.app.exception.address.AddressNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.AddressMapper;
 import com.example.app.model.Address;
@@ -44,7 +45,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressPublicDataDTO updateAddress(Long id, AddressUpdateDataDTO addressUpdateDataDTO) {
 
         Address addressDB = addressRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException
+                .orElseThrow(() -> new AddressNotFoundException
                         ("La direccion con id " + id + " no se encuentra registrada"));
 
         addressDB.setStreetNumber(addressUpdateDataDTO.streetNumber());
@@ -71,7 +72,7 @@ public class AddressServiceImpl implements AddressService {
     public void deleteAddress(Long id) {
 
         addressRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException
+                .orElseThrow(() -> new AddressNotFoundException
                         ("La direccion con id " + id + " no existe"));
 
         addressRepository.deleteById(id);

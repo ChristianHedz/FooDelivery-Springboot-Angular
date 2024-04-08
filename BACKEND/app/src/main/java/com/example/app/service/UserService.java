@@ -1,9 +1,7 @@
 package com.example.app.service;
 
-import com.example.app.dto.user.LoggedUserDto;
-import com.example.app.dto.user.SignedUserDTO;
-import com.example.app.dto.user.UserToLoginDto;
-import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.dto.GeneralResponseDTO;
+import com.example.app.dto.user.*;
 import com.example.app.exception.user.UserAlreadyExistsException;
 import com.example.app.exception.user.UserDataLoginException;
 import com.example.app.exception.user.UserNotFoundException;
@@ -12,12 +10,20 @@ import com.example.app.model.Role;
 import com.example.app.model.User;
 import com.example.app.repository.UserRepository;
 import com.example.app.security.PasswordEncoder;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +33,10 @@ public class UserService {
     private final UserMapper userMapper;
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
+    @Value("${secretPsw}")
+    private String secretPsw;
+    @Value("${google.clientId}")
+    private String googleClientId;
 
     public SignedUserDTO signUp(UserToSignUpDto userToSignUpDto, HttpServletRequest request) {
 
@@ -37,7 +47,7 @@ public class UserService {
         if (userRepository.existsByPhoneAndActiveTrue(userToSignUpDto.phone()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese teléfono");
 
-        if (userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
+        if (userToSignUpDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
 
         // Get the plain password
@@ -83,7 +93,7 @@ public class UserService {
 
         // Check if the user exists
         if (!userRepository.existsByEmailAndActiveTrue(userEmail))
-            throw new UserNotFoundException("El usuario no existe en la base de datos");
+            throw new UserNotFoundException("El email o la contraseña es incorrecta.");
 
         // Get hashed password from the database
         String hashedPassword = userRepository.findByEmailAndActiveTrue(userEmail).getPassword();
@@ -107,8 +117,7 @@ public class UserService {
         return new LoggedUserDto(
           false,
           authUser.getId(),
-          authUser.getFirstName(),
-          authUser.getLastName(),
+          authUser.getFullName(),
           authUser.getEmail(),
           token
         );
@@ -118,6 +127,44 @@ public class UserService {
         User user = getUserByPhoneFromDatabase(request);
 
         return userMapper.userToSignedUserDTO(user);
+    }
+
+    public SignedUserDTO updateUser(UserToUpdateDto userToUpdateDto, HttpServletRequest request) {
+
+        if (userToUpdateDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToUpdateDto.alias()))
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
+
+        User user = getUserByPhoneFromDatabase(request);
+
+        return userMapper.userToSignedUserDTO(user.update(userToUpdateDto));
+    }
+
+    public GeneralResponseDTO changePassword(UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
+        User user = getUserByPhoneFromDatabase(request);
+
+        // Get the old plain password
+        String oldPlainPassword = userChangePasswordDTO.oldPassword();
+
+        // Get hashed password from the database
+        String hashedPassword = userRepository.findByEmailAndActiveTrue(user.getEmail()).getPassword();
+
+        // Check if the password is correct
+        boolean passwordMatches = PasswordEncoder.verifyPassword(oldPlainPassword, hashedPassword);
+
+        if (!passwordMatches)
+            throw new UserDataLoginException("La contraseña anterior es incorrecta.");
+
+        // Get the new plain password
+        String newPlainPassword = userChangePasswordDTO.newPassword();
+
+        // Generate the password hash
+        String newHashedPassword = PasswordEncoder.generatePasswordHash(newPlainPassword);
+
+        // Assign the new password hash to the entity
+        user.setPassword(newHashedPassword);
+
+        return new GeneralResponseDTO(false, "Contraseña actualizada correctamente.");
+
     }
 
     /** Get the user by phone from the database
@@ -136,5 +183,41 @@ public class UserService {
         }
 
         return (User) userRepository.findByPhoneAndActiveTrue(userPhone);
+    }
+
+    public SignedUserGoogleDto loginGoogle(TokenDto tokenDto) throws IOException {
+        final NetHttpTransport transport = new NetHttpTransport();
+        final GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+
+        GoogleIdTokenVerifier.Builder verifier =
+                new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                        .setAudience(Collections.singletonList(googleClientId));
+        GoogleIdToken googleIdToken = GoogleIdToken.parse(verifier.getJsonFactory(), tokenDto.token());
+
+        final GoogleIdToken.Payload payload = googleIdToken.getPayload();
+
+        UserToSignUpGoogleDto userGoogle =  new UserToSignUpGoogleDto(
+                (String) payload.get("given_name"),
+                (String) payload.get("family_name"),
+                (String) payload.get("name"),
+                payload.getEmail(),
+                Role.CUSTOMER,
+                PasswordEncoder.generatePasswordHash(secretPsw),
+                true
+        );
+
+        User user = userMapper.toEntity(userGoogle);
+
+        if (!userRepository.existsByEmailAndActiveTrue(userGoogle.email())){
+            user = userRepository.save(user);
+        }else{
+            user = userRepository.findByEmail(userGoogle.email());
+        }
+
+        String token = tokenService.generateToken(user);
+        SignedUserGoogleDto signedUserGoogleDto = userMapper.userToSignedUserGoogleDto(user);
+        signedUserGoogleDto.setToken(token);
+
+        return signedUserGoogleDto;
     }
 }

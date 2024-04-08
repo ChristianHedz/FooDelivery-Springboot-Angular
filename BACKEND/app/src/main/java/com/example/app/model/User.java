@@ -1,5 +1,6 @@
 package com.example.app.model;
 
+import com.example.app.dto.user.UserToUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,10 +24,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "full_name")
+    private String fullName;
     @Column(name = "user_name", unique = true)
     private String alias;
     @Column(unique = true)
@@ -58,23 +57,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
     */
-
-    //****** Helper Methods for USER/ADDRESS models: Keep Both Sides of the Association in SYNC.********/
-
-    /** Add an address to the list of addresses
-     * @param address the address to add */
-    public void addAddress(Address address) {
-        this.addresses.add(address);
-        address.setUser(this);
-    }
-
-    /** Remove an address from the list of addresses
-     * @param address the address to remove */
-    public void removeAddress(Address address) {
-        address.setUser(null);
-        this.addresses.remove(address);
-    }
-    //********************End Helper Methods********************************************/
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -109,20 +91,19 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return active == user.active && Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(alias, user.alias) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role;
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(alias, user.alias) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, alias, phone, email, password, active, role);
+        return Objects.hash(id, fullName, alias, phone, email, password, active, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
           "id=" + id +
-          ", firstName='" + firstName + '\'' +
-          ", lastName='" + lastName + '\'' +
+          ", fullName='" + fullName + '\'' +
           ", userName='" + alias + '\'' +
           ", phone='" + phone + '\'' +
           ", email='" + email + '\'' +
@@ -130,5 +111,15 @@ public class User implements UserDetails {
           ", active=" + active +
           ", role=" + role +
           '}';
+    }
+
+    public User update(UserToUpdateDto userToUpdateDto) {
+        if (userToUpdateDto.fullName() != null)
+            this.fullName = userToUpdateDto.fullName();
+
+        if (userToUpdateDto.alias() != null)
+            this.alias = userToUpdateDto.alias();
+
+        return this;
     }
 }
