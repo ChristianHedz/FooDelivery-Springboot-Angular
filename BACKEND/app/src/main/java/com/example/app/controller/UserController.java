@@ -141,6 +141,21 @@ public class UserController {
 
     }
 
+    @Operation(
+      summary = "Change user password using token.",
+      description = "Let a User change the password using the Token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "Password changed successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
     @PutMapping("/auth")
     @Transactional
     public ResponseEntity<GeneralResponseDTO> updateUser(
