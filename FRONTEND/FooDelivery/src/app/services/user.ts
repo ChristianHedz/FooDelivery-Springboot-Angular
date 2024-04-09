@@ -4,6 +4,6 @@ export interface User {
   email: string;
   password: string;
   alias: string;
- /*  role: string;
-  active: boolean; */
+  role: string;
+  active: boolean;
 }
