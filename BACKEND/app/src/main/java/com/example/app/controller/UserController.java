@@ -4,6 +4,8 @@ import com.example.app.dto.GeneralResponseDTO;
 import com.example.app.dto.user.*;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.net.URI;
 
@@ -142,6 +146,21 @@ public class UserController {
 
     }
 
+    @Operation(
+      summary = "Change user password using token.",
+      description = "Let a User change the password using the Token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "Password changed successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
     @PutMapping("/auth")
     @Transactional
     public ResponseEntity<GeneralResponseDTO> updateUser(
@@ -159,5 +178,30 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userGoogleDto);
+    }
+
+    @Operation(
+      summary = "Get all users.",
+      description = "Get all users in a paginated list. Token is required. Only Admin can access this endpoint."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "201", description = "User list successfully generated",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "Users Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @Parameters({
+      @Parameter(name = "page", description = "Page number", required = false, example = "0"),
+      @Parameter(name = "size", description = "Size of the page", required = false, example = "10"),
+      @Parameter(name = "sort", description = "Sort the page", required = false, example = "id,desc")
+    })
+    @GetMapping
+    public ResponseEntity<Page<SignedUserDTO>> getAllUsersByAdmin(Pageable pageable) {
+        return ResponseEntity.status(200).body(userService.getAllUsersByAdmin(pageable));
     }
 }
