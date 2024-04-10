@@ -16,6 +16,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -219,5 +221,9 @@ public class UserService {
         signedUserGoogleDto.setToken(token);
 
         return signedUserGoogleDto;
+    }
+
+    public Page<SignedUserDTO> getAllUsersByAdmin(Pageable pageable) {
+        return userRepository.findAllByActiveTrue(pageable).map(userMapper::userToSignedUserDTO);
     }
 }
