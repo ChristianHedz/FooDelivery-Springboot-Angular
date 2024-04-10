@@ -26,25 +26,36 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-          .csrf(AbstractHttpConfigurer::disable)
-          .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-          .authorizeRequests(authorizeRequests ->
-            authorizeRequests
-              .requestMatchers(HttpMethod.GET, "/users/me")
-                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
-              .requestMatchers(HttpMethod.POST, "/users/auth")
-                .permitAll()
-              .requestMatchers(HttpMethod.POST, "/users")
-                .permitAll()
-              .requestMatchers("/api-docs/**", "api-docs.yaml")
-                .permitAll()
-              .requestMatchers("/swagger-ui-custom.html", "/swagger-ui/**", "/swagger-ui/")
-                .permitAll()
-              .anyRequest()
-                .authenticated()
-            )
-          .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers(HttpMethod.GET, "/users/me")
+                                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+                                .requestMatchers(HttpMethod.POST, "/users/auth")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.POST, "/users")
+                                .permitAll()
+
+                                .requestMatchers(HttpMethod.POST, "/products").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+                                .requestMatchers(HttpMethod.PUT, "/products").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/products").hasAuthority(Role.ADMIN.name())
+
+                                .requestMatchers(HttpMethod.POST, "/categories").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.GET, "/categories").hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+                                .requestMatchers(HttpMethod.PUT, "/categories").hasAuthority(Role.ADMIN.name())
+                                .requestMatchers(HttpMethod.DELETE, "/categories").hasAuthority(Role.ADMIN.name())
+
+                                .requestMatchers("/api-docs/**", "api-docs.yaml")
+                                .permitAll()
+                                .requestMatchers("/swagger-ui-custom.html", "/swagger-ui/**", "/swagger-ui/")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
