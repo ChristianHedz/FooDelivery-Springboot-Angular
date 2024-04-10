@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import {Observable, BehaviorSubject, of, map, switchMap, catchError} from 'rxjs';
 import { User } from '../services/user';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -94,5 +94,24 @@ export class AuthService {
     } else {
       return null;
     }
+  }
+
+  isAdminAuthenticated() {
+    const storage = this.getStorage();
+
+    if (storage) {
+      return this.getUserProfile().pipe(
+        map(user => user && user.role === 'ADMIN'),
+        switchMap(isAdmin => of(storage.getItem(this.tokenKey) !== null && isAdmin)),
+        catchError(error => {
+          console.error('Error al obtener el perfil del usuario:', error);
+          return of(false);
+        })
+
+      );
+    }
+
+    return of(false);
+
   }
 }
