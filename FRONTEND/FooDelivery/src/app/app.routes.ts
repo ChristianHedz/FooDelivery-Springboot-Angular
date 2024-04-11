@@ -5,17 +5,12 @@ import { MainContentComponent } from './main-content/main-content.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { ProfileComponent } from './profile/profile.component';
 
-
 export const routes: Routes = [
+  { path: 'home', component: MainContentComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'products', component: ProductsListComponent },
 
-    {path: "home", component: MainContentComponent},
-    {path: "login", component: LoginComponent},
-    {path:"profile", component:ProfileComponent},
-    {path: "register", component: RegisterComponent},
-    {path: "products", component: ProductsListComponent},
-
-    {path: "**", redirectTo: "home", pathMatch: 'full'}
-
-
-
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
