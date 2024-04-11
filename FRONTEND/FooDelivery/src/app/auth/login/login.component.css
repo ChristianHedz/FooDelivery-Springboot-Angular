@@ -1,97 +1,127 @@
 *{
-    text-align: center;
-
 
 }
 form{
-    margin: 100px;
-/*     background-color: rgb(240, 244, 244); */
-
+    margin: 10px;
     text-align: center; 
 }
-
-img{ 
-    border-radius: 24px;
-    max-width: 700px;
-    min-height: 816px;
-             
-
-
-
+img {
+  margin-top: 20px;
+  border-radius: 24px;
+  max-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position:50% center;; 
 }
 #logoimg{
     max-width: 103.17px;
     min-height: 108.12px;
 }
+.row-container {
+  display: flex;
+  align-items: center; 
+   margin-top: -10px;
+}
+.row-container img {
+  width: 100px;
+  height: auto; 
+
+}
+@font-face {
+    font-family: 'Artbrush';
+    src: url('../../../assets/Artbrush.ttf') format('truetype');
+}
+h1{font-family: 'Artbrush';
+  font-size: 72.54px;
+  font-weight: 80%;
+  line-height: 79.51px;
+  text-align: left;
+
+  margin-top: 20px;
+  }
+h4{margin-bottom: 80px;}
+h6{margin-top: -100px;}
 
 .btn-color{
     background-color: #EE9B01;
     color: white;
     width: 400px;
     height: Fixed (10,140px)px;
-    padding: 32px 0px 0px 0px;
-    gap: 32px;
-    opacity: 0px;
+    opacity: px;
     border-radius: 12px;
+    text-align: center;
+    font-size: larger;
+  }
+.input-group {
+    width: 100%; 
+  }
+  
+.col-md-12 {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+    justify-content: left; 
+  }
+.col-form-label {
+    align-self: flex-start;
+    margin-bottom: 5px; 
+  }
+
+#email{margin-top: -30px; }
+/* #password{margin-top: 10px;} */
+#olvidaste{margin: -10px;
+padding-right: 70px;}
+#botonInit{
+display: flex;
+padding-right: 100px;
+}
+#google{margin-bottom: 12px;
+margin-top: 12px; display: flex; justify-content: center;}
+#iniciar{padding-left: 90px; display: flex; justify-content: center;}
+
+#registrate{margin-top: -10px;}
+
+
+
+
+
+
+
+@media (max-width: 860px){
+  col-md-6.row:nth-child(1) {
+    display: flex;
+    flex-direction: row-reverse;
+}
+  }
     
 
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    max-width: 50%;
+  }
+  
+@media (max-width: 767px) {
+    .col-md-6 {
+      width: 100%;
+      max-width: 100%;
+    }
  
 
-  .input-group {
-    width: 100%; /* Ajusta el ancho del campo de entrada al 100% del contenedor */
-  }
-  
-  .col-md-12 {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .col-form-label {
-    align-self: flex-start; /* Alinea la etiqueta de "Email" a la izquierda */
-    margin-bottom: 5px; /* Espacio entre la etiqueta y el campo de entrada */
-  }
-  .input-group {
-    width: 100%; /* Ajusta el ancho del campo de contraseña al 100% del contenedor */
-  }
-  
-  .col-md-12 {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .col-form-label {
-    align-self: flex-start; /* Alinea la etiqueta de "Password" a la izquierda */
-    margin-bottom: 5px; /* Espacio entre la etiqueta y el campo de contraseña */
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  .line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: black;
-  }
-  
-  .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: black;
-  }
-  
-  .logo {
-    width: 24px; /* Ajusta el tamaño del logo según sea necesario */
-    margin-right: 8px; /* Añade un pequeño espacio entre el logo y el texto del botón */
-  }
+    .row:nth-child(1) {
+      flex-direction: row-reverse;
+    }
+}
   

@@ -1,35 +1,88 @@
 .container {
-    margin-top: 50px;
+    margin-top: 10px;
   }
-  
-  h2 {
+h2 {
     color: #333;
   }
-  
+  h5 {
+    text-align: center; 
+    max-width: 60%;
+    margin: 0 auto; }
   .form-label {
     font-weight: bold;
   }
   
   .form-control {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   
   .btn-primary {
-    margin-top: 20px;
+    margin-top: -20px;
   }
-  
-  .mt-3 {
+ 
+
+  img {
     margin-top: 20px;
+    border-radius: 24px;
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    object-position:50% center;; 
   }
-  
-  /* Agrega aquí cualquier otro estilo que desees */
-  img{
-   /*  max-width: 700px;
-    min-height: 600px; */
-    width: 816px;
-height: 1076px;
-gap: 0px;
-border-radius: 24px 0px 0px 0px;
-opacity: 0px;
+  #logoimg{
+    max-width: 103.17px;
+    min-height: 108.12px;
+}.row-container {
+  display: flex;
+  align-items: center; 
+   margin-top: -10px;
+}
+.row-container img {
+  width: 100px;
+  height: auto; 
+
+}
+@font-face {
+    font-family: 'Artbrush';
+    src: url('../../../assets/Artbrush.ttf') format('truetype');
+}
+h1{font-family: 'Artbrush';
+  font-size: 72.54px;
+  font-weight: 80%;
+  line-height: 79.51px;
+  text-align: left;
+
+  margin-top: 20px;
+  }
+
+
+  #botonRegister{
+    display: flex;
+    padding-right: 100px;
+    }
+ 
+    #registrar{padding-left: 90px; display: flex; justify-content: center;}
+    .btn-color{
+      background-color: #EE9B01;
+      color: white;
+      width: 400px;
+      height: Fixed (10,140px)px;
+      opacity: px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: larger;
+      margin-top: -25px;
+    }
+    #google{margin-bottom: 12px;
+      margin-top: 12px; display: flex; justify-content: center;}
+      #facebook{margin-bottom: 12px;
+        margin-top: 12px; display: flex; justify-content: center;}
+       
+       
+    
+  #iniciar {
+    margin-top: -15px;
+    display: flex;
+    margin: auto;
 
   }
