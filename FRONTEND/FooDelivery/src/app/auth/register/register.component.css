@@ -1,8 +1,7 @@
 .container {
-    margin-top: 50px;
+    margin-top: 10px;
   }
-  
-  h2 {
+h2 {
     color: #333;
   }
   
@@ -22,12 +21,9 @@
     margin-top: 20px;
   }
   
-  /* Agrega aquí cualquier otro estilo que desees */
   img{
-   /*  max-width: 700px;
-    min-height: 600px; */
-    width: 816px;
-height: 1076px;
+width: 516px;
+height: 576px;
 gap: 0px;
 border-radius: 24px 0px 0px 0px;
 opacity: 0px;

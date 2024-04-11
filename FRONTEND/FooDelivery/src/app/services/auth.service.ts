@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import {Observable, BehaviorSubject, of, map, switchMap, catchError} from 'rxjs';
 import { User } from '../services/user';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,37 @@ export class AuthService {
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getToken() !== null);
   public isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/users/auth`, { email, password });
+    return this.http.post<any>(`${this.baseUrl}/users/auth`, { email, password }).pipe(
+      tap(response => {
+        console.log('Inicio de sesión exitoso');
+        this.setToken(response.token);
+
+        this.getUserProfile().subscribe(
+          user => {
+            console.log('Perfil del usuario:', user);
+            if (user.role === 'ADMIN') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/home']);
+            }
+          },
+          error => {
+            console.error('Error al obtener el perfil del usuario:', error);
+
+            this.router.navigate(['/home']);
+          }
+        );
+      })
+    );
   }
+
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
+
   setToken(token: string): void {
     const storage = this.getStorage();
     if (storage) {
@@ -63,12 +88,30 @@ export class AuthService {
     return this.http.put<any>(`${this.baseUrl}/users`, user, { headers: this.addTokenToHeaders() });
   }
 
-
   private getStorage(): Storage | null {
     if (typeof window !== 'undefined') {
       return sessionStorage;
     } else {
       return null;
     }
+  }
+
+  isAdminAuthenticated() {
+    const storage = this.getStorage();
+
+    if (storage) {
+      return this.getUserProfile().pipe(
+        map(user => user && user.role === 'ADMIN'),
+        switchMap(isAdmin => of(storage.getItem(this.tokenKey) !== null && isAdmin)),
+        catchError(error => {
+          console.error('Error al obtener el perfil del usuario:', error);
+          return of(false);
+        })
+
+      );
+    }
+
+    return of(false);
+
   }
 }

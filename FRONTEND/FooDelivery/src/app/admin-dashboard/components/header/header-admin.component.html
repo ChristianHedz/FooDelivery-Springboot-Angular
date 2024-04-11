@@ -1,0 +1,19 @@
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+
+  <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
+    <app-title [title]="user" />
+  </div>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="flex justify-content-start w-100" >
+    <span class="lead w-100 col-md-3 col-lg-2 me-0 px-3 text-white" >
+      Área de Administración de FooDelivery
+    </span>
+  </div>
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" (click)="logout()">Sign out</a>
+    </div>
+  </div>
+</header>
