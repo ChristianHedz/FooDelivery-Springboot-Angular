@@ -33,6 +33,24 @@
     height: 25px;
   }
 }
+.cerrar-sesion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px #ffae00;
+  padding: 12px 16px;
+  font-weight: bold;
+  color: #ffb800;
+  svg {
+    width: 30px;
+    height: 25px;
+  }
+}
+
 
 footer {
   background-color: black;

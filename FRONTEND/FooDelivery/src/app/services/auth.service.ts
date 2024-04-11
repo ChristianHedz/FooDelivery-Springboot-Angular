@@ -40,7 +40,10 @@ export class AuthService {
       })
     );
   }
-
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.isLoggedInSubject.next(false);
+  }
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
