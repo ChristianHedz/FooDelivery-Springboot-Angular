@@ -1,1 +1,58 @@
-<p>register works!</p>
+   <div class="container">
+    <div class="row">
+      <div class="col-md-6"> 
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <h2>FooDelivery</h2>
+          <h4>¡Mantén la calma y regístrate para comer una hamburguesa!</h4>
+          <div class="mb-3">
+            <label for="inputFullName" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="inputFullName" formControlName="fullName" placeholder="Ingresa tu nombre completo">
+            <div *ngIf="registerForm.get('fullName')?.invalid && (registerForm.get('fullName')?.dirty || registerForm.get('fullName')?.touched)">
+              <span class="form-text text-danger" *ngIf="registerForm.get('fullName')?.errors?.['required']">Nombre completo es obligatorio</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="inputPhone" class="form-label">Número de teléfono</label>
+            <input type="text" class="form-control" id="inputPhone" formControlName="phone" placeholder="Ingresa tu número de teléfono">
+            <div *ngIf="registerForm.get('phone')?.invalid && (registerForm.get('phone')?.dirty || registerForm.get('phone')?.touched)">
+              <span class="form-text text-danger" *ngIf="registerForm.get('phone')?.errors?.['required']">Número de teléfono es obligatorio</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail" formControlName="email" placeholder="Ejemplo@email.com">
+            <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+              <span class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.['required']">Email es obligatorio</span>
+              <span class="form-text text-danger" *ngIf="registerForm.get('email')?.errors?.['email']">Email inválido</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="inputPassword" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="inputPassword" formControlName="password" placeholder="Al menos 8 caracteres">
+            <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+              <span class="form-text text-danger" *ngIf="registerForm.get('password')?.errors?.['required']">Contraseña es obligatoria</span>
+              <span class="form-text text-danger" *ngIf="registerForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="inputAlias" class="form-label">Alias</label>
+            <input type="text" class="form-control" id="inputAlias" formControlName="alias" placeholder="Ingresa tu alias">
+            <div *ngIf="registerForm.get('alias')?.invalid && (registerForm.get('alias')?.dirty || registerForm.get('alias')?.touched)">
+              <span class="form-text text-danger" *ngIf="registerForm.get('alias')?.errors?.['required']">Alias es obligatorio</span>
+          
+            </div>
+          </div>
+          
+        
+          <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrarse</button>
+          <div class="mt-3">
+            ¿Ya estás registrado? <a href="/login">Inicia sesión</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <img src="https://s3-alpha-sig.figma.com/img/8ea8/8dc3/2a99af4191b8b8da1577b7fc3d281a2e?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JaOTpVPWdyLFhG18SDNwkithDRqUfcJxBWQ081wJGgAtRPps0PZ2WFucQoG~ZMcPSsmHxOnCZHijoDJzM7FH1AfpqvDQNnGNvgIEjcxdUc2HC5QQXQ~XpDlvKJDd3mI~dlt2qBYCinV18biXZLYhShJkYASxhzf1jhvU06cVY-PND0hinus27YQSMoExnF3YH5YQ0tV2IbSSZAckAQ2b3ze86-scVT4WnL0W-iEo96x-JljWyrQb0YxGiL9Wc10SQdFagSV0sUL1cI0Nh7b7QljAeASqYtUqEbGTQ8Rx1aVuG77xfqsq7zy9u9QXNGhTyKrElhC7rIRETm7C10qBgA__" alt="FooDelivery logo">
+      </div>
+    </div>
+  </div>
+  

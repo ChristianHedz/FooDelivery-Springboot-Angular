@@ -1,1 +1,96 @@
-<p>login works!</p>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6"> 
+       
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="row g-3 align-items-center">
+  <div>
+  <div class="row-g1 align-items-left"><img id="logoimg" src="https://s3-alpha-sig.figma.com/img/9cd5/92ea/d300f24646096f8362589256aae7fc76?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nUAD7tFPdCe5mK04UpzJn779T28hP8XV9rnqQJEtBHhw3DDNangdPXW-nGoEASAG~6P6y0sHD~k89AmU-128eC603tNZMV49Uw7sjzotSDtsfOm6W0TBVOY1I~qp7o-jTl50sbXeC~IeTUEVUQRWLq~2zmZVxhsAc8k-piAUNJRDFtCjNfN803LUfT0yh55AI-qHgJ3GaqHdaDvcRqzjRS9e0cKbo8hcIaGdSJDxy5MgpDsre9uPbHE4cHLwDGq4wyyxaDk8zqo72i2KugkvxOn0g51j9TNxnhEXIYXL6sWavfqBtWR4e-rGJDYV5-jK92-a3KQHUAm-ykIHwAszDw__" alt="logo">
+   </div>    <h2 class="row-g2 align-items-right">FooDelivery</h2>
+  </div>
+  <h4>¡Bienvenido de Nuevo!</h4>
+  <h5>¡Ingresá y disfrutá de una hamburguesa!</h5>
+    
+          <div class="row g-3 align-items-center">
+            <div class="col-md-12">
+              <label for="inputEmail" class="col-form-label">Email</label>
+              <div class="input-group">
+                <input type="email" id="inputEmail" class="form-control" formControlName="email" placeholder="ejemplo@gmail.com">
+                <div *if="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                  <span class="form-text text-danger" *if="loginForm.get('email').errors?.required">Email is required</span>
+                  <span class="form-text text-danger" *if="loginForm.get('email').errors?.email">Invalid email</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-md-12">
+            <label for="inputPassword" class="col-form-label">Contraseña</label>
+            <div class="input-group">
+              <input type="password" id="inputPassword" class="form-control" formControlName="password" placeholder="Enter your password">
+              <div *if="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.required">Password is required</span>
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.minlength">Password must be at least 8 characters</span>
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.maxlength">Password cannot be more than 20 characters</span>
+              </div>
+            </div>
+            <span class="form-text"><!-- Must be 8-20 characters long. --></span>
+          </div>
+        </div>
+        
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto" style="margin-left: auto;">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+      
+          <div class="row g-3 mt-2">
+            <div class="col-auto d-flex justify-content-center align-items-center">
+              <button type="submit" class="btn-color btn btn-primary text-center" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto">
+            <span>------------------------------------------------</span>
+          </div>
+        </div>
+        
+      
+        
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary">Ingresar con Google</button>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary">Ingresar con Facebook</button>
+          </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto">
+            <span>¿No estás registrado? <a href="/register">Registrate</a></span>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+        
+    <div class="col-md-6">
+
+      <img src="https://s3-alpha-sig.figma.com/img/83f1/5130/0cd587b13acc95fbd4de4675afb55b8b?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PJML0PeIVbtc-FwWNr2AKy2TkByVmbtOBbdNEcia0ggvxG8fgQ7DOiqKCLQcCgGfmAo3y~Ua36VE038KMa-oTXkPEbiKrXACV0PT4jyjZn0bXHrdYpxqQlO9-6SfCODfQ~FzNawRb2Zl6Wwx1u31ptfni~012L~CCKJUonDYmoHNJZcVthEaGcNZ0GEn4Lqsit8P0alOE2OCOJlGcmb347-LPSf1rJ6guD4jJGHZjnZ3HhU4zj1Eh1v6jWcmNzgV9cIBtjfjqrOnmljeBB6BdmkU4vSwjhNq824QEKFpQNeQpdJ15aYh826v80NjsLk6W4KOrjbz9w5~g~nx8maYHQ__" alt="Hamburguesa">
+    </div>
+  </div>
+</div>

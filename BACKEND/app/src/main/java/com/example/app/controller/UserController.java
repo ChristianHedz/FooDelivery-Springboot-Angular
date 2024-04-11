@@ -170,7 +170,7 @@ public class UserController {
           .status(HttpStatus.OK)
           .body(userService.changePassword(userChangePasswordDTO, request));
 
-    }
+    } 
 
     @PostMapping("/authGoogle")
     public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
