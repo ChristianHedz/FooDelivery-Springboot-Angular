@@ -1,19 +1,27 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { HeaderComponent } from './home/header/header.component';
-import { FooterComponent } from './home/footer/footer.component';
-import { NavComponent } from './home/nav/nav.component';
+
+import { PrimeNGConfig } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,FooterComponent,NavComponent],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'FooDelivery';  
+  private primengConfig = inject(PrimeNGConfig);
+  menuOption: string = '';
+
+  onOption(menuOption: string) {
+    this.menuOption = menuOption;
+  }
+
+  title = 'FooDelivery';
   constructor(private http: HttpClient) {
-   
+    this.primengConfig.ripple = true;
   }
 }

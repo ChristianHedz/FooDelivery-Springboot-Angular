@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../home/header/header.component';
-import { NavComponent } from '../home/nav/nav.component';
-import { FooterComponent } from '../home/footer/footer.component';
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule,HeaderComponent,NavComponent,FooterComponent],
+  imports: [],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 
