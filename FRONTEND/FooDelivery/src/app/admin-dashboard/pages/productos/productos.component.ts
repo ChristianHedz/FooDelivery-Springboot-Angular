@@ -10,7 +10,7 @@ import { UsersTableAdminDashboardComponent } from "../usuarios/components/users-
     UsersTableAdminDashboardComponent
   ],
   templateUrl: './productos.component.html',
-  styles: ``
+  styleUrl: `./productos.component.css`
 })
 export default class ProductosComponent {
   location = inject(Location);

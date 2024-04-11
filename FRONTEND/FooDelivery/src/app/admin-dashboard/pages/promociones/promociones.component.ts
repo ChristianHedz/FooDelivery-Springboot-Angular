@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './promociones.component.html',
-  styles: ``
+  styleUrl: `./promociones.component.css`
 })
 export default class PromocionesComponent {
 

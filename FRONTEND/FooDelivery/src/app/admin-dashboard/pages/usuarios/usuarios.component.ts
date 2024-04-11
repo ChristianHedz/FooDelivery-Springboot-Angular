@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {UsersTableAdminDashboardComponent} from "./components/users-table/users-table.component";
 import {JsonPipe, TitleCasePipe} from "@angular/common";
 import {UserService} from "./services/user.service";
@@ -16,8 +16,9 @@ import {DashboardTableType} from "../../interfaces/dashboard-table.enum";
     JsonPipe
   ],
   templateUrl: './usuarios.component.html',
-  styles: ``,
+  styleUrl: './usuarios.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export default class UsuariosComponent {
   userService = inject(UserService);

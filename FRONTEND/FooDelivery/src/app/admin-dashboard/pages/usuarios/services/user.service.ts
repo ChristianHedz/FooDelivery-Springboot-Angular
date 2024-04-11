@@ -50,5 +50,21 @@ export class UserService {
     );
   }
 
+  getUserFromStorage() {
+    const storage = this.getStorage();
+
+    if (storage) {
+      const user = storage.getItem('user');
+      return user ? JSON.parse(user) : null;
+    }
+  }
+
+  private getStorage(): Storage | null {
+    if (typeof window !== 'undefined') {
+      return sessionStorage;
+    } else {
+      return null;
+    }
+  }
 
 }

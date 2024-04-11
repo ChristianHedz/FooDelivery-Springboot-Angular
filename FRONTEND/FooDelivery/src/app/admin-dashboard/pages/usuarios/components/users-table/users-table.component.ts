@@ -16,10 +16,6 @@ import {ToggleButtonModule} from "primeng/togglebutton";
     TitleCasePipe,
     ModalAdminDeleteComponent,
     FormsModule,
-    CalendarModule,
-    ButtonModule,
-    RippleModule,
-    ToggleButtonModule
   ],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.css',

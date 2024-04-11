@@ -1,22 +1,48 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, ViewEncapsulation} from '@angular/core';
 import {RouterModule} from "@angular/router";
+import {NgOptimizedImage, TitleCasePipe} from "@angular/common";
+import {SidebarModule} from "primeng/sidebar";
+import {ButtonModule} from "primeng/button";
+import {AvatarModule} from "primeng/avatar";
+import {RippleModule} from "primeng/ripple";
+import {StyleClassModule} from "primeng/styleclass";
 import adminRoutes from "../../admin.routes";
-import {TitleCasePipe} from "@angular/common";
+import {UserService} from "../../pages/usuarios/services/user.service";
 
 @Component({
   selector: 'sidebar-admin',
   standalone: true,
-  imports: [RouterModule, TitleCasePipe],
+  imports: [
+    RouterModule,
+    TitleCasePipe,
+    SidebarModule,
+    NgOptimizedImage,
+    SidebarModule,
+    ButtonModule,
+    AvatarModule,
+    RippleModule,
+    StyleClassModule,
+  ],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class SidebarComponent {
 
-  // Con este array pintaremos el menú lateral
-  public menuItems =  adminRoutes
-    .map( route => route ?? []) // Obtener las rutas hijas y si no hay, devolver un array vacío
-    .flat() // Aplanar el array ya que el map devuelve un array de arrays
-    .filter( route => route && route.path) // Filtrar las rutas que no tengan path: path: ''
-    .filter( route => !route.path?.includes(':')) // Filtrar las rutas que tengan parámetros
+  private userService = inject(UserService);
+
+  userName = computed<string>(
+    () => this.userService.getUserFromStorage().fullName
+  );
+
+  // Obtén los children de adminRoutes y extrae sus títulos
+  public menuItems = adminRoutes
+    .filter(route => route && route.path) // Filtra las rutas que no tengan path: path: ''
+    .filter(route => !route.path?.includes(':')) // Filtra las rutas que tengan parámetros
+    .map(route => ({
+        title: route.title,
+        path: route.path
+      }));
 
 }
