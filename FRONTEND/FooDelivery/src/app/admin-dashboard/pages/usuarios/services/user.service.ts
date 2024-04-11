@@ -2,6 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {EMPTY, map, Observable, switchMap} from "rxjs";
 import { UserApiService } from "../../../../core/api/user-api.service";
 import {IUser} from "../../../../core/interfaces/user/User.interface";
+import {tap} from "rxjs/operators";
 
 interface State {
   users: IUser[],
@@ -24,15 +25,23 @@ export class UserService {
   loading = computed(() => this.#state().loading);
 
   constructor() {
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
     this.userApi.getAllUsers()
-      .subscribe(response => {
-
-        this.#state.set({
-          users: response,
-          loading: false,
-        });
-
-      });
+        .subscribe( {
+          next: response => {
+            this.#state.set({
+              users: response.content,
+              loading: false,
+            });
+          },
+          error: (error) => {
+            return error;
+          },
+        }
+      );
   }
 
   getUserByToken() {

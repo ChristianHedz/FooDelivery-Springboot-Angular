@@ -11,14 +11,19 @@
     </div>
   </div>
 </div>
-<table-admin-dashboard />
 
 <div>
-  @if( user() ) {
-    <pre>
-            {{ user() | json }}
-          </pre>
+  @if( userService.loading() ) {
+      <p> Cargando... </p>
+      <pre>
+        {{ userService.users()[1] | json }}
+      </pre>
+  } @else if(!userService.loading() && userService.users().length <= 0 ) {
+      <p> No hay usuarios registrados </p>
   } @else {
-    <p> Cargando... </p>
+      <users-table-admin-dashboard
+              [users]="userService.users()"
+      />
   }
+
 </div>
