@@ -16,11 +16,6 @@ export class ModalAdminDeleteComponent {
   onDelete() {
 
     console.log(`Eliminando usuario ${this.user?.id} - ${this.user?.fullName}`);
-
-    setTimeout(() => {
-      console.log('Usuario eliminado');
-    }, 5000);
-    this.deleteCompleted.emit();
   }
 
 }
