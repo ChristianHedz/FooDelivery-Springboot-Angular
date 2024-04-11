@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { PrimeNGConfig } from "primeng/api";
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   standalone: true,
