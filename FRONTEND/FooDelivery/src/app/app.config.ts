@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { GoogleLoginProvider,SocialAuthServiceConfig} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider,SocialAuthServiceConfig,FacebookLoginProvider} from '@abacritt/angularx-social-login';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +25,10 @@ export const appConfig: ApplicationConfig = {
               prompt: 'consent',
             }),
           },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('440367792002771')
+          }
         ],
         onError: (err) => {
           console.error(err);

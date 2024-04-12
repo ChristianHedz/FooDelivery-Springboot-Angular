@@ -1,5 +1,5 @@
 import {
-  GoogleSigninButtonModule,SocialAuthService,SocialLoginModule,
+  GoogleSigninButtonModule,SocialAuthService,SocialLoginModule,FacebookLoginProvider
 } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -57,5 +57,17 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('Formulario inválido, no se puede enviar.');
     }
+  }
+
+  facebookLogin(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      data => {
+        console.log("inicio");
+      }
+    ).catch(
+      err => {
+        console.log(err);
+      }
+    );
   }
 }
