@@ -47,6 +47,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.PUT, "/categories").hasAuthority(Role.ADMIN.name())
                                 .requestMatchers(HttpMethod.DELETE, "/categories").hasAuthority(Role.ADMIN.name())
 
+                                .requestMatchers(HttpMethod.POST, "/orders").hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name())
+
+
                                 .requestMatchers("/api-docs/**", "api-docs.yaml")
                                 .permitAll()
                                 .requestMatchers("/swagger-ui-custom.html", "/swagger-ui/**", "/swagger-ui/")
