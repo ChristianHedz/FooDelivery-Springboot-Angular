@@ -25,19 +25,19 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login' || event.url === '/register') {
-          this.showNavbarAndFooter = false; 
+          this.showNavbarAndFooter = true;
         } else {
           this.authService.isAdminAuthenticated().subscribe(isAdmin => {
-            this.showNavbarAndFooter = !isAdmin; 
+            this.showNavbarAndFooter = !isAdmin;
           });
         }
       }
     });
-    
+
     this.authService.isLoggedIn.subscribe(isLoggedIn => {
       this.userLoginOn = isLoggedIn;});
   }
- 
+
   onOption(menuOption: string) {
     this.menuOption = menuOption;
   }
@@ -45,4 +45,4 @@ export class AppComponent {
     this.authService.logout();
   }
   }
-  
+
