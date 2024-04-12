@@ -234,4 +234,11 @@ public class UserService {
 
         user.setActive(false);
     }
+
+    public SignedUserDTO getUserByAdmin(Long id) {
+        User user = userRepository.findById(id)
+          .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        return userMapper.userToSignedUserDTO(user);
+    }
 }
