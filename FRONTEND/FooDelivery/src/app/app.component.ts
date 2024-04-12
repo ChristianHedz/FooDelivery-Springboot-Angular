@@ -25,7 +25,7 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login' || event.url === '/register') {
-          this.showNavbarAndFooter = true;
+          this.showNavbarAndFooter = false;
         } else {
           this.authService.isAdminAuthenticated().subscribe(isAdmin => {
             this.showNavbarAndFooter = !isAdmin;
