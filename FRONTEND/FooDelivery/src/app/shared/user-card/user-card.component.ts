@@ -48,19 +48,15 @@ export class UserCardComponent {
   noName: string = 'NoName';
 
   // Service
-  // private userAdminService = inject(UserService);
   private router = inject(Router);
-  // private messageService = inject(MessageService);
+
   // Inputs
   @Input({ required: true }) user!: IUser;
   @Input({ transform: booleanAttribute }) isAdmin: boolean = false;
 
 
-
   constructor(
-    private userAdminService: UserService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private userAdminService: UserService
   ) { }
 
 

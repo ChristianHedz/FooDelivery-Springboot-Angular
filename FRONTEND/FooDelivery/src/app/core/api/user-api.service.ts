@@ -23,15 +23,11 @@ export class UserApiService {
   }
 
   deleteUserByAdmin(userId: number): Observable<void> {
-    const body = { id: userId };
-    return this.http.delete<void>(`${this.url}/users`, {
-      body,
-      headers: this.authService.addTokenToHeaders()
-    });
+    return this.http.delete<void>(`${this.url}/users/${userId}`, { headers: this.authService.addTokenToHeaders() });
   }
 
   getUserByAdmin(userId: number): Observable<IUser> {
-    return this.http.get<IUser>(`${this.url}/users/${ userId }`, {
+    return this.http.get<IUser>(`${this.url}/users/me/${ userId }`, {
       headers: this.authService.addTokenToHeaders()
     });
   }

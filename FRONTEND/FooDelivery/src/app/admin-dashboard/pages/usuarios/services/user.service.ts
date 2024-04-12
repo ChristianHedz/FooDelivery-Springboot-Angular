@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {EMPTY, map, Observable, switchMap} from "rxjs";
+import {catchError, EMPTY, map, Observable, switchMap, throwError} from "rxjs";
 import { UserApiService } from "../../../../core/api/user-api.service";
 import {IUser, UserDTO} from "../../../../core/interfaces/user/User.interface";
 import {tap} from "rxjs/operators";
@@ -32,10 +32,6 @@ export class UserService {
         .subscribe( {
           next: response => {
             this.users.set(response.content);
-            /*this.#state.set({
-              users: response.content,
-              loading: false,
-            });*/
           },
           error: (error) => {
             return error;
@@ -67,9 +63,9 @@ export class UserService {
     }
   }
 
-  confirmDeleteUser(id: number): void {
-    console.log('confirmDeleteUser', id);
-    this.confirmationService.confirm({
+  confirmDeleteUser(id: number) {
+
+    return this.confirmationService.confirm({
       target: document.body,
       message: '¿Estas seguro de que quieres eliminar este usuario?',
       header: 'Eliminar usuario',
@@ -77,20 +73,45 @@ export class UserService {
       acceptIcon: 'pi pi-trash',
       rejectIcon: 'none',
       rejectButtonStyleClass: 'p-button-text',
-      accept: () => this.deleteUser(id).subscribe(),
+      accept: () => this.deleteUser(id).subscribe({
+        next: (response) => {
+
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Usuario eliminado!',
+            detail: "El usuario fue eliminado exitosamente.",
+          });
+
+        },
+        error: (error) => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: 'Error al eliminar usuario',
+            detail: error,
+          });
+        },
+      }),
     });
   }
 
-  private deleteUser(userId: number): Observable<void> {
+  private deleteUser(userId: number) {
     return this.userApi.deleteUserByAdmin(userId).pipe(
-      tap((response) => {
+      tap(() => {
         this.users.update(( usersArr ) =>
-          usersArr.filter((user) => user.id !== userId) //TODO: && user.active = true
+          usersArr.filter((user) => user.id !== userId)
         );
-        // this.showMessage(response.message);
       }),
-      tap((_) => this.router.navigate(['/admin/dashboard/sorteos'])),
-      switchMap(() => EMPTY)
+      tap((_) => {
+        setTimeout(() => {
+          this.router.navigate(['/admin/dashboard/usuarios'])
+        }, 1200);
+      }),
+      catchError(({ error }) => {
+        console.log('Error al eliminar ususario: ', error);
+        return throwError( () => "Error al eliminar al usuario");
+      })
     );
   };
 
@@ -100,18 +121,24 @@ export class UserService {
       .pipe(map((response) => response));
   }
 
-  createUserByAdmin( user: UserDTO): Observable<void> {
+  createUserByAdmin( user: UserDTO) {
     return this.userApi.createUserByAdmin(user).pipe(
       tap((response) => this.showMessage("Usuario creado exitosamente")),
       tap((_) => this.router.navigate(['/admin/dashboard/usuarios'])),
-      switchMap(() => EMPTY)
+      catchError(({ error }) => {
+        console.log('Error al crear usuario: ', error);
+        return throwError( () => "Error al crear al usuario");
+      })
     );
   }
 
-  updateUserByAdmin( user: UserDTO): Observable<void> {
+  updateUserByAdmin( user: UserDTO) {
     return this.userApi.updateUserByAdmin(user).pipe(
       tap((response) => this.showMessage("Usuario actualizado exitosamente")),
-      switchMap(() => EMPTY)
+      catchError(({ error }) => {
+        console.log('Error al actualizar usuario: ', error);
+        return throwError( () => "Error al actualizar el usuario");
+      })
     );
   }
 
@@ -121,24 +148,6 @@ export class UserService {
       severity: 'success',
       summary: 'Listo!',
       detail: message,
-    });
-  }
-
-
-  confirm1() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      acceptIcon: "none",
-      rejectIcon: "none",
-      rejectButtonStyleClass: "p-button-text",
-      accept: () => {
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'You have accepted'});
-      },
-      reject: () => {
-        this.messageService.add({severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000});
-      }
     });
   }
 

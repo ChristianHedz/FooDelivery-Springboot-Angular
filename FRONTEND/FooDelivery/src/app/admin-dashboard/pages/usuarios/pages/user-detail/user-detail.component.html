@@ -1,17 +1,15 @@
-<div class="mb-3 font-bold text-2xl">
-  <span class="text-900">Detalles del usuario </span>
-</div>
-
 @if (user()) {
   <div class="">
-    <h1 class="text-5xl">{{ user()?.fullName | titlecase }}</h1>
+      <div class="mb-3 font-bold text-2xl">
+          <p-avatar [style]="{ 'background-color': '#5cb85c', color: '#ffffff' }" [label]="user() && user()?.fullName ? user()?.fullName!.at(0) : 'N'" styleClass="mr-2" size="large" shape="circle"></p-avatar>
+          <span class="font-bold">{{ user() && user()?.fullName ? user()?.fullName : "NoName" | titlecase }}</span>
+      </div>
     <p-divider></p-divider>
     <div class="grid justify-content-center">
       <section class="col-12 md:col-9">
         <!-- contenido -->
-        <p class="text-lg">{{ user()?.alias }}</p>
-
-        <!-- fecha inicio -->
+          <span class="text-lg font-semibold">Username: </span>
+        <span class="text-lg font-semibold">{{ user()?.alias }}</span>
         <div class="flex flex-column sm:flex-row my-4">
           <p class="font-bold mr-3">
             <p-chip
@@ -20,23 +18,45 @@
             }}"
             ></p-chip>
           </p>
-          <p class="font-bold mt-2 sm:mt-0">
+          <p class="font-bold mt-2 sm:mt-0 mr-3">
             <p-chip
               label="{{
               user()?.phone
             }}"
             ></p-chip>
           </p>
+            <p class="font-bold mt-2 sm:mt-0">
+                <p-chip
+                        label="{{
+              user()?.role | titlecase
+            }}"
+                ></p-chip>
+            </p>
         </div>
 
-        <!-- addresses -->
-        <!--<div class="premio-principal col-12 lg:col-8 mx-auto">
-          <h2>Direcciones</h2>
-          <p>{{ user()?.address }}</p>
-        </div>-->
+          <div class="addresses my-4">
+              <h5 class="capitalize text-2xl mb-2">Direcciones</h5>
+              <p-divider></p-divider>
+              <div class="addresses__container--scroll">
+                  <p-messages
+                          [(value)]="messageNotData"
+                          [enableService]="false"
+                          [closable]="false"
+                  ></p-messages>
+              </div>
+          </div>
 
-        <!-- Pedidos -->
-<!--        <app-list-orders [orders]="user()?.users!" />-->
+          <div class="orders my-4">
+              <h5 class="capitalize text-2xl mb-2">Pedidos</h5>
+              <p-divider></p-divider>
+              <div class="orders__container--scroll">
+                  <p-messages
+                          [(value)]="messageNotData"
+                          [enableService]="false"
+                          [closable]="false"
+                  ></p-messages>
+              </div>
+          </div>
       </section>
 
       <!-- buttons -->
@@ -56,7 +76,7 @@
           label="Eliminar"
           icon="pi pi-trash"
           class="block w-full bg-red-500 border-red-500"
-          (click)="confirmDeleteLottery()"
+          (click)="this.confirmDeleteUser()"
         ></button>
       </section>
     </div>
@@ -68,5 +88,5 @@
 }
 
 <div class="card flex justify-content-center">
-  <p-toast></p-toast>
+    <p-confirmDialog></p-confirmDialog>
 </div>

@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {IUser} from "../../../../../core/interfaces/user/User.interface";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {TitleCasePipe} from "@angular/common";
@@ -8,10 +8,12 @@ import {DividerModule} from "primeng/divider";
 import {ChipModule} from "primeng/chip";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {StyleClassModule} from "primeng/styleclass";
+import {AvatarModule} from "primeng/avatar";
+import {MessagesModule} from "primeng/messages";
 
 @Component({
   selector: 'app-user-detail',
@@ -26,32 +28,38 @@ import {StyleClassModule} from "primeng/styleclass";
     ToastModule,
     ConfirmDialogModule,
     StyleClassModule,
+    AvatarModule,
+    MessagesModule,
+    RouterLinkActive,
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
 })
-export default class UserDetailComponent {
+export default class UserDetailComponent implements OnInit {
   // Services
-  private userSer = inject(UserService);
   private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private router = inject(Router);
 
+  messageNotData = [
+    { severity: 'info', summary: 'Sin informacion ', detail: '' },
+  ];
+
   // Variables
   public userId: string | null = null;
   public user = signal<IUser | null>(null);
 
-  constructor() {
+  constructor( private userService: UserService ) {
     this.userId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
     if (this.userId) {
       const id = Number(this.userId);
-      this.userSer
+      this.userService
         .getUserByAdmin(id)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
@@ -67,8 +75,8 @@ export default class UserDetailComponent {
     }
   }
 
-  confirmDeleteLottery() {
-    this.userSer.confirmDeleteUser(this.user()?.id!);
+  confirmDeleteUser() {
+    this.userService.confirmDeleteUser(this.user()!.id);
   }
 
   showMessage(message: string, severity: string, summary: string): void {

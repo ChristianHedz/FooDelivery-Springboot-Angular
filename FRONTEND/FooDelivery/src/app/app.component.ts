@@ -6,11 +6,12 @@ import { PrimeNGConfig } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import {AuthService} from "./services/auth.service";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive, ConfirmDialogModule],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive, ConfirmDialogModule, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
