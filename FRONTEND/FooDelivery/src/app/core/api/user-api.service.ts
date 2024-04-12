@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
-import {IUser, IUsers} from "../interfaces/user/User.interface";
+import {IUser, IUsers, UserDTO} from "../interfaces/user/User.interface";
 import {AuthService} from "../../services/auth.service";
 
 @Injectable({
@@ -20,6 +20,32 @@ export class UserApiService {
 
   getAllUsers(): Observable<IUsers> {
     return this.http.get<IUsers>(`${this.url}/users`, { headers: this.authService.addTokenToHeaders() });
+  }
+
+  deleteUserByAdmin(userId: number): Observable<void> {
+    const body = { id: userId };
+    return this.http.delete<void>(`${this.url}/users`, {
+      body,
+      headers: this.authService.addTokenToHeaders()
+    });
+  }
+
+  getUserByAdmin(userId: number): Observable<IUser> {
+    return this.http.get<IUser>(`${this.url}/users/${ userId }`, {
+      headers: this.authService.addTokenToHeaders()
+    });
+  }
+
+  createUserByAdmin(user: UserDTO): Observable<IUser> {
+    return this.http.post<IUser>(`${this.url}/users`, user, {
+      headers: this.authService.addTokenToHeaders()
+    });
+  }
+
+  updateUserByAdmin(user: UserDTO): Observable<IUser> {
+    return this.http.put<IUser>(`${this.url}/users`, user, {
+      headers: this.authService.addTokenToHeaders()
+    });
   }
 
 }

@@ -1,11 +1,36 @@
+import {FormControl} from "@angular/forms";
+
 export interface IUser {
-  isError:  boolean;
+  isError?:  boolean;
   id:       number;
   fullName: string;
   phone:    string;
   email:    string;
   alias?:    string;
   role?:     string;
+  active?:   boolean;
+}
+
+export interface UserDTO {
+  id?:       number;
+  fullName: string;
+  phone:    string;
+  email:    string;
+  alias?:    string;
+  role?:     string;
+  password?: string;
+  active?:   boolean;
+}
+
+export interface IFormUser {
+  id?: FormControl<number>;
+  fullName: FormControl<string>;
+  phone: FormControl<string>;
+  email: FormControl<string>;
+  alias?: FormControl<string>;
+  role?: FormControl<string>;
+  password: FormControl<string>;
+  active?: FormControl<boolean>;
 }
 
 export interface IUsers {

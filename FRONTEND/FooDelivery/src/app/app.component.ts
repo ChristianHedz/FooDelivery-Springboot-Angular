@@ -4,15 +4,18 @@ import { HttpClient } from '@angular/common/http';
 
 import { PrimeNGConfig } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import {AuthService} from "./services/auth.service";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive, ConfirmDialogModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+  authService = inject(AuthService);
   private primengConfig = inject(PrimeNGConfig);
   menuOption: string = '';
 

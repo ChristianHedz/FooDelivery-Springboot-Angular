@@ -40,6 +40,7 @@ export class SidebarComponent {
   public menuItems = adminRoutes
     .filter(route => route && route.path) // Filtra las rutas que no tengan path: path: ''
     .filter(route => !route.path?.includes(':')) // Filtra las rutas que tengan parámetros
+    .filter(route => !route.path?.includes('/')) // Filtra las rutas que tengan subrutas
     .map(route => ({
         title: route.title,
         path: route.path
