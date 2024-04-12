@@ -226,4 +226,12 @@ public class UserService {
     public Page<SignedUserDTO> getAllUsersByAdmin(Pageable pageable) {
         return userRepository.findAllByActiveTrue(pageable).map(userMapper::userToSignedUserDTO);
     }
+
+    public void deleteByAdmin(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        user.setActive(false);
+    }
 }
