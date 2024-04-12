@@ -12,7 +12,7 @@
   </section>
   <section class="p-2 grid">
     @for (user of userService.users(); track $index) {
-      <article class="col-12 sm:col-6 lg:col-4 xl:col-3">
+      <article class="col-12 sm:col-6 lg:col-4">
         <user-card [user]="user" isAdmin></user-card>
       </article>
     }@empty {

@@ -26,6 +26,10 @@ export default [
     loadComponent: () => import('./pages/usuarios/pages/add-or-edit-user/add-or-edit-user.component'),
   },
   {
+    path: 'usuario/:id',
+    loadComponent: () => import('./pages/usuarios/pages/user-detail/user-detail.component'),
+  },
+  {
     path: 'ordenes',
     title: 'pi-shopping-cart',
     loadComponent: () => import('./pages/ordenes/ordenes.component'),

@@ -1,0 +1,72 @@
+<div class="mb-3 font-bold text-2xl">
+  <span class="text-900">Detalles del usuario </span>
+</div>
+
+@if (user()) {
+  <div class="">
+    <h1 class="text-5xl">{{ user()?.fullName | titlecase }}</h1>
+    <p-divider></p-divider>
+    <div class="grid justify-content-center">
+      <section class="col-12 md:col-9">
+        <!-- contenido -->
+        <p class="text-lg">{{ user()?.alias }}</p>
+
+        <!-- fecha inicio -->
+        <div class="flex flex-column sm:flex-row my-4">
+          <p class="font-bold mr-3">
+            <p-chip
+              label="{{
+              user()?.email
+            }}"
+            ></p-chip>
+          </p>
+          <p class="font-bold mt-2 sm:mt-0">
+            <p-chip
+              label="{{
+              user()?.phone
+            }}"
+            ></p-chip>
+          </p>
+        </div>
+
+        <!-- addresses -->
+        <!--<div class="premio-principal col-12 lg:col-8 mx-auto">
+          <h2>Direcciones</h2>
+          <p>{{ user()?.address }}</p>
+        </div>-->
+
+        <!-- Pedidos -->
+<!--        <app-list-orders [orders]="user()?.users!" />-->
+      </section>
+
+      <!-- buttons -->
+      <section class="col-12 md:col-3">
+        <button
+          pButton
+          pRipple
+          label="Editar"
+          icon="pi pi-pencil"
+          class="block w-full bg-gray-400 border-gray-400 mb-2"
+          [routerLink]="['/admin/dashboard/usuario', this.user()?.id, 'editar']"
+          routerLinkActive="router-link-active"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Eliminar"
+          icon="pi pi-trash"
+          class="block w-full bg-red-500 border-red-500"
+          (click)="confirmDeleteLottery()"
+        ></button>
+      </section>
+    </div>
+  </div>
+} @else {
+  <div class="flex justify-content-center">
+    <p class="text-2xl">No se ha encontrado el usuario</p>
+  </div>
+}
+
+<div class="card flex justify-content-center">
+  <p-toast></p-toast>
+</div>
