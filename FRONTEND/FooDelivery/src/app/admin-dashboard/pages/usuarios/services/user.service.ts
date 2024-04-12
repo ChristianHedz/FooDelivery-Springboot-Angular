@@ -124,9 +124,20 @@ export class UserService {
   createUserByAdmin( user: UserDTO) {
     return this.userApi.createUserByAdmin(user).pipe(
       tap((response) => this.showMessage("Usuario creado exitosamente")),
-      tap((_) => this.router.navigate(['/admin/dashboard/usuarios'])),
+      tap( () => this.getAllUsers()),
+      tap((_) => {
+        setTimeout(() => {
+          this.router.navigate(['/admin/dashboard/usuarios'])
+        }, 1200);
+      }),
       catchError(({ error }) => {
         console.log('Error al crear usuario: ', error);
+        this.messageService.add({
+          key: 'toast',
+          severity: 'error',
+          summary: 'Usuario no creado!',
+          detail: "Revise si ya ha tenido una cuenta con ese telefono o email.",
+        });
         return throwError( () => "Error al crear al usuario");
       })
     );
