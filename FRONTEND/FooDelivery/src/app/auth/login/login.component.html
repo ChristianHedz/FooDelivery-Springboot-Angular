@@ -1,8 +1,8 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-md-6"> 
-       
+    <div class="col-md-6">
+
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="row g-3 align-items-center">
 
@@ -11,7 +11,7 @@
         <h1 class="row-g2 align-items-right"> FoodDelivery</h1>
         </div>
         <h4>¡Bienvenido de Nuevo!</h4>
-        <h6>¡Ingresá y disfrutá de una hamburguesa!</h6> 
+        <h6>¡Ingresá y disfrutá de una hamburguesa!</h6>
         </div>
         <!--email-->
         <div class="row g-3 align-items-center">
@@ -26,7 +26,7 @@
         </div>
         </div>
         </div>
-   
+
         <!--password-->
         <div class="row g-3 align-items-center">
         <div class="col-md-12" id="password">
@@ -55,22 +55,17 @@
         </div>
         </div>
 
-        <!-- google -->
-        <div class="col-auto" id="google">
-        <button type="button" class="btn btn-primary-light">  
-        <svg width="20" height="20" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_268_1479)">
-        <path d="M28.227 14.385C28.227 13.4333 28.1498 12.4765 27.9852 11.5402H14.78V16.9314H22.342C22.0282 18.6701 21.0199 20.2083 19.5435 21.1857V24.6837H24.055C26.7043 22.2454 28.227 18.6444 28.227 14.385Z" fill="#4285F4"/>
-        <path d="M14.78 28.0635C18.5558 28.0635 21.7401 26.8237 24.0602 24.6837L19.5487 21.1856C18.2935 22.0396 16.673 22.5231 14.7851 22.5231C11.1327 22.5231 8.0359 20.059 6.92475 16.7462H2.26923V20.3523C4.64586 25.0798 9.48657 28.0635 14.78 28.0635Z" fill="#34A853"/>
-        <path d="M6.91966 16.7462C6.33322 15.0074 6.33322 13.1246 6.91966 11.3859V7.77979H2.26928C0.283612 11.7357 0.283612 16.3964 2.26928 20.3523L6.91966 16.7462Z" fill="#FBBC04"/>
-        <path d="M14.78 5.60377C16.7759 5.57291 18.705 6.32396 20.1505 7.70262L24.1476 3.70555C21.6166 1.32892 18.2575 0.0222897 14.78 0.0634434C9.48657 0.0634434 4.64586 3.04709 2.26923 7.77978L6.9196 11.3859C8.02561 8.06786 11.1276 5.60377 14.78 5.60377Z" fill="#EA4335"/>
-        </g>
-        <defs>
-        <clipPath id="clip0_268_1479">
-        <rect width="28" height="28" fill="white" transform="translate(0.5 0.0625)"/>
-        </clipPath>
-        </defs>
-        </svg>   Ingresar con Google</button> </div>
+        <div class="separator mx-2 my-2">o</div>
+
+        <!-- Google -->
+        <div class="m-auto">
+          <asl-google-signin-button
+            type="standard"
+            size="large"
+            class="d-flex justify-content-center align-items-center"
+          ></asl-google-signin-button>
+        </div>
+
         <!-- facebook -->
         <div class="col-auto">
         <button type="button" class="btn btn-primary-light">
@@ -87,7 +82,7 @@
         </svg>
         Ingresar con Facebook</button>
         </div>
-        
+
         <!-- regístrate -->
         <div class="row g-3 align-items-center mt-2" >
         <div class="col-auto"id="registrate">
@@ -97,7 +92,7 @@
 
       </form>
     </div>
-       
+
     <div class="col-md-6">
       <img src="../../../assets/loginimg.jpg" alt="HamburguesaLogin">
     </div>

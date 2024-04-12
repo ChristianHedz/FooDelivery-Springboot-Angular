@@ -4,6 +4,7 @@ import {Observable, BehaviorSubject, of, map, switchMap, catchError} from 'rxjs'
 import { User } from '../services/user';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { socialUser } from './socialUser';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,16 @@ export class AuthService {
       })
     );
   }
+
+  googleLogin(token: string):Observable<socialUser> {
+    console.log('se recibio el token: ' + {token});
+    return this.http.post<socialUser>(this.baseUrl + '/users/authGoogle',{token}).pipe(
+      tap((userResp: socialUser) => {
+        console.log({userResp});
+      }),
+    )
+  }
+
 
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
