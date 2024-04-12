@@ -10,9 +10,9 @@ import {notAuthGuard} from "./core/guards/not-auth.guard";
 export const routes: Routes = [
 
     {path: "home", component: MainContentComponent},
-    {path: "login", component: LoginComponent, canMatch: [notAuthGuard]},
+    {path: "login", component: LoginComponent,canActivate: [notAuthGuard] },
     {path:"profile", component:ProfileComponent},
-    {path: "register", component: RegisterComponent, canMatch: [notAuthGuard]},
+    {path: "register", component: RegisterComponent,canActivate: [notAuthGuard] },
     {path: "products", component: ProductsListComponent},
     {
       path:"admin",
