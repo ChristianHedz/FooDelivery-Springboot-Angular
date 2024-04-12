@@ -204,4 +204,45 @@ public class UserController {
     public ResponseEntity<Page<SignedUserDTO>> getAllUsersByAdmin(Pageable pageable) {
         return ResponseEntity.status(200).body(userService.getAllUsersByAdmin(pageable));
     }
+
+    @Operation(
+      summary = "Delete a user by admin.",
+      description = "Let an admin set active false a user. Token is required. Only Admin can access this endpoint."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "204", description = "Not content. User deleted successfully.",
+        content = {@Content}),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deleteByAdmin(@PathVariable Long id) {
+        userService.deleteByAdmin(id);
+        return ResponseEntity.status(204).build();
+    }
+
+    @Operation(
+      summary = "Admin get a user data.",
+      description = "Let an admin get a data from a user using the authorization token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User found successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @GetMapping("/me/{id}")
+    public ResponseEntity<SignedUserDTO> getUserByAdmin(@PathVariable Long id) {
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.getUserByAdmin(id));
+    }
 }
