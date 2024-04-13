@@ -14,7 +14,7 @@ export default [
   {
     path: 'ordenes',
     title: 'pi-shopping-cart',
-    loadComponent: () => import('./pages/ordenes/ordenes.component'),
+    loadComponent: () => import('./pages/ordenes/pages/orders-grid/orders-grid.component'),
   },
   {
     path: 'usuarios',
