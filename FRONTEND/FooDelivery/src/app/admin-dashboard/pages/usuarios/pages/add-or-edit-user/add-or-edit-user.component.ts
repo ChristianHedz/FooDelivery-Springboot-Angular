@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, ViewEncapsulation} from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
@@ -9,7 +9,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IFormUser, IUser, UserDTO} from "../../../../../core/interfaces/user/User.interface";
+import {IFormUser, IUser, UserDTO, UserToUpdate} from "../../../../../core/interfaces/user/User.interface";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {MessageService } from "primeng/api";
 import {StyleClassModule} from "primeng/styleclass";
@@ -77,6 +77,11 @@ export default class AddOrEditUserComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId) {
+
+      this.userForm.controls['phone'].disable();
+      this.userForm.controls['email'].disable();
+      this.userForm.controls['role']!.disable();
+
       const id = Number(this.userId);
       this.userService
         .getUserByAdmin(id)
@@ -119,6 +124,19 @@ export default class AddOrEditUserComponent implements OnInit {
   }
 
   save() {
+
+    if (this.userId) {
+      this.userForm.controls['password'].clearValidators();
+      this.userForm.controls['phone'].clearValidators();
+      this.userForm.controls['email'].clearValidators();
+      this.userForm.controls['role']!.clearValidators();
+
+      this.userForm.controls['password'].updateValueAndValidity();
+      this.userForm.controls['phone'].updateValueAndValidity();
+      this.userForm.controls['email'].updateValueAndValidity();
+      this.userForm.controls['role']!.updateValueAndValidity();
+    }
+
     if (this.userForm.invalid) return this.userForm.markAllAsTouched();
 
     const codeRol: any = this.userForm.controls['role']?.value === '' ? {code: 'CUSTOMER'}: this.userForm.controls['role']?.value;
@@ -133,11 +151,13 @@ export default class AddOrEditUserComponent implements OnInit {
       active: this.userForm.controls['active']?.value,
     };
 
+    let bodyUserToUpdate: UserToUpdate | undefined = undefined;
+
     if (this.userId) {
-      user = { ...user, id: Number(this.userId) };
+      bodyUserToUpdate = { fullName: user.fullName, alias: user.alias ? user.alias : '', id: Number(this.userId) };
     }
 
-    this.userId ? this.updateUSer(user) : this.addUser(user);
+    this.userId ? this.updateUSer(bodyUserToUpdate) : this.addUser(user);
   }
 
   addUser( user: UserDTO) {
@@ -147,7 +167,7 @@ export default class AddOrEditUserComponent implements OnInit {
       .subscribe();
   }
 
-  updateUSer( user: UserDTO) {
+  updateUSer( user: UserToUpdate | undefined) {
     this.userService
       .updateUserByAdmin(user)
       .pipe(takeUntilDestroyed(this.destroyRef))

@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
-import {IUser, IUsers, UserDTO} from "../interfaces/user/User.interface";
+import {IUser, IUsers, UserDTO, UserToUpdate} from "../interfaces/user/User.interface";
 import {AuthService} from "../../services/auth.service";
 
 @Injectable({
@@ -38,8 +38,8 @@ export class UserApiService {
     });
   }
 
-  updateUserByAdmin(user: UserDTO): Observable<IUser> {
-    return this.http.put<IUser>(`${this.url}/users`, user, {
+  updateUserByAdmin(user: UserToUpdate | undefined): Observable<IUser> {
+    return this.http.put<IUser>(`${this.url}/users/me${ user!.id }`, {fullName: user?.fullName, alias: user?.alias}, {
       headers: this.authService.addTokenToHeaders()
     });
   }

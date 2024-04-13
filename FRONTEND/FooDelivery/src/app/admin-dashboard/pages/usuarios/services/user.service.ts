@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {catchError, EMPTY, map, Observable, switchMap, throwError} from "rxjs";
 import { UserApiService } from "../../../../core/api/user-api.service";
-import {IUser, UserDTO} from "../../../../core/interfaces/user/User.interface";
+import {IUser, UserDTO, UserToUpdate} from "../../../../core/interfaces/user/User.interface";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -143,14 +143,34 @@ export class UserService {
     );
   }
 
-  updateUserByAdmin( user: UserDTO) {
+  updateUserByAdmin( user: UserToUpdate | undefined) {
     return this.userApi.updateUserByAdmin(user).pipe(
       tap((response) => this.showMessage("Usuario actualizado exitosamente")),
+      tap( () => this.getAllUsers()),
+      tap((_) => {
+        setTimeout(() => {
+          this.goRouteUpdate(user!.id);
+        }, 1200);
+      }),
       catchError(({ error }) => {
         console.log('Error al actualizar usuario: ', error);
+        this.messageService.add({
+          key: 'toast',
+          severity: 'error',
+          summary: 'Usuario no actualizado!',
+          detail: "Ocurrio un problema al intentar actualizar el usuario.",
+        });
         return throwError( () => "Error al actualizar el usuario");
       })
     );
+  }
+
+  private goRouteUpdate(id: number) {
+    this.router.navigate([
+      '/admin/dashboard/usuario',
+      id,
+      'editar',
+    ]);
   }
 
   showMessage(message: string): void {

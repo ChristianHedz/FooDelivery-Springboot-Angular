@@ -1,7 +1,7 @@
 <form [formGroup]="userForm" class="">
 
     <h1 class="mt-2">{{ userId ? "Actualizar Usuario" : "Nuevo Usuario" }}</h1>
-  <p-divider></p-divider>
+    <p-divider></p-divider>
 
   <div class="grid">
 
@@ -38,12 +38,13 @@
     <div class="col-12 md:col-6 flex flex-column gap-2">
       <label for="email">Email</label>
       <input
-        pInputText
-        id="email"
-        placeholder="Correo del usuario"
-        formControlName="email"
+          pInputText
+          id="email"
+          placeholder="Correo del usuario"
+          formControlName="email"
       />
-      @if (inputValid('email')) {<small class="text-red-700 font-bold"
+
+        @if (inputValid('email')) {<small class="text-red-700 font-bold"
       >El email es requerido</small
       >}
     </div>

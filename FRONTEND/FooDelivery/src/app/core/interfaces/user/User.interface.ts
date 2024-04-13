@@ -61,3 +61,9 @@ export interface Sort {
   sorted:   boolean;
   unsorted: boolean;
 }
+
+export type UserToUpdate = {
+  fullName: string;
+  alias: string;
+  id: number;
+}
