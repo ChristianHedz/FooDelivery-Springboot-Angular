@@ -241,4 +241,14 @@ public class UserService {
 
         return userMapper.userToSignedUserDTO(user);
     }
+
+    public SignedUserDTO updateByAdmin(UserToUpdateDto userToUpdateDto, Long id) {
+        User user = userRepository.findById(id)
+          .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        if (userToUpdateDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToUpdateDto.alias()))
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
+
+        return userMapper.userToSignedUserDTO(user.update(userToUpdateDto));
+    }
 }

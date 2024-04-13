@@ -245,4 +245,29 @@ public class UserController {
           .status(HttpStatus.OK)
           .body(userService.getUserByAdmin(id));
     }
+
+    @Operation(
+      summary = "Update data user by an Admin.",
+      description = "Let an Admin update another user data. Token is required. Only Admin can access this endpoint"
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User updated successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @PutMapping("/me/{id}")
+    @Transactional
+    public ResponseEntity<SignedUserDTO> updateUserByAdmin(@PathVariable Long id, @RequestBody @Valid UserToUpdateDto userToUpdateDto) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.updateByAdmin(userToUpdateDto, id));
+
+    }
 }
