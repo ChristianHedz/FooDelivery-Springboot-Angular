@@ -4,12 +4,17 @@ export default [
   {
     path: 'productos',
     title: 'pi-truck',
-    loadComponent: () => import('./pages/productos/productos.component'),
+    loadComponent: () => import('./pages/productos/pages/products-grid/products-grid.component'),
   },
   {
     path: 'promociones',
     title: 'pi-gift',
     loadComponent: () => import('./pages/promociones/promociones.component'),
+  },
+  {
+    path: 'ordenes',
+    title: 'pi-shopping-cart',
+    loadComponent: () => import('./pages/ordenes/ordenes.component'),
   },
   {
     path: 'usuarios',
@@ -28,11 +33,6 @@ export default [
   {
     path: 'usuario/:id',
     loadComponent: () => import('./pages/usuarios/pages/user-detail/user-detail.component'),
-  },
-  {
-    path: 'ordenes',
-    title: 'pi-shopping-cart',
-    loadComponent: () => import('./pages/ordenes/ordenes.component'),
   },
   {
     path: '',
