@@ -6,6 +6,9 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { GoogleLoginProvider,SocialAuthServiceConfig,FacebookLoginProvider} from '@abacritt/angularx-social-login';
 
+import { MessageService, ConfirmationService } from 'primeng/api';
+import {ToastModule} from "primeng/toast";
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
@@ -35,5 +38,8 @@ export const appConfig: ApplicationConfig = {
         },
       } as SocialAuthServiceConfig,
     },
+    MessageService,
+    ConfirmationService,
+    ToastModule
   ]
 };

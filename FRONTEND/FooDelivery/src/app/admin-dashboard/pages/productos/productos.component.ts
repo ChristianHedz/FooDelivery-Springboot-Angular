@@ -1,16 +1,14 @@
 import {Component, inject, signal} from '@angular/core';
 import {Location, TitleCasePipe} from "@angular/common";
-import { UsersTableAdminDashboardComponent } from "../usuarios/components/users-table/users-table.component";
 
 @Component({
   selector: 'productos-admin',
   standalone: true,
   imports: [
     TitleCasePipe,
-    UsersTableAdminDashboardComponent
   ],
   templateUrl: './productos.component.html',
-  styles: ``
+  styleUrl: `./productos.component.css`
 })
 export default class ProductosComponent {
   location = inject(Location);
