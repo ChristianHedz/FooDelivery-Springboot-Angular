@@ -35,6 +35,8 @@ public class SecurityConfiguration {
                 .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
               .requestMatchers(HttpMethod.GET, "/users/me/**")
                 .hasAuthority(Role.ADMIN.name())
+              .requestMatchers(HttpMethod.PUT, "/users/me/**")
+                .hasAuthority(Role.ADMIN.name())
               .requestMatchers(HttpMethod.POST, "/users/auth")
                 .permitAll()
               .requestMatchers(HttpMethod.DELETE, "/users/**")
