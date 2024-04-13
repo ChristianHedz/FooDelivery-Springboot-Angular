@@ -13,7 +13,11 @@ public interface UserMapper {
 
     User toEntity(SignedUserDTO signedUserDTO);
 
+    User toEntity(UserToSignUpGoogleDto userToSignGoogleUpDto);
+
     SignedUserDTO userToSignedUserDTO(User user);
+
+    SignedUserGoogleDto userToSignedUserGoogleDto(User user);
 
     User toEntity(UserToLoginDto userToLoginDto);
 
