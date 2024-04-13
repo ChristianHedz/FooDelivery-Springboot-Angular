@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './ordenes.component.html',
-  styles: ``
+  styleUrl: `./ordenes.component.css`
 })
 export default class OrdenesComponent {
 

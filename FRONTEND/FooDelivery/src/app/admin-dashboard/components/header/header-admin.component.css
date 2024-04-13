@@ -1,33 +1,51 @@
-/*
- * Navbar
- */
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
 
-.navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+::ng-deep .p-menubar {
+  position: relative;
+  height: 3.5rem;
+  background-color: var(--primary-900);
+  margin: .2rem;
 }
 
-.navbar .navbar-toggler {
-  top: .25rem;
-  right: 1rem;
+.p-menubar-button {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  transform: translateX(-50%) translateY(-135%);
+  color: #6b7280;
+  background: #f3f4f6;
 }
 
-.navbar .form-control {
-  padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
+::ng-deep .p-menuitem-link {
+  text-decoration: none;
 }
 
-.form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
-}
 
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+@media screen and (min-width: 961px) {
+
+  ::ng-deep .admin .p-menubar .header__img {
+    display: none !important;
+  }
+
+  ::ng-deep .p-menubar-root-list>li:last-child .p-submenu-list {
+    right: 0;
+  }
+
+  ::ng-deep .p-menubar .p-menubar-root-list {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    transform: translateX(-3%) translateY(-110%);
+  }
+
+  ::ng-deep .p-menuitem-content {
+    background: white;
+  }
+
+  ::ng-deep .p-menuitem-content:hover {
+    background: #f3f4f6;
+  }
 }

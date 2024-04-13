@@ -5,6 +5,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
+import { MessageService, ConfirmationService } from 'primeng/api';
+import {ToastModule} from "primeng/toast";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +14,9 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     BrowserAnimationsModule,
-    provideAnimations()
-
+    provideAnimations(),
+    MessageService,
+    ConfirmationService,
+    ToastModule
   ]
 };
