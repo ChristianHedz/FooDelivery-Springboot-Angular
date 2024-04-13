@@ -1,4 +1,4 @@
-<header [ngClass]="{ admin: true }">
-  <p-menubar [model]="items">
+<header [ngClass]="{ admin: isAdmin }">
+  <p-menubar [model]="isAdmin ? menus() : []">
   </p-menubar>
 </header>

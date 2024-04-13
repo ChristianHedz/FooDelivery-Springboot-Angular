@@ -42,8 +42,9 @@ export class SidebarComponent {
     .filter(route => !route.path?.includes(':')) // Filtra las rutas que tengan parámetros
     .filter(route => !route.path?.includes('/')) // Filtra las rutas que tengan subrutas
     .map(route => ({
-        title: route.title,
-        path: route.path
-      }));
+      label: route.path.split('')[0].toUpperCase() + route.path.slice(1),
+      routerLink: route.path,
+      icon: `${route.title}`
+    }));
 
 }

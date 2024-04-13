@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
 import {TitleComponent} from "../../../shared/title/title.component";
 import {AuthService} from "../../../services/auth.service";
 import {Router} from "@angular/router";
@@ -6,8 +6,10 @@ import {NgClass, NgOptimizedImage} from "@angular/common";
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
 import {UserService} from "../../pages/usuarios/services/user.service";
-import {RippleModule} from "primeng/ripple";
 import {StyleClassModule} from "primeng/styleclass";
+import adminRoutes from "../../admin.routes";
+import {IUser, IUserAuth} from "../../../core/interfaces/user/User.interface";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'header-admin',
@@ -29,28 +31,66 @@ export class HeaderAdminComponent implements OnInit {
   private userService = inject(UserService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private breakpointObserver = inject(BreakpointObserver);
+
+  private userAuth = computed<IUserAuth>(
+    () => this.userService.getUserFromStorage()
+  );
+
+  private user = signal<IUser | undefined>(undefined);
+
+  isAdmin: boolean = false;
+
+  // Obtén los children de adminRoutes y extrae sus títulos
+  public menuItems = adminRoutes
+    .filter(route => route && route.path) // Filtra las rutas que no tengan path: path: ''
+    .filter(route => !route.path?.includes(':')) // Filtra las rutas que tengan parámetros
+    .filter(route => !route.path?.includes('/')) // Filtra las rutas que tengan subrutas
+    .map(route => ({
+      label: route.path.split('')[0].toUpperCase() + route.path.slice(1),
+      routerLink: route.path,
+      icon: `pi ${route.title}`
+    }));
+
+  private items = signal<MenuItem[]>([
+    {
+      label: 'ADMINISTRACIÓN',
+      icon: 'pi pi-fw pi-chevron-down',
+      items: [...this.menuItems],
+    },
+    {
+      label: this.user()?.fullName,
+      icon: 'pi pi-fw pi-user',
+      items: [
+        {
+          label: 'Cerrar Sesión',
+          icon: 'pi pi-power-off',
+          command: () => this.logout(),
+        },
+      ],
+    },
+  ]);
+
+  private isMobile = this.breakpointObserver.observe(Breakpoints.Handset);
+  menus = signal(this.isMobile ? this.items() : [this.items()[1]]);
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: this.user(),
-        icon: 'pi pi-fw pi-user',
-        items: [
-          {
-            label: 'Cerrar Sesión',
-            icon: 'pi pi-power-off',
-            command: () => this.logout(),
-          },
-        ],
-      },
-    ];
+    this.userService.getUserByToken().subscribe(
+      user => this.user.set(user)
+    )
+
+    this.isMobile.subscribe(result => {
+      this.updateMenu(result.matches);
+    });
+
+    this.isAdmin = this.user()?.role === 'ADMIN';
   };
 
-  items: MenuItem[] | undefined;
+  private updateMenu(isMobile: boolean): void {
+    const [, userMenu] = this.items();
+    this.menus.set( isMobile && this.isAdmin ? this.items() : [userMenu]);
+  }
 
-  private user = computed<string>(
-    () => this.userService.getUserFromStorage().fullName
-  );
 
   logout(): void {
     this.authService.removeToken();
