@@ -26,18 +26,43 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+
           .csrf(AbstractHttpConfigurer::disable)
           .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .authorizeHttpRequests(authorizeRequests ->
             authorizeRequests
               .requestMatchers(HttpMethod.GET, "/users/me")
                 .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+              .requestMatchers(HttpMethod.GET, "/users/me/**")
+                .hasAuthority(Role.ADMIN.name())
+              .requestMatchers(HttpMethod.PUT, "/users/me/**")
+                .hasAuthority(Role.ADMIN.name())
               .requestMatchers(HttpMethod.POST, "/users/auth")
                 .permitAll()
+              .requestMatchers(HttpMethod.DELETE, "/users/**")
+                .hasAuthority(Role.ADMIN.name())
+              .requestMatchers(HttpMethod.GET, "/users")
+                .hasAuthority(Role.ADMIN.name())
               .requestMatchers(HttpMethod.POST, "/users")
                 .permitAll()
               .requestMatchers(HttpMethod.POST, "/users/authGoogle")
-                .permitAll()
+                .permitAll()                                 
+               .requestMatchers(HttpMethod.POST, "/products")
+                .hasAuthority(Role.ADMIN.name())
+               .requestMatchers(HttpMethod.GET, "/products")
+                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+               .requestMatchers(HttpMethod.PUT, "/products")
+                .hasAuthority(Role.ADMIN.name())
+               .requestMatchers(HttpMethod.DELETE, "/products")
+                .hasAuthority(Role.ADMIN.name())
+               .requestMatchers(HttpMethod.POST, "/categories")
+                .hasAuthority(Role.ADMIN.name())
+               .requestMatchers(HttpMethod.GET, "/categories")
+                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+               .requestMatchers(HttpMethod.PUT, "/categories")
+                .hasAuthority(Role.ADMIN.name())
+               .requestMatchers(HttpMethod.DELETE, "/categories")
+                .hasAuthority(Role.ADMIN.name())                                 
               .requestMatchers(HttpMethod.POST, "/api/payments")
                 .permitAll()
               .requestMatchers(HttpMethod.GET, "/api/payments/success")
@@ -53,6 +78,7 @@ public class SecurityConfiguration {
             )
           .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
+
     }
 
     @Bean

@@ -16,6 +16,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -217,5 +219,34 @@ public class UserService {
         signedUserGoogleDto.setToken(token);
 
         return signedUserGoogleDto;
+    }
+
+    public Page<SignedUserDTO> getAllUsersByAdmin(Pageable pageable) {
+        return userRepository.findAllByActiveTrue(pageable).map(userMapper::userToSignedUserDTO);
+    }
+
+    public void deleteByAdmin(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        user.setActive(false);
+    }
+
+    public SignedUserDTO getUserByAdmin(Long id) {
+        User user = userRepository.findById(id)
+          .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        return userMapper.userToSignedUserDTO(user);
+    }
+
+    public SignedUserDTO updateByAdmin(UserToUpdateDto userToUpdateDto, Long id) {
+        User user = userRepository.findById(id)
+          .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        if (userToUpdateDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToUpdateDto.alias()))
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
+
+        return userMapper.userToSignedUserDTO(user.update(userToUpdateDto));
     }
 }
