@@ -197,8 +197,6 @@ public class UserService {
         final GoogleIdToken.Payload payload = googleIdToken.getPayload();
 
         UserToSignUpGoogleDto userGoogle =  new UserToSignUpGoogleDto(
-                (String) payload.get("given_name"),
-                (String) payload.get("family_name"),
                 (String) payload.get("name"),
                 payload.getEmail(),
                 Role.CUSTOMER,

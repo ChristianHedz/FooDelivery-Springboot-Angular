@@ -6,9 +6,7 @@ import lombok.Data;
 public class SignedUserGoogleDto{
     private boolean isError;
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String alias;
+    private String fullName;
     private String email;
     private String role;
     private String token;
