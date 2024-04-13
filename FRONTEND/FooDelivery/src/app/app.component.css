@@ -1,0 +1,148 @@
+.flex-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 3em;
+}
+
+.navigation {
+  gap: 2em;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: #808080;
+}
+.nav-link:focus {
+  color: #d02500;
+}
+
+.inicio-sesion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px #ffae00;
+  padding: 12px 16px;
+  font-weight: bold;
+  color: #ffb800;
+  svg {
+    width: 30px;
+    height: 25px;
+  }
+}
+.cerrar-sesion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 4px #ffae00;
+  padding: 12px 16px;
+  font-weight: bold;
+  color: #ffb800;
+  svg {
+    width: 30px;
+    height: 25px;
+  }
+}
+
+.footer {
+  background-color: black;
+  padding: 50px 0;
+}
+
+.footer h4 {
+  color: white;
+}
+
+.footer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 10px;
+}
+
+.footer ul li a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.footer ul li a:hover {
+  color: #007bff;
+}
+
+.follow-text {
+  color: gray;
+}
+
+.btn-orange {
+  background-color: orange;
+  color: #fff;
+  border: none;
+}
+
+.btn-orange:hover {
+  background-color: darkorange;
+}
+.email-icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.form-control {
+  background-image: url('data:image/svg+xml;utf8,<svg width="23" height="17" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.9346 5.92974C22.1031 5.80339 22.3558 5.92974 22.3558 6.14032V14.7323C22.3558 15.8694 21.4292 16.7539 20.3341 16.7539H2.81329C1.67612 16.7539 0.791656 15.8694 0.791656 14.7323V6.14032C0.791656 5.92974 1.00224 5.80339 1.17071 5.92974C2.13941 6.68785 3.36082 7.61443 7.65679 10.7311C8.54126 11.3629 10.0575 12.7528 11.5737 12.7528C13.0478 12.7528 14.6062 11.3629 15.4485 10.7311C19.7445 7.61443 20.9659 6.68785 21.9346 5.92974ZM11.5737 11.3629C10.5629 11.405 9.17302 10.1415 8.45702 9.63607C2.85541 5.5928 2.43423 5.21374 1.17071 4.20292C0.918009 4.03446 0.791656 3.73963 0.791656 3.40269V2.60246C0.791656 1.50741 1.67612 0.58083 2.81329 0.58083H20.3341C21.4292 0.58083 22.3558 1.50741 22.3558 2.60246V3.40269C22.3558 3.73963 22.1873 4.03446 21.9346 4.20292C20.6711 5.21374 20.2499 5.5928 14.6483 9.63607C13.9323 10.1415 12.5424 11.405 11.5737 11.3629Z" fill="#ADADAD"/></svg>');
+  background-position: left 10px center;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+}
+.footer label {
+  color: white;
+  padding-bottom: 10px;
+}
+.follow-text {
+  color: #777777;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons svg {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.social-icons svg:hover {
+  opacity: 0.7;
+}
+
+.input-group {
+  color: #adadad;
+  border-radius: 10px;
+
+  span,
+  input {
+    background-color: #424242;
+    border: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  input {
+    margin-right: 10px;
+  }
+  input::placeholder {
+    color: #adadad;
+  }
+}
+
