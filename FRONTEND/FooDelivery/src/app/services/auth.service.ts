@@ -22,6 +22,7 @@ export class AuthService {
       tap(response => {
         console.log('Inicio de sesión exitoso');
         this.setToken(response.token);
+        this.setUser(response);
 
         this.getUserProfile().subscribe(
           user => {
@@ -68,6 +69,14 @@ export class AuthService {
     }
   }
 
+  setUser(user: any): void {
+    const storage = this.getStorage();
+    if (storage) {
+      storage.setItem('user', JSON.stringify(user));
+      this.isLoggedInSubject.next(true);
+    }
+  }
+
   getToken(): string | null {
     const storage = this.getStorage();
     if (storage) {
@@ -80,6 +89,7 @@ export class AuthService {
     const storage = this.getStorage();
     if (storage) {
       storage.removeItem(this.tokenKey);
+      storage.removeItem('user');
       this.isLoggedInSubject.next(false);
     }
   }
