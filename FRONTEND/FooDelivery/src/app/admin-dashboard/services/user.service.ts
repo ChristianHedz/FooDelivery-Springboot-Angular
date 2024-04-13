@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {catchError, map, Observable, throwError} from "rxjs";
-import { UserApiService } from "../../../../core/api/user-api.service";
-import {IUser, UserDTO, UserToUpdate} from "../../../../core/interfaces/user/User.interface";
+import { UserApiService } from "../../core/api/user-api.service";
+import {IUser, UserDTO, UserToUpdate} from "../../core/interfaces/user/User.interface";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";

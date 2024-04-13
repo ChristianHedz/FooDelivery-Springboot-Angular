@@ -7,7 +7,7 @@ import {AvatarModule} from "primeng/avatar";
 import {RippleModule} from "primeng/ripple";
 import {StyleClassModule} from "primeng/styleclass";
 import adminRoutes from "../../admin.routes";
-import {UserService} from "../../pages/usuarios/services/user.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'sidebar-admin',

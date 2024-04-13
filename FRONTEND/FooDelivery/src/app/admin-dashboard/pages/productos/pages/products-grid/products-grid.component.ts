@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, ViewEncapsulation} from '@angular/core';
 import {JsonPipe, TitleCasePipe} from "@angular/common";
-import {UserService} from "../../../../services/user.service";
+import { ProductService } from "../../../../services/product.service";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {RouterLink} from "@angular/router";
@@ -12,7 +12,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'products-grid-admin',
   standalone: true,
   imports: [
     TitleCasePipe,
@@ -27,16 +27,16 @@ import {ToastModule} from "primeng/toast";
     ConfirmDialogModule,
     ToastModule
   ],
-  templateUrl: './users-grid.component.html',
-  styleUrl: './users-grid.component.css',
+  templateUrl: './products-grid.component.html',
+  styleUrl: './products-grid.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export default class UsersGridComponent {
-  userService = inject(UserService);
+export default class ProductsGridComponent {
+  productService = inject(ProductService);
 
   messageNotData = [
-    { severity: 'info', summary: 'No hay usuarios que mostrar', detail: '' },
+    { severity: 'info', summary: 'No hay productos que mostrar', detail: '' },
   ];
 
 

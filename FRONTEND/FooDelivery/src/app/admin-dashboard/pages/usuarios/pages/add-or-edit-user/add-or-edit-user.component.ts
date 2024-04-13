@@ -7,7 +7,7 @@ import {DividerModule} from "primeng/divider";
 import {CalendarModule} from "primeng/calendar";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ToggleButtonModule} from "primeng/togglebutton";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IFormUser, IUser, UserDTO, UserToUpdate} from "../../../../../core/interfaces/user/User.interface";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
