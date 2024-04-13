@@ -16,6 +16,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     BrowserAnimationsModule,
     provideAnimations(),
+    MessageService,
+    ConfirmationService,
+    ToastModule,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
