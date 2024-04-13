@@ -1,8 +1,6 @@
-import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
-import {UsersTableAdminDashboardComponent} from "../../components/users-table/users-table.component";
+import {ChangeDetectionStrategy, Component, inject, ViewEncapsulation} from '@angular/core';
 import {JsonPipe, TitleCasePipe} from "@angular/common";
 import {UserService} from "../../services/user.service";
-import {DashboardTableType} from "../../../../interfaces/dashboard-table.enum";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {RouterLink} from "@angular/router";
@@ -17,7 +15,6 @@ import {ToastModule} from "primeng/toast";
   selector: 'app-usuarios',
   standalone: true,
   imports: [
-    UsersTableAdminDashboardComponent,
     TitleCasePipe,
     JsonPipe,
     ButtonModule,

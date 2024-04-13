@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
-import {NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators} from "@angular/forms";
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
@@ -151,10 +151,14 @@ export default class AddOrEditUserComponent implements OnInit {
       active: this.userForm.controls['active']?.value,
     };
 
-    let bodyUserToUpdate: UserToUpdate | undefined = undefined;
+    let bodyUserToUpdate: UserToUpdate = { id: 0, fullName: '', alias: '' };
 
-    if (this.userId) {
-      bodyUserToUpdate = { fullName: user.fullName, alias: user.alias ? user.alias : '', id: Number(this.userId) };
+    if ( this.userId ) {
+      bodyUserToUpdate = { fullName: user.fullName, id: Number(this.userId) };
+
+      if ( !!user.alias && !this.userForm.controls['alias']?.pristine )
+        bodyUserToUpdate.alias = user.alias;
+
     }
 
     this.userId ? this.updateUSer(bodyUserToUpdate) : this.addUser(user);
@@ -167,7 +171,7 @@ export default class AddOrEditUserComponent implements OnInit {
       .subscribe();
   }
 
-  updateUSer( user: UserToUpdate | undefined) {
+  updateUSer( user: UserToUpdate ) {
     this.userService
       .updateUserByAdmin(user)
       .pipe(takeUntilDestroyed(this.destroyRef))

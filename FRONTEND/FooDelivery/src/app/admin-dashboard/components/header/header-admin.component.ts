@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
-import {TitleComponent} from "../../../shared/title/title.component";
 import {AuthService} from "../../../services/auth.service";
 import {Router} from "@angular/router";
 import {NgClass, NgOptimizedImage} from "@angular/common";
@@ -15,7 +14,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   selector: 'header-admin',
   standalone: true,
   imports: [
-    TitleComponent,
     NgClass,
     MenubarModule,
     NgOptimizedImage,

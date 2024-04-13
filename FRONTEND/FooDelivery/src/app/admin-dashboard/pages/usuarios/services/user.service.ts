@@ -1,5 +1,5 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {catchError, EMPTY, map, Observable, switchMap, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import { UserApiService } from "../../../../core/api/user-api.service";
 import {IUser, UserDTO, UserToUpdate} from "../../../../core/interfaces/user/User.interface";
 import {tap} from "rxjs/operators";
@@ -34,6 +34,12 @@ export class UserService {
             this.users.set(response.content);
           },
           error: (error) => {
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: 'Error al obtener lista de usuarios',
+              detail: error,
+            });
             return error;
           },
         }
@@ -143,7 +149,7 @@ export class UserService {
     );
   }
 
-  updateUserByAdmin( user: UserToUpdate | undefined) {
+  updateUserByAdmin( user: UserToUpdate ) {
     return this.userApi.updateUserByAdmin(user).pipe(
       tap((response) => this.showMessage("Usuario actualizado exitosamente")),
       tap( () => this.getAllUsers()),

@@ -11,6 +11,14 @@ export interface IUser {
   active?:   boolean;
 }
 
+export interface IUserAuth {
+  isError:  boolean;
+  id:       number;
+  fullName: string;
+  email:    string;
+  token:    string;
+}
+
 export interface UserDTO {
   id?:       number;
   fullName: string;
@@ -64,6 +72,6 @@ export interface Sort {
 
 export type UserToUpdate = {
   fullName: string;
-  alias: string;
+  alias?: string;
   id: number;
 }

@@ -38,8 +38,10 @@ export class UserApiService {
     });
   }
 
-  updateUserByAdmin(user: UserToUpdate | undefined): Observable<IUser> {
-    return this.http.put<IUser>(`${this.url}/users/me${ user!.id }`, {fullName: user?.fullName, alias: user?.alias}, {
+  updateUserByAdmin(user: UserToUpdate ): Observable<IUser> {
+    const { id, ...body } = user;
+
+    return this.http.put<IUser>(`${this.url}/users/me/${ user.id }`, body, {
       headers: this.authService.addTokenToHeaders()
     });
   }
