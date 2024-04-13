@@ -9,7 +9,7 @@ export default [
   {
     path: 'promociones',
     title: 'pi-gift',
-    loadComponent: () => import('./pages/promociones/promociones.component'),
+    loadComponent: () => import('./pages/promociones/pages/promotions-grid/promotions-grid.component'),
   },
   {
     path: 'ordenes',

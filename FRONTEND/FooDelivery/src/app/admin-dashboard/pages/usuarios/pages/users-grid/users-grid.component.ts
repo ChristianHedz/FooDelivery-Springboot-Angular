@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, ViewEncapsulation} from '@angular/core';
 import {JsonPipe, TitleCasePipe} from "@angular/common";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../../services/user.service";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {RouterLink} from "@angular/router";

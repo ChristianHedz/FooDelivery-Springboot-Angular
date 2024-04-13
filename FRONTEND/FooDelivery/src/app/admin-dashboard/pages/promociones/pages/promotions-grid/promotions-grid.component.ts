@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, ViewEncapsulation} from '@angular/core';
 import {JsonPipe, TitleCasePipe} from "@angular/common";
-import { ProductService } from "../../../../services/product.service";
+import { PromotionService } from "../../../../services/promotion.service";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {RouterLink} from "@angular/router";
@@ -12,7 +12,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 
 @Component({
-  selector: 'products-grid-admin',
+  selector: 'promotions-grid-admin',
   standalone: true,
   imports: [
     TitleCasePipe,
@@ -27,16 +27,16 @@ import {ToastModule} from "primeng/toast";
     ConfirmDialogModule,
     ToastModule
   ],
-  templateUrl: './products-grid.component.html',
-  styleUrl: './products-grid.component.css',
+  templateUrl: './promotions-grid.component.html',
+  styleUrl: './promotions-grid.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export default class ProductsGridComponent {
-  productService = inject(ProductService);
+export default class PromotionsGridComponent {
+  promotionService = inject(PromotionService);
 
   messageNotData = [
-    { severity: 'info', summary: 'No hay productos que mostrar', detail: '' },
+    { severity: 'info', summary: 'No hay promociones que mostrar', detail: '' },
   ];
 
 

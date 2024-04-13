@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, ViewEncapsulation} from '@angular/core';
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../../../services/user.service";
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {IUser} from "../../../../../core/interfaces/user/User.interface";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";

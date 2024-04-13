@@ -1,10 +1,10 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {catchError, map, Observable, throwError} from "rxjs";
-import { ProductApiService } from "../../../../core/api/product-api.service";
+import { ProductApiService } from "../../core/api/product-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IProductReq} from "../../../interfaces/product.interface";
+import {IProductReq} from "../interfaces/product.interface";
 
 interface State {
   products: any[],
