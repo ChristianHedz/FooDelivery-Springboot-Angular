@@ -63,6 +63,8 @@ public class SecurityConfiguration {
                 .hasAuthority(Role.ADMIN.name())
                .requestMatchers(HttpMethod.DELETE, "/categories")
                 .hasAuthority(Role.ADMIN.name())                                 
+              .requestMatchers(HttpMethod.POST, "/orders")
+                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name())
               .requestMatchers(HttpMethod.POST, "/api/payments")
                 .permitAll()
               .requestMatchers(HttpMethod.GET, "/api/payments/success")
@@ -78,7 +80,6 @@ public class SecurityConfiguration {
             )
           .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
-
     }
 
     @Bean
