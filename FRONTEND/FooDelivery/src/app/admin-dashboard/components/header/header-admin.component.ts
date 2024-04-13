@@ -37,7 +37,7 @@ export class HeaderAdminComponent implements OnInit {
 
   private user = signal<IUser | undefined>(undefined);
 
-  isAdmin: boolean = false;
+  isAdmin = signal<boolean>(false);
 
   // Obtén los children de adminRoutes y extrae sus títulos
   public menuItems = adminRoutes
@@ -81,12 +81,12 @@ export class HeaderAdminComponent implements OnInit {
       this.updateMenu(result.matches);
     });
 
-    this.isAdmin = this.user()?.role === 'ADMIN';
+    this.isAdmin.set(this.user()?.role === 'ADMIN');
   };
 
   private updateMenu(isMobile: boolean): void {
     const [, userMenu] = this.items();
-    this.menus.set( isMobile && this.isAdmin ? this.items() : [userMenu]);
+    this.menus.set( isMobile && this.isAdmin() ? this.items() : [userMenu]);
   }
 
 
