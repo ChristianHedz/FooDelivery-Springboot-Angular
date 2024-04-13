@@ -13,7 +13,7 @@ import {ButtonModule} from "primeng/button";
 import {BadgeModule} from "primeng/badge";
 import {Router, RouterLink} from "@angular/router";
 import {MenuModule} from "primeng/menu";
-import {UserService} from "../../admin-dashboard/pages/usuarios/services/user.service";
+import {UserService} from "../../admin-dashboard/services/user.service";
 import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
 import {RippleModule} from "primeng/ripple";
 import {MenubarModule} from "primeng/menubar";
