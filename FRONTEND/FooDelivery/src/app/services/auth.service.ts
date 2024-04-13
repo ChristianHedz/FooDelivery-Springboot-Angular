@@ -4,6 +4,7 @@ import {Observable, BehaviorSubject, of, map, switchMap, catchError} from 'rxjs'
 import { User } from '../services/user';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { socialUser } from './socialUser';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthService {
       tap(response => {
         console.log('Inicio de sesión exitoso');
         this.setToken(response.token);
+        this.setUser(response);
 
         this.getUserProfile().subscribe(
           user => {
@@ -40,10 +42,21 @@ export class AuthService {
       })
     );
   }
+
+  googleLogin(token: string):Observable<socialUser> {
+    console.log('se recibio el token: ' + {token});
+    return this.http.post<socialUser>(this.baseUrl + '/users/authGoogle',{token}).pipe(
+      tap((userResp: socialUser) => {
+        console.log({userResp});
+      }),
+    )
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.isLoggedInSubject.next(false);
   }
+  
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
@@ -52,6 +65,14 @@ export class AuthService {
     const storage = this.getStorage();
     if (storage) {
       storage.setItem(this.tokenKey, token);
+      this.isLoggedInSubject.next(true);
+    }
+  }
+
+  setUser(user: any): void {
+    const storage = this.getStorage();
+    if (storage) {
+      storage.setItem('user', JSON.stringify(user));
       this.isLoggedInSubject.next(true);
     }
   }
@@ -68,6 +89,7 @@ export class AuthService {
     const storage = this.getStorage();
     if (storage) {
       storage.removeItem(this.tokenKey);
+      storage.removeItem('user');
       this.isLoggedInSubject.next(false);
     }
   }

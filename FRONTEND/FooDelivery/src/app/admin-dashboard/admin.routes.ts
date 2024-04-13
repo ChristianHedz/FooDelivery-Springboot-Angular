@@ -2,26 +2,41 @@ import { Route } from '@angular/router';
 
 export default [
   {
-    path: 'usuarios',
-    loadComponent: () => import('./pages/usuarios/usuarios.component'),
-  },
-  {
-    path: 'ordenes',
-    loadComponent: () => import('./pages/ordenes/ordenes.component'),
-  },
-  {
     path: 'productos',
+    title: 'pi-truck',
     loadComponent: () => import('./pages/productos/productos.component'),
-    // providers: [LotteryService],
   },
   {
     path: 'promociones',
-    loadComponent: () =>
-      import('./pages/promociones/promociones.component'),
+    title: 'pi-gift',
+    loadComponent: () => import('./pages/promociones/promociones.component'),
+  },
+  {
+    path: 'usuarios',
+    title: 'pi-user',
+    loadComponent: () => import('./pages/usuarios/pages/users-grid/users-grid.component'),
+  },
+  {
+    path: 'usuario/agregar',
+    loadComponent: () => import('./pages/usuarios/pages/add-or-edit-user/add-or-edit-user.component'),
+    pathMatch: 'full',
+  },
+  {
+    path: 'usuario/:id/editar',
+    loadComponent: () => import('./pages/usuarios/pages/add-or-edit-user/add-or-edit-user.component'),
+  },
+  {
+    path: 'usuario/:id',
+    loadComponent: () => import('./pages/usuarios/pages/user-detail/user-detail.component'),
+  },
+  {
+    path: 'ordenes',
+    title: 'pi-shopping-cart',
+    loadComponent: () => import('./pages/ordenes/ordenes.component'),
   },
   {
     path: '',
-    redirectTo: 'usuarios',
+    redirectTo: 'productos',
     pathMatch: 'full',
   },
 ] satisfies Route[];
