@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {NgClass, NgOptimizedImage} from "@angular/common";
 import {MenubarModule} from "primeng/menubar";
 import {MenuItem} from "primeng/api";
-import {UserService} from "../../pages/usuarios/services/user.service";
+import {UserService} from "../../services/user.service";
 import {StyleClassModule} from "primeng/styleclass";
 import adminRoutes from "../../admin.routes";
 import {IUser, IUserAuth} from "../../../core/interfaces/user/User.interface";

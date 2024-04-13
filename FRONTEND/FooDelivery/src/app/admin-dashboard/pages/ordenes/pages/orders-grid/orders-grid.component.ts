@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, ViewEncapsulation} from '@angular/core';
 import {JsonPipe, TitleCasePipe} from "@angular/common";
-import {UserService} from "../../../../services/user.service";
+import { OrderService } from "../../../../services/order.service";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {RouterLink} from "@angular/router";
@@ -12,7 +12,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'orders-grid-admin',
   standalone: true,
   imports: [
     TitleCasePipe,
@@ -27,16 +27,16 @@ import {ToastModule} from "primeng/toast";
     ConfirmDialogModule,
     ToastModule
   ],
-  templateUrl: './users-grid.component.html',
-  styleUrl: './users-grid.component.css',
+  templateUrl: './orders-grid.component.html',
+  styleUrl: './orders-grid.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export default class UsersGridComponent {
-  userService = inject(UserService);
+export default class OrdersGridComponent {
+  orderService = inject(OrderService);
 
   messageNotData = [
-    { severity: 'info', summary: 'No hay usuarios que mostrar', detail: '' },
+    { severity: 'info', summary: 'No hay ordenes que mostrar', detail: '' },
   ];
 
 
