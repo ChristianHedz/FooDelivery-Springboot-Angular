@@ -172,13 +172,27 @@ public class UserController {
 
     } 
 
-    @PostMapping("/authGoogle")
-    public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
-        SignedUserGoogleDto userGoogleDto = userService.loginGoogle(tokenDto);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userGoogleDto);
-    }
+@Operation(
+  summary = "User Google Login section.",
+  description = "Let a user login with their Google account. Return a token"
+)
+@ApiResponses(value = {
+  @ApiResponse(
+    responseCode = "200", description = "User logged successfully",
+    content = {
+      @Content(mediaType = "application/json",
+        schema = @Schema(implementation = SignedUserGoogleDto.class))
+    }),
+  @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+})
+@SecurityRequirements()
+@PostMapping("/authGoogle")
+public ResponseEntity<SignedUserGoogleDto> loginGoogle(@RequestBody TokenDto tokenDto) throws IOException {
+    SignedUserGoogleDto userGoogleDto = userService.loginGoogle(tokenDto);
+    return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userGoogleDto);
+}
 
     @Operation(
       summary = "Get all users.",
