@@ -46,6 +46,7 @@ public class PaypalService {
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl(cancelUrl);
         redirectUrls.setReturnUrl(successUrl);
+        payment.setRedirectUrls(redirectUrls);
 
         return payment.create(apiContext);
     }

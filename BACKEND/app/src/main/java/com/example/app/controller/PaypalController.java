@@ -3,54 +3,57 @@ package com.example.app.controller;
 import com.example.app.dto.user.DataPayment;
 import com.example.app.dto.user.URLPaypalResponse;
 import com.example.app.service.PaypalService;
-import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("/api/payments")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PaypalController {
 
-    private PaypalService paypalService;
-    private static final String PAYPAL_SUCCESS_URL = "http://localhost:8080/api/payments/success";
-    private static final String PAYPAL_CANCEL_URL = "http://localhost:8080/api/payments/cancel";
-    private static final String HOME_ROUTE = "http://localhost:4200";
+    private final PaypalService paypalService;
+    @Value("${paypal.successUrl}")
+    private String PAYPAL_SUCCESS_URL;
+    @Value("${paypal.cancelUrl}")
+    private String PAYPAL_CANCEL_URL;
+    @Value("${paypal.homeUrl}")
+    private String HOME_URL;
 
     @PostMapping
-    public URLPaypalResponse createPayment(@RequestBody DataPayment dataPayment) throws PayPalRESTException {
-        Payment payment = paypalService.createPayment(
-                Double.parseDouble(dataPayment.amount()),
-                dataPayment.currency(),
-                dataPayment.method(),
-                "SALE",
-                dataPayment.description(),
-                PAYPAL_CANCEL_URL,
-                PAYPAL_SUCCESS_URL
-        );
-        return new URLPaypalResponse(payment.getLinks().stream()
-                .filter(link -> link.getRel().equals("approval_url"))
-                .map(Links::getHref)
+    public URLPaypalResponse createPayment(@RequestBody DataPayment dataPayment) throws PayPalRESTException{
+            Payment payment = paypalService.createPayment(
+                    Double.valueOf(dataPayment.amount()),
+                    dataPayment.currency(),
+                    dataPayment.method(),
+                    "sale",
+                    dataPayment.description(),
+                    PAYPAL_CANCEL_URL,
+                    PAYPAL_SUCCESS_URL
+            );
+            return payment.getLinks().stream()
+                .filter(links -> "approval_url".equals(links.getRel()))
                 .findFirst()
-                .orElse(HOME_ROUTE)
-        );
+                .map(links -> new URLPaypalResponse(links.getHref()))
+                .orElse(new URLPaypalResponse(HOME_URL));
     }
 
     @GetMapping("/success")
-    public RedirectView successPay(@RequestParam String paymentId, @RequestParam String payerId) throws PayPalRESTException {
-        Payment payment = paypalService.executePayment(paymentId, payerId);
-        if (payment.getState().equals("approved")) {
-            return new RedirectView(HOME_ROUTE + "/api/payment/success");
-        }
-        return new RedirectView(HOME_ROUTE);
+    public RedirectView paymentSuccess(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId)
+            throws PayPalRESTException{
+            Payment payment = paypalService.executePayment(paymentId, payerId);
+            if (payment.getState().equals("approved")){
+                return new RedirectView(HOME_URL + "/purchase");
+            }
+        return new RedirectView(HOME_URL);
     }
 
     @GetMapping("/cancel")
     public RedirectView cancelPay() {
-        return new RedirectView(HOME_ROUTE);
+        return new RedirectView(HOME_URL);
     }
 
 
