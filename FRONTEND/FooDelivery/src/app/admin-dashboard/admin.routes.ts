@@ -12,6 +12,10 @@ export default [
     pathMatch: 'full',
   },
   {
+    path: 'producto/:id',
+    loadComponent: () => import('./pages/productos/pages/product-detail/product-detail.component'),
+  },
+  {
     path: 'promociones',
     title: 'pi-gift',
     loadComponent: () => import('./pages/promociones/pages/promotions-grid/promotions-grid.component'),

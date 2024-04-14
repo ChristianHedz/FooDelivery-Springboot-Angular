@@ -119,13 +119,13 @@ export default class AddOrEditProductComponent implements OnInit {
 
   }
 
-  fillFormData(product: IFormProduct) {
+  fillFormData(product: IProductDTO) {
     this.productForm.patchValue({
-      name: product.name.value,
-      img: product.img.value,
-      description: product.description.value,
-      price: product.price.value,
-      category: product.category.value
+      name: product.name,
+      img: product.img,
+      description: product.description,
+      price: product.price,
+      category: product.category?.name
     });
   }
 

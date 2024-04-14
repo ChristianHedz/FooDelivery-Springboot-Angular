@@ -125,7 +125,7 @@ export class ProductService {
     );
   };
 
-  getProductByAdmin(id: number): Observable<IFormProduct> {
+  getProductByAdmin(id: number): Observable<IProductDTO> {
     return this.productApiService
       .getProductByAdmin(id)
       .pipe(map((response) => response));
