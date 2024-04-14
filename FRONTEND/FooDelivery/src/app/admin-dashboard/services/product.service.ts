@@ -4,7 +4,7 @@ import { ProductApiService } from "../../core/api/product-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IFormProduct, IProductDTO} from "../interfaces/product.interface";
+import {IProductDTO} from "../interfaces/product.interface";
 
 interface State {
   products: any[],
@@ -72,8 +72,8 @@ export class ProductService {
   }
 
   confirmDeleteProduct(id: number | undefined) {
-
     if (id === undefined) return;
+    console.log('id', id);
 
     return this.confirmationService.confirm({
       target: document.body,
@@ -85,7 +85,6 @@ export class ProductService {
       rejectButtonStyleClass: 'p-button-text',
       accept: () => this.deleteProduct(id).subscribe({
         next: (response) => {
-
           this.messageService.add({
             key: 'toast',
             severity: 'success',
@@ -125,7 +124,7 @@ export class ProductService {
     );
   };
 
-  getProductByAdmin(id: number): Observable<IFormProduct> {
+  getProductByAdmin(id: number): Observable<IProductDTO> {
     return this.productApiService
       .getProductByAdmin(id)
       .pipe(map((response) => response));

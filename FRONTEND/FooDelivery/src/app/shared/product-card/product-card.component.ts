@@ -23,6 +23,7 @@ import {CurrencyPipe, NgOptimizedImage} from "@angular/common";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {ImageModule} from "primeng/image";
+import {DividerModule} from "primeng/divider";
 
 @Component({
   selector: 'product-card',
@@ -44,6 +45,7 @@ import {ImageModule} from "primeng/image";
     FormsModule,
     CurrencyPipe,
     ImageModule,
+    DividerModule,
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css',

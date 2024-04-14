@@ -62,6 +62,7 @@
 
 .product-container {
   height: 550px;
+  overflow: hidden;
 }
 
 .img-container {
@@ -75,3 +76,8 @@
   overflow-wrap: break-word;
   overflow-y: auto;
 }
+
+ .container-crud-btns {
+   display: flex;
+   justify-content: flex-end;
+ }
