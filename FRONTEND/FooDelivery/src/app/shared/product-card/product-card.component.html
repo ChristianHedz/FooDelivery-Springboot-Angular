@@ -20,8 +20,10 @@
     <p-button icon="pi pi-shopping-cart" [disabled]="isAdmin"></p-button>
   </div>
 
+  <p-divider></p-divider>
+
   @if(isAdmin) {
-    <div class="my-5">
+    <div class="my-5 container-crud-btns">
       <button
         pButton
         pRipple
@@ -44,6 +46,7 @@
             'editar'
           ]"
       ></button>
+
       <button
         pButton
         pRipple
