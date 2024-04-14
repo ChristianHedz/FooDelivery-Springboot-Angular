@@ -98,7 +98,10 @@ export default class AddOrEditProductComponent implements OnInit {
         .getProductByAdmin(id)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: ( product) => this.fillFormData(product),
+          next: ( product) => {
+            this.imgUrl.set(product.img);
+            return this.fillFormData(product)
+          },
           error: (err) => {
             console.error({...err});
             this.showMessage(`No se pudo obtener datos del producto.`, 'error', 'Ocurrio un error');
@@ -119,13 +122,13 @@ export default class AddOrEditProductComponent implements OnInit {
 
   }
 
-  fillFormData(product: IFormProduct) {
+  fillFormData(product: IProductDTO) {
     this.productForm.patchValue({
-      name: product.name.value,
-      img: product.img.value,
-      description: product.description.value,
-      price: product.price.value,
-      category: product.category.value
+      name: product.name,
+      img: product.img,
+      description: product.description,
+      price: product.price,
+      category: product.category?.name
     });
   }
 
@@ -154,7 +157,7 @@ export default class AddOrEditProductComponent implements OnInit {
 
     if (this.productForm.invalid) return this.productForm.markAllAsTouched();
 
-    const catForm: any = this.productForm.controls['category']?.value === '' ? {code: 2}: this.productForm.controls['category']?.value;
+    const catForm: any = this.productForm.controls['category']?.value === '' ? {code: 2} : this.addCategory(this.productForm.controls['category']?.value);
 
     let product: IProductDTO = {
       name: this.productForm.controls['name'].value,
@@ -202,6 +205,16 @@ export default class AddOrEditProductComponent implements OnInit {
     }
 
     this.imgUrl.set(this.productForm.controls['img'].value);
+  }
+
+  private addCategory(category: string): ICategoryReq {
+    if(typeof category === 'object')
+      return category;
+
+    const cat = this.categories()!.find((cat) => cat.name === category);
+    return {
+      ...cat!
+    };
   }
 
 }
