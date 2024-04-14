@@ -12,7 +12,7 @@
   </section>
   <section class="grid grid-nogutter gap-3 md:gap-2">
       @for (product of productService.products(); track $index) {
-        <div class="col-12 md:col-5 lg:col-3">
+        <div class="col-12 md:col-6 lg:col-5">
           <product-card [product]="product" isAdmin></product-card>
         </div>
       }@empty {

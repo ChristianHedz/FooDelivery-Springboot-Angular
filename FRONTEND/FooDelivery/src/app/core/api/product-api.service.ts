@@ -21,9 +21,9 @@ export class ProductApiService {
   }
 
   updateProductByAdmin(product: IProductDTO ): Observable<any> {
-    const { id, ...body } = product;
+    // const { id, ...body } = product;
 
-    return this.http.put<any>(`${this.url}/products/${ product.id }`, body, {
+    return this.http.put<any>(`${this.url}/products/${ product.id }`, product, {
       headers: this.authService.addTokenToHeaders()
     });
   }
@@ -32,8 +32,8 @@ export class ProductApiService {
     return this.http.delete<void>(`${this.url}/products/${productId}`, { headers: this.authService.addTokenToHeaders() });
   }
 
-  getProductByAdmin(userId: number): Observable<IFormProduct> {
-    return this.http.get<IFormProduct>(`${this.url}/products/${ userId }`, {
+  getProductByAdmin(userId: number): Observable<IProductDTO> {
+    return this.http.get<IProductDTO>(`${this.url}/products/${ userId }`, {
       headers: this.authService.addTokenToHeaders()
     });
   }

@@ -20,9 +20,12 @@
     <p-button icon="pi pi-shopping-cart" [disabled]="isAdmin"></p-button>
   </div>
 
+  <p-divider></p-divider>
+
   @if(isAdmin) {
-    <div class="my-5">
+    <div class="my-5 container-crud-btns">
       <button
+        pTooltip="Detalles del producto"
         pButton
         pRipple
         icon="pi pi-eye"
@@ -34,17 +37,20 @@
       ></button>
 
       <button
+        pTooltip="Editar el producto"
         pButton
         pRipple
         icon="pi pi-file-edit"
         class="mr-2 p-button-rounded p-button-success"
         [routerLink]="[
-            isAdmin ? '/admin/dashboard/producto' : './login',
+            '/admin/dashboard/producto',
             product.id,
             'editar'
           ]"
       ></button>
+
       <button
+        pTooltip="Eliminar producto"
         pButton
         pRipple
         icon="pi pi-trash"
