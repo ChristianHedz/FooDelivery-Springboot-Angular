@@ -21,9 +21,9 @@ export class ProductApiService {
   }
 
   updateProductByAdmin(product: IProductDTO ): Observable<any> {
-    const { id, ...body } = product;
+    // const { id, ...body } = product;
 
-    return this.http.put<any>(`${this.url}/products/${ product.id }`, body, {
+    return this.http.put<any>(`${this.url}/products/${ product.id }`, product, {
       headers: this.authService.addTokenToHeaders()
     });
   }

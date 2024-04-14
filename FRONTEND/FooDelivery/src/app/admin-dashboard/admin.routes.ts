@@ -12,6 +12,10 @@ export default [
     pathMatch: 'full',
   },
   {
+    path: 'producto/:id/editar',
+    loadComponent: () => import('./pages/productos/pages/add-or-edit-product/add-or-edit-product.component'),
+  },
+  {
     path: 'producto/:id',
     loadComponent: () => import('./pages/productos/pages/product-detail/product-detail.component'),
   },
