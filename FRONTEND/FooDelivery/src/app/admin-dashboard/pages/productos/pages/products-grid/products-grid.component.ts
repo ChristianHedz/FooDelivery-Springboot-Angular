@@ -10,6 +10,7 @@ import {UserCardComponent} from "../../../../../shared/user-card/user-card.compo
 import {StyleClassModule} from "primeng/styleclass";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
+import {ProductCardComponent} from "../../../../../shared/product-card/product-card.component";
 
 @Component({
   selector: 'products-grid-admin',
@@ -25,7 +26,8 @@ import {ToastModule} from "primeng/toast";
     UserCardComponent,
     StyleClassModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    ProductCardComponent
   ],
   templateUrl: './products-grid.component.html',
   styleUrl: './products-grid.component.css',

@@ -1,0 +1,56 @@
+<div class="card p-4 border-1 surface-border product-container" >
+  <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-3">
+    <div class="flex align-items-center">
+      <i class="pi pi-tag mr-2"></i>
+      <span class="font-semibold">{{product.category?.name}}</span>
+    </div>
+    <span [class]="'product-badge status-instock'">{{inventoryStatus}}</span>
+  </div>
+  <div class="flex flex-column align-items-center text-center mb-3">
+    <div class="img-container">
+<!--      <img [src]="product.img" [alt]="product.name" class="w-9 shadow-2 my-3 mx-0"/>-->
+      <p-image [src]="product.img" class="shadow-4" alt="Image" width="250" [preview]="true"></p-image>
+    </div>
+    <div class="text-2xl font-bold">{{product.name}}</div>
+    <div class="mb-3 description-container">{{product.description}}</div>
+    <p-rating [ngModel]="rating" [readonly]="true" [cancel]="false"></p-rating>
+  </div>
+  <div class="flex align-items-center justify-content-between">
+    <span class="text-2xl font-semibold">{{ product.price | currency }}</span>
+    <p-button icon="pi pi-shopping-cart" [disabled]="isAdmin"></p-button>
+  </div>
+
+  @if(isAdmin) {
+    <div class="my-5">
+      <button
+        pButton
+        pRipple
+        icon="pi pi-eye"
+        class="mr-2 p-button-rounded"
+        [routerLink]="[
+            isAdmin ? '/admin/dashboard/producto' : './login',
+            product.id
+          ]"
+      ></button>
+
+      <button
+        pButton
+        pRipple
+        icon="pi pi-file-edit"
+        class="mr-2 p-button-rounded p-button-success"
+        [routerLink]="[
+            isAdmin ? '/admin/dashboard/producto' : './login',
+            product.id,
+            'editar'
+          ]"
+      ></button>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-trash"
+        class="p-button-rounded p-button-danger"
+        (click)="productService.confirmDeleteProduct(product.id)"
+      ></button>
+    </div>
+  }
+</div>
