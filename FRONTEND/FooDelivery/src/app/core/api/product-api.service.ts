@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IProductReq} from "../../admin-dashboard/interfaces/product.interface";
+import {IFormProduct, IProductDTO} from "../../admin-dashboard/interfaces/product.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,13 @@ export class ProductApiService {
   private url = environments.baseUrl;
   private authService = inject(AuthService);
 
-  createProductByAdmin( product: IProductReq ): Observable<any> {
+  createProductByAdmin( product: IProductDTO ): Observable<any> {
     return this.http.post<any>(`${this.url}/products`, product, {
       headers: this.authService.addTokenToHeaders()
     });
   }
 
-  updateProductByAdmin(product: IProductReq ): Observable<any> {
+  updateProductByAdmin(product: IProductDTO ): Observable<any> {
     const { id, ...body } = product;
 
     return this.http.put<any>(`${this.url}/products/${ product.id }`, body, {
@@ -32,13 +32,13 @@ export class ProductApiService {
     return this.http.delete<void>(`${this.url}/products/${productId}`, { headers: this.authService.addTokenToHeaders() });
   }
 
-  getProductByAdmin(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.url}/products/${ userId }`, {
+  getProductByAdmin(userId: number): Observable<IFormProduct> {
+    return this.http.get<IFormProduct>(`${this.url}/products/${ userId }`, {
       headers: this.authService.addTokenToHeaders()
     });
   }
 
-  getAllProducts(): Observable<any> {
+  getAllProducts(): Observable<IProductDTO[]> {
     return this.http.get<any>(`${this.url}/products`, { headers: this.authService.addTokenToHeaders() });
   }
 

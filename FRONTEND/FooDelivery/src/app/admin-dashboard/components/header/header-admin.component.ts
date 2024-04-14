@@ -37,7 +37,7 @@ export class HeaderAdminComponent implements OnInit {
 
   private user = signal<IUser | undefined>(undefined);
 
-  isAdmin = signal<boolean>(false);
+  isAdmin = signal<boolean>(true);
 
   // Obtén los children de adminRoutes y extrae sus títulos
   public menuItems = adminRoutes

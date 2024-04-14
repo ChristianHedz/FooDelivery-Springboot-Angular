@@ -1,0 +1,77 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+::ng-deep .p-card-subtitle {
+  margin-bottom: 0;
+  overflow: hidden;
+  text-wrap: none;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .p-tieredmenu .p-submenu-list { right: 100%; left: unset; }
+
+::ng-deep .p-card-content {
+  padding-top: 1rem;
+  padding-bottom: 0rem;
+}
+
+::ng-deep .p-badge {
+  min-width: 1.5rem;
+}
+
+::ng-deep .p-card-footer {
+  padding-top: 1rem;
+}
+
+::ng-deep .p-card-footer {
+
+  .p-button {
+    display: block;
+    width: 100%;
+
+    &.p-button-outlined {
+      color: var(--primary-900);
+    }
+  }
+
+  .btn--participar .p-button {
+    margin-top: .3rem;
+  }
+
+}
+
+::ng-deep .p-confirm-dialog  i {
+  padding-right: .5rem;
+}
+
+.product-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.status-instock {
+  background: #C8E6C9;
+  color: #256029;
+}
+
+.product-container {
+  height: 550px;
+}
+
+.img-container {
+  height: 150px;
+  overflow: hidden;
+}
+
+.description-container {
+  height: 90px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}

@@ -4,7 +4,7 @@ import { ProductApiService } from "../../core/api/product-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IProductReq} from "../interfaces/product.interface";
+import {IFormProduct, IProductDTO} from "../interfaces/product.interface";
 
 interface State {
   products: any[],
@@ -27,7 +27,7 @@ export class ProductService {
     this.getAllProducts();
   }
 
-  createProductByAdmin( product: IProductReq ) {
+  createProductByAdmin( product: IProductDTO ) {
     return this.productApiService.createProductByAdmin(product).pipe(
       tap((response) => this.showMessage("Producto creado exitosamente")),
       tap( () => this.getAllProducts()),
@@ -49,13 +49,13 @@ export class ProductService {
     );
   }
 
-  updateProductByAdmin( product: IProductReq ) {
+  updateProductByAdmin( product: IProductDTO ) {
     return this.productApiService.updateProductByAdmin( product ).pipe(
       tap((response) => this.showMessage("Producto actualizado exitosamente")),
       tap( () => this.getAllProducts()),
       tap((_) => {
         setTimeout(() => {
-          this.goRouteUpdate(product!.id);
+          this.goRouteUpdate(Number(product!.id));
         }, 1200);
       }),
       catchError(({ error }) => {
@@ -71,7 +71,9 @@ export class ProductService {
     );
   }
 
-  confirmDeleteProduct(id: number) {
+  confirmDeleteProduct(id: number | undefined) {
+
+    if (id === undefined) return;
 
     return this.confirmationService.confirm({
       target: document.body,
@@ -123,7 +125,7 @@ export class ProductService {
     );
   };
 
-  getProductByAdmin(id: number): Observable<any> {
+  getProductByAdmin(id: number): Observable<IFormProduct> {
     return this.productApiService
       .getProductByAdmin(id)
       .pipe(map((response) => response));
@@ -133,7 +135,7 @@ export class ProductService {
     this.productApiService.getAllProducts()
         .subscribe( {
           next: response => {
-            this.products.set(response.content);
+            this.products.set(response);
           },
           error: (error) => {
             this.messageService.add({
