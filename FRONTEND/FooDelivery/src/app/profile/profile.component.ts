@@ -1,26 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
-
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
-
 })
 
 export class ProfileComponent implements OnInit {
   user: User | undefined;
   isEditing: boolean = false;
-
-  editedFirstName: string = '';
+  editedFullName: string = '';
   editedAlias: string = '';
   editedPhone: string = '';
   editedEmail: string = '';
-
+  editedProfileImage: string = ''; 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -31,10 +29,10 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserProfile().subscribe(
       (user: User) => {
         this.user = user;
-        this.editedFirstName = this.user?.fullName || '';
+        this.editedFullName = this.user?.fullName || '';
         this.editedAlias = this.user?.alias || '';
-        this.editedPhone = this.user?.phone || '';
-        this.editedEmail = this.user?.email || '';
+
+   /*      this.editedProfileImage = this.user?.profileImage || ''; */
       },
       (error) => {
         console.error('Error fetching user profile:', error);
@@ -50,21 +48,21 @@ export class ProfileComponent implements OnInit {
     if (this.user) {
       this.user = {
         ...this.user,
-        fullName: this.editedFirstName,
+        fullName: this.editedFullName,
         alias: this.editedAlias,
-        phone: this.editedPhone,
-        email: this.editedEmail
+    /*     profileImage: this.editedProfileImage  */
       };
 
-this.authService.updateUserProfile(this.user).subscribe({
-  next: () => {
-    console.log('Perfil de usuario actualizado con éxito');
-    this.isEditing = false;
-  },
-  error: (error) => {
-    console.error('Error updating user profile:', error);
-  }
-});
+      this.authService.updateUserProfile(this.user).subscribe({
+        next: () => {
+          console.log('Perfil de usuario actualizado con éxito');
+          this.isEditing = false;
+        },
+        error: (error) => {
+          console.error('Error updating user profile:', error);
+        }
+      });
     }
   }
+
 }
