@@ -1,8 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-9">
+      <br>
+      <h2>Perfil</h2>
       <div class="card mb-3">
+        
         <div class="card-body">
+        
           <h3 class="card-title">Informacion Personal</h3>
           <div class="row">
             <div class="col-md-4">
@@ -16,10 +20,10 @@
                 <span class="info-label"></span>
                 <input class="form-control" type="text" [(ngModel)]="editedFullName" *ngIf="isEditing">
                 <span *ngIf="!isEditing"><strong>{{ user?.fullName }}</strong></span>
-     <p>República de Córdoba</p>          </div>
+     <p>Caseros 3445, República de Córdoba</p>          </div>
   
               <div class="info-row">
-                <span class="info-label">Alias: {{ user?.alias }}     </span>
+                <span class="info-label">{{ user?.alias }}     </span>
                 <input class="form-control" type="text" [(ngModel)]="editedAlias" *ngIf="isEditing">
                 <span *ngIf="!isEditing"><!-- {{ user?.alias }} --></span>
               </div>
@@ -45,7 +49,7 @@
     </div>
 
     
-    <div class="col-md-3">
+    <div class="col-md-3"><br><br><br>
       <button class="btn btn-primary w-100 mb-2" id="btn1">
 
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,4 +101,55 @@
 </div>
 </div>
 
+<div class="container">
+  <!-- Botones del switch -->
+  <div class="row mt-3">
+    <div class="col-md-3">
+      <button class="btn btn-primary" (click)="showCurrentOrders()">Ordenes en Curso</button>
+      <button class="btn btn-primary" (click)="showOrderHistory()">Historial de Pedidos</button>
+    </div>
+    <div class="col-md-9">
+      <!-- Pantallas de Ordenes en Curso o Historial de Pedidos -->
+      <div class="row">
+        <!-- Pantalla de Ordenes en Curso -->
+        <div class="col-md-8" *ngIf="showCurrentOrdersScreen">
+          <div class="card mb-3">
+            <!-- Contenido de la primera pantalla -->
+            <p>Contenido de Ordenes en Curso</p>
+          </div>
+          <div class="card mb-3">
+            <!-- Contenido de la primera pantalla -->
+            <p>Contenido de Ordenes en Curso</p>
+          </div>
+          <div class="card mb-3">
+            <!-- Contenido de la primera pantalla -->
+            <p>Contenido de Ordenes en Curso</p>
+          </div>
+        </div>
 
+        <!-- Pantalla de Historial de Pedidos -->
+        <div class="col-md-8" *ngIf="showOrderHistoryScreen">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="card-title">Historial de Pedidos</h3>
+              <!-- Tabla con historial de pedidos -->
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>ORDER ID</th>
+                    <th>STATUS</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aquí deberías iterar sobre tus datos y mostrar cada pedido en una fila de la tabla -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
