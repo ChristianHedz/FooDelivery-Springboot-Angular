@@ -6,6 +6,7 @@
   background-position: center;
   height: 90vh; /* Ajusta la altura de la imagen de fondo */
 }
+
 .container_text {
   margin-left: 15vh;
   .container_text-search {
@@ -74,6 +75,18 @@
     }
   }
 }
+
+.card-custom {
+  width: 18rem;
+  height: 24rem;
+  border: 0;
+}
+
+.card-img-top-custom {
+  height: 200px;
+  object-fit: cover;
+}
+
 /* IMAGEN DE SECTION */
 .image-section {
   width: 100%;
