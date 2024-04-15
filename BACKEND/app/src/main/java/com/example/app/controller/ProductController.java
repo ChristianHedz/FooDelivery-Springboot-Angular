@@ -5,6 +5,7 @@ import com.example.app.model.Category;
 import com.example.app.model.Product;
 import com.example.app.repository.CategoryRepository;
 import com.example.app.service.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +30,13 @@ public class ProductController {
 
 
     @GetMapping
+    @SecurityRequirements
     public List<Product> list() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirements
     public ResponseEntity<?> view(@PathVariable Long id) {
         Optional<Product> productOptional = service.findById(id);
         if (productOptional.isPresent()) {
