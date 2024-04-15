@@ -1,7 +1,7 @@
 package com.example.app.exception;
 
+import com.paypal.base.rest.PayPalRESTException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
@@ -62,6 +61,13 @@ public class ApplicationExceptionHandler {
         }
 
         return errors;
+    }
+
+    @ExceptionHandler(PayPalRESTException.class)
+    public ResponseEntity<ApplicationExceptionResponse> payPalRESTException(PayPalRESTException ex, HttpServletRequest req) {
+        Map<String, String> errors = new HashMap<>(Map.of(ex.getClass().getSimpleName(), ex.getMessage()));
+        ApplicationExceptionResponse errorResponse = ExceptionUtils.createResponse(HttpStatus.BAD_REQUEST, req, errors);
+        return ResponseEntity.status(400).body(errorResponse);
     }
 
 }
