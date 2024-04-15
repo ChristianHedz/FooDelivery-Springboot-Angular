@@ -1,0 +1,22 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+.promo-container {
+  width: auto;
+  height: 70px;
+  background: #C8E6C9;
+  color: #256029;
+  border-radius: var(--border-radius);
+}
+
+.promo-badge {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 1rem;
+}
