@@ -25,6 +25,19 @@ export default [
     loadComponent: () => import('./pages/promociones/pages/promotions-grid/promotions-grid.component'),
   },
   {
+    path: 'promocion/agregar',
+    loadComponent: () => import('./pages/promociones/pages/add-or-edit-prom/add-or-edit-prom.component'),
+    pathMatch: 'full',
+  },
+  {
+    path: 'promocion/:id/editar',
+    loadComponent: () => import('./pages/promociones/pages/add-or-edit-prom/add-or-edit-prom.component'),
+  },
+  {
+    path: 'promocion/:id',
+    loadComponent: () => import('./pages/promociones/pages/promotion-detail/promotion-detail.component'),
+  },
+  {
     path: 'ordenes',
     title: 'pi-shopping-cart',
     loadComponent: () => import('./pages/ordenes/pages/orders-grid/orders-grid.component'),

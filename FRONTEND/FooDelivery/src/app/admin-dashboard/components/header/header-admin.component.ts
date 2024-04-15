@@ -81,7 +81,7 @@ export class HeaderAdminComponent implements OnInit {
       this.updateMenu(result.matches);
     });
 
-    this.isAdmin.set(this.user()?.role === 'ADMIN');
+    // this.isAdmin.set(this.user()?.role === 'ADMIN');
   };
 
   private updateMenu(isMobile: boolean): void {

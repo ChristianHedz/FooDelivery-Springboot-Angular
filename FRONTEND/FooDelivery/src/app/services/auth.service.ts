@@ -58,7 +58,6 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     this.isLoggedInSubject.next(false);
   }
-
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
