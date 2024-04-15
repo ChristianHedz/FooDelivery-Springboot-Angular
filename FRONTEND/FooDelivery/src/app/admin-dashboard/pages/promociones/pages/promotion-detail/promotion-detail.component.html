@@ -1,0 +1,56 @@
+@if (promotion()) {
+  <div class="">
+      <div class="flex flex-column sm:flex-row my-4 justify-content-start align-items-center gap-4 mb-3 font-bold text-2xl">
+        <div class="promo-container" pBadge [value]="percentage()">
+          <span [class]="'promo-badge'" >{{ promotion()?.code }}</span>
+        </div>
+      </div>
+
+    <p-divider></p-divider>
+
+    <div class="grid justify-content-center">
+      <section class="col-12 md:col-9">
+
+        <!-- contenido -->
+        <span class="text-lg font-semibold">{{ promotion()?.description }}</span>
+
+        <div class="orders my-6">
+          <h5 class="capitalize text-2xl mb-2">Productos</h5>
+          <p-divider></p-divider>
+          <div class="orders__container--scroll">
+            <p-messages
+              [(value)]="messageNotData"
+              [enableService]="false"
+              [closable]="false"
+            ></p-messages>
+          </div>
+        </div>
+      </section>
+
+      <!-- buttons -->
+      <section class="col-12 md:col-3">
+        <button
+          pButton
+          pRipple
+          label="Editar"
+          icon="pi pi-pencil"
+          class="block w-full bg-gray-400 border-gray-400 mb-2"
+          [routerLink]="['/admin/dashboard/promocion', this.promotion()?.id, 'editar']"
+          routerLinkActive="router-link-active"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Eliminar"
+          icon="pi pi-trash"
+          class="block w-full bg-red-500 border-red-500"
+          (click)="this.confirmDeletePromo()"
+        ></button>
+      </section>
+    </div>
+  </div>
+} @else {
+  <div class="flex justify-content-center">
+    <p class="text-2xl">No se ha encontrado la promocion</p>
+  </div>
+}

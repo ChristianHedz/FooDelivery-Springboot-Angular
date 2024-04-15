@@ -16,7 +16,7 @@
           routerLinkActive="active"
           [ngClass]="{ active: menuOption == 'menu' }"
           (click)="onOption('menu')"
-        >Menú</a
+          >Menú</a
         >
       </li>
       <li class="nav-item">
@@ -25,7 +25,8 @@
           routerLink=""
           [ngClass]="{ active: menuOption == 'cupones' }"
           (click)="onOption('cupones')"
-        >Cupones</a
+          *ngIf="userLoginOn"
+          >Cupones</a
         >
       </li>
       <li class="nav-item">
@@ -34,7 +35,8 @@
           routerLink="profile"
           [ngClass]="{ active: menuOption == 'nosotros' }"
           (click)="onOption('nosotros')"
-        >Nosotros</a
+          *ngIf="userLoginOn" 
+          >Mi Perfil</a
         >
       </li>
       <li class="nav-item">
@@ -43,11 +45,16 @@
           routerLink=""
           [ngClass]="{ active: menuOption == 'contacto' }"
           (click)="onOption('contacto')"
-        >Contacto</a
+          >Contacto</a
         >
       </li>
+  
+  
+    <li *ngIf="userLoginOn" class="nav-item">
+      <a class="nav-link" routerLink="ajustes">Ajustes</a>
+    </li>
     </ul>
-
+  
     <button
       *ngIf="!userLoginOn"
       class="inicio-sesion"
@@ -68,7 +75,7 @@
       </svg>
       Iniciar sesión
     </button>
-
+  
     <button *ngIf="userLoginOn" class="cerrar-sesion" (click)="logout()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -85,8 +92,7 @@
       Cerrar sesión
     </button>
   </nav>
-}
-
+  }
 <router-outlet></router-outlet>
 
 @if (showNavbarAndFooter) {
