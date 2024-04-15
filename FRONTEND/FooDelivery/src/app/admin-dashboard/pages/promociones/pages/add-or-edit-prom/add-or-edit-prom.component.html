@@ -1,0 +1,78 @@
+<form [formGroup]="promForm" class="">
+
+    <h1 class="mt-2">{{ promId ? "Actualizar Promoción" : "Nueva Promoción" }}</h1>
+    <p-divider></p-divider>
+
+  <div class="grid">
+
+    <!-- description -->
+    <div class="field col-12 flex flex-column gap-2">
+      <label for="description">Descripción</label>
+      <input
+        pInputText
+        id="description"
+        placeholder="Agregue una descripción"
+        formControlName="description"
+      />
+      @if (inputValid('description')) {<small class="text-red-700 font-bold"
+      >La descripción es requerida</small
+      >}
+    </div>
+
+      <!-- price -->
+      <div class="field col-12 md:col-6 flex flex-column gap-2">
+        <label for="percentage">Porcentaje</label>
+        <p-inputGroup class="w-full">
+
+          <p-inputGroupAddon>%</p-inputGroupAddon>
+
+          <input
+            pInputText
+            id="percentage"
+            placeholder="Precio"
+            formControlName="percentage"
+          />
+        </p-inputGroup>
+          @if (inputValid('percentage')) {
+            <small class="text-red-700 font-bold">
+              El porcentage es requerido. Solo se permiten números
+            </small>
+          }
+      </div>
+
+    <!-- promo code -->
+    <div class="field col-12 md:col-6 flex flex-column gap-2">
+      <label for="code">Código de la promoción</label>
+      <p-inputGroup class="w-full">
+
+      <p-inputGroupAddon>
+        <i class="pi pi-tags" style="line-height: 1.25"></i>
+      </p-inputGroupAddon>
+
+        <input
+          pInputText
+          id="code"
+          placeholder="Codigo de promoción"
+          formControlName="code"
+        />
+      </p-inputGroup>
+      @if (inputValid('code')) {
+        <small class="text-red-700 font-bold">
+          El codigo de la promocion es requerido.
+        </small>
+      }
+    </div>
+
+  </div>
+
+  <div class="text-center mt-4">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700 w-full md:w-4 lg:w-3"
+      [label]="promId ? 'Guardar Cambios' : 'Agregar Promocion'"
+      (click)="save()"
+    ></button>
+  </div>
+
+</form>

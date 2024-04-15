@@ -1,9 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
-import {Observable} from "rxjs";
+import {catchError, Observable, of, throwError} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IPromReq} from "../../admin-dashboard/interfaces/promotion.interface";
+import {IPromDto, IPromReq} from "../../admin-dashboard/interfaces/promotion.interface";
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class PromotionApiService {
     });
   }
 
-  updatePromotionByAdmin( prom: IPromReq ): Observable<any> {
+  updatePromotionByAdmin( prom: IPromReq ): Observable<IPromDto> {
     const { id, ...body } = prom;
 
     return this.http.put<any>(`${this.url}/promotion/update/${ id }`, body, {
@@ -28,8 +29,17 @@ export class PromotionApiService {
     });
   }
 
-  deletePromotionByAdmin( promId: number ): Observable<void> {
-    return this.http.delete<void>(`${this.url}/promotion/delete/${ promId }`, { headers: this.authService.addTokenToHeaders() });
+  deletePromotionByAdmin( promo: IPromDto ): Observable<string | void> {
+    return this.http.delete<void>(`${this.url}/promotion/delete/${ promo.id }`, { headers: this.authService.addTokenToHeaders() })
+      .pipe(
+        catchError( (err) => {
+          if (err.status === 200) {
+            return of('La promoción fue eliminada exitosamente');
+          } else {
+            return throwError( () => "Error al eliminar la promoción");
+          }
+        })
+      )
   }
 
   getPromotionByAdmin( promId: number ): Observable<any> {
