@@ -10,22 +10,17 @@
     </button>
     <p-divider></p-divider>
   </section>
-  <section class="p-2 grid">
-    @for (user of productService.products(); track $index) {
-      <!--<article class="col-12 sm:col-6 lg:col-4">
-        <user-card [user]="user" isAdmin></user-card>
-      </article>-->
-    }@empty {
-      <div class="col-12 flex justify-content-center align-items-center">
-        <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
-      </div>
-    }
+  <section class="grid grid-nogutter gap-3 md:gap-2">
+      @for (product of productService.products(); track $index) {
+        <div class="col-12 md:col-6 lg:col-5">
+          <product-card [product]="product" isAdmin></product-card>
+        </div>
+      }@empty {
+        <div class="col-12 flex justify-content-center align-items-center">
+          <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+        </div>
+      }
   </section>
 
-
-  <div class="card flex justify-content-center">
-    <p-toast></p-toast>
-    <p-confirmDialog></p-confirmDialog>
-  </div>
 </div>
 

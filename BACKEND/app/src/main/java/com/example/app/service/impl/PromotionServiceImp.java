@@ -1,61 +1,83 @@
 package com.example.app.service.impl;
 
+import com.example.app.mapper.PromotionMapper;
 import com.example.app.service.PromotionService;
-import com.example.app.promotion.dto.PromotionDto;
 import com.example.app.model.Promotion;
-import com.example.app.mapper.PromotionMapping;
-import com.example.app.promotion.exepcion.ResourceNotFoundExepcion;
+import com.example.app.dto.promotion.PromotionDto;
+import com.example.app.exeption.promotion.PromotionNotFoundExepcion;
 import java.util.List;
-import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.app.repository.PromotionRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
+@RequiredArgsConstructor
 
 @Service
-@AllArgsConstructor
 public class PromotionServiceImp implements PromotionService {
 
-    private PromotionRepository promotionRepository;
+    private final PromotionRepository promotionRepository;
+    private final PromotionMapper promotionMapper;
 
     @Override
+    @Transactional
     public PromotionDto createPromotion(PromotionDto promotionDto) {
-        Promotion promotion = PromotionMapping.mapper_PromotionDto(promotionDto);
+        Promotion promotion = promotionMapper.toEntity(promotionDto);
         Promotion promotionSaved = promotionRepository.save(promotion);
-        return PromotionMapping.mapper_promotion(promotionSaved);
+        return promotionMapper.toDto(promotionSaved);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PromotionDto findPromotionById(Long id) {
-        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
-        return PromotionMapping.mapper_promotion(promotion);
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new PromotionNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
+        return promotionMapper.toDto(promotion);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PromotionDto> listPromotions() {
         List<Promotion> promotions = (List<Promotion>) promotionRepository.findAll();
-        return promotions.stream()
-                .map(promotion -> PromotionMapping.mapper_promotion(promotion))
-                .collect(Collectors.toList());
+        return promotionMapper.entityListToDtoList(promotions);
     }
 
     @Override
+    @Transactional
     public PromotionDto updatePromotion(Long id, PromotionDto updatePromotion) {
-        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
+        Promotion promotion = promotionRepository.findById(id)
+                .orElseThrow(() -> new PromotionNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
 
-        promotion.setDescription(updatePromotion.getDescription());
-        promotion.setCode(updatePromotion.getCode());
-        promotion.setPercentage(updatePromotion.getPercentage());
+        promotion.setDescription(updatePromotion.description());
+        promotion.setCode(updatePromotion.code());
+        promotion.setPercentage(updatePromotion.percentage());
 
-        Promotion promotionUpdated = promotionRepository.save(promotion);
-
-        return PromotionMapping.mapper_promotion(promotionUpdated);
+        return promotionMapper.toDto(promotionRepository.save(promotion));
     }
 
     @Override
+    @Transactional
     public void deletePromotion(Long id) {
-        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new PromotionNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
 
         promotionRepository.delete(promotion);
+    }
+
+    @Override
+    @Transactional
+    public void cancelPromotion(Long id) {
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new PromotionNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
+
+        promotion.setActive(Boolean.FALSE);
+
+        promotionRepository.save(promotion);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PromotionDto> findAllByActiveTrue(Pageable pageable) {
+        return promotionRepository.findAllByActiveTrue(pageable).map(promotionMapper::toDto);
     }
 
 }

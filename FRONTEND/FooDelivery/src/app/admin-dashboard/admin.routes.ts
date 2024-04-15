@@ -7,6 +7,19 @@ export default [
     loadComponent: () => import('./pages/productos/pages/products-grid/products-grid.component'),
   },
   {
+    path: 'producto/agregar',
+    loadComponent: () => import('./pages/productos/pages/add-or-edit-product/add-or-edit-product.component'),
+    pathMatch: 'full',
+  },
+  {
+    path: 'producto/:id/editar',
+    loadComponent: () => import('./pages/productos/pages/add-or-edit-product/add-or-edit-product.component'),
+  },
+  {
+    path: 'producto/:id',
+    loadComponent: () => import('./pages/productos/pages/product-detail/product-detail.component'),
+  },
+  {
     path: 'promociones',
     title: 'pi-gift',
     loadComponent: () => import('./pages/promociones/pages/promotions-grid/promotions-grid.component'),

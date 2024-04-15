@@ -1,12 +1,12 @@
-package com.example.app.promotion.exepcion;
+package com.example.app.exeption.promotion;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundExepcion extends RuntimeException {
+public class PromotionNotFoundExepcion extends RuntimeException {
 
-    public ResourceNotFoundExepcion(String message) {
+    public PromotionNotFoundExepcion(String message) {
         super(message);
     }
 }
