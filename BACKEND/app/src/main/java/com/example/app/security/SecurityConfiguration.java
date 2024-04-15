@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                .requestMatchers(HttpMethod.POST, "/products")
                 .hasAuthority(Role.ADMIN.name())
                .requestMatchers(HttpMethod.GET, "/products")
-                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
+                .permitAll()
                .requestMatchers(HttpMethod.PUT, "/products")
                 .hasAuthority(Role.ADMIN.name())
                .requestMatchers(HttpMethod.DELETE, "/products")
