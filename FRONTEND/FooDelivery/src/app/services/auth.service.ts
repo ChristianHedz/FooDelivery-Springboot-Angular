@@ -47,6 +47,8 @@ export class AuthService {
     console.log('se recibio el token: ' + {token});
     return this.http.post<socialUser>(this.baseUrl + '/users/authGoogle',{token}).pipe(
       tap((userResp: socialUser) => {
+        this.setToken(userResp.token);
+        this.setUser(userResp);
         console.log({userResp});
       }),
     )
@@ -56,7 +58,6 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     this.isLoggedInSubject.next(false);
   }
-  
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
