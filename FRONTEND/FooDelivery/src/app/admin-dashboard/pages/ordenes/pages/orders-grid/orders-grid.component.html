@@ -1,0 +1,26 @@
+<div class="lotterys__list">
+  <section class="p-2">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700"
+      [routerLink]="['/admin/dashboard/ordenes/agregar']"
+    >
+      Nueva orden
+    </button>
+    <p-divider></p-divider>
+  </section>
+  <section class="p-2 grid">
+    @for (user of orderService.orders(); track $index) {
+      <!--<article class="col-12 sm:col-6 lg:col-4">
+        <user-card [user]="user" isAdmin></user-card>
+      </article>-->
+    }@empty {
+      <div class="col-12 flex justify-content-center align-items-center">
+        <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+      </div>
+    }
+  </section>
+
+</div>
+

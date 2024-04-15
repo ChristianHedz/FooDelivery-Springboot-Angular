@@ -1,0 +1,110 @@
+<form [formGroup]="userForm" class="">
+
+    <h1 class="mt-2">{{ userId ? "Actualizar Usuario" : "Nuevo Usuario" }}</h1>
+    <p-divider></p-divider>
+
+  <div class="grid">
+
+    <!-- fullName -->
+    <div class="col-12 md:col-6 flex flex-column gap-2">
+      <label for="name">Nombre</label>
+      <input
+        pInputText
+        id="name"
+        placeholder="Nombre completo"
+        formControlName="fullName"
+      />
+      @if (inputValid('fullName')) {<small class="text-red-700 font-bold"
+      >El nombre es requerido</small
+      >}
+    </div>
+
+    <!-- phone -->
+    <div class="col-12 md:col-6 flex flex-column gap-2">
+      <label for="phone">Telefono</label>
+      <input
+        pInputText
+        id="phone"
+        placeholder="Telefono del usuario"
+        formControlName="phone"
+        type="number"
+      />
+      @if (inputValid('phone')) {<small class="text-red-700 font-bold"
+      >El telefono es requerido</small
+      >}
+    </div>
+
+    <!-- email -->
+    <div class="col-12 md:col-6 flex flex-column gap-2">
+      <label for="email">Email</label>
+      <input
+          pInputText
+          id="email"
+          placeholder="Correo del usuario"
+          formControlName="email"
+      />
+
+        @if (inputValid('email')) {<small class="text-red-700 font-bold"
+      >El email es requerido</small
+      >}
+    </div>
+
+      <!-- username -->
+      <div class="col-12 md:col-6 flex flex-column gap-2">
+          <label for="alias">Username</label>
+          <input
+                  pInputText
+                  id="alias"
+                  placeholder="Username"
+                  formControlName="alias"
+          />
+          @if (inputValid('alias')) {<small class="text-red-700 font-bold"
+          >Debe o estar vacío o contener solo caracteres alfanuméricos y _</small
+          >}
+      </div>
+
+    <!-- password -->
+    @if (!userId) {
+      <div class="col-12 md:col-6 flex flex-column gap-2">
+        <label for="email">Password</label>
+        <input
+          pInputText
+          id="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        @if (inputValid('password')) {<small class="text-red-700 font-bold"
+        >El password es requerido</small
+        >}
+      </div>
+    }
+
+      <div class="col-12 md:col-6 flex flex-column gap-2">
+        <label for="role">Rol</label>
+        <p-dropdown
+          id="role"
+          optionLabel="name"
+          [options]="roles"
+          formControlName="role"
+          placeholder="Seleccione un rol"
+        ></p-dropdown>
+        @if (inputValid('role')) {
+            <small class="text-red-700 font-bold">
+                El rol es requerido
+            </small>
+        }
+      </div>
+
+  </div>
+
+  <div class="text-center mt-3">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700 w-full md:w-4 lg:w-3"
+      [label]="userId ? 'Guardar Cambios' : 'Agregar Usuario'"
+      (click)="save()"
+    ></button>
+  </div>
+
+</form>

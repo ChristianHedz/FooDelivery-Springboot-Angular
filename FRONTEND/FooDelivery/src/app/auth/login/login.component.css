@@ -1,0 +1,127 @@
+*{
+
+}
+form{
+    margin: 10px;
+    text-align: center; 
+}
+img {
+  margin-top: 20px;
+  border-radius: 24px;
+  max-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position:50% center;; 
+}
+#logoimg{
+    max-width: 103.17px;
+    min-height: 108.12px;
+}
+.row-container {
+  display: flex;
+  align-items: center; 
+   margin-top: -10px;
+}
+.row-container img {
+  width: 100px;
+  height: auto; 
+
+}
+@font-face {
+    font-family: 'Artbrush';
+    src: url('../../../assets/Artbrush.ttf') format('truetype');
+}
+h1{font-family: 'Artbrush';
+  font-size: 72.54px;
+  font-weight: 80%;
+  line-height: 79.51px;
+  text-align: left;
+
+  margin-top: 20px;
+  }
+h4{margin-bottom: 80px;}
+h6{margin-top: -100px;}
+
+.btn-color{
+    background-color: #EE9B01;
+    color: white;
+    width: 400px;
+    height: Fixed (10,140px)px;
+    opacity: px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: larger;
+  }
+.input-group {
+    width: 100%; 
+  }
+  
+.col-md-12 {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+    justify-content: left; 
+  }
+.col-form-label {
+    align-self: flex-start;
+    margin-bottom: 5px; 
+  }
+
+#email{margin-top: -30px; }
+/* #password{margin-top: 10px;} */
+#olvidaste{margin: -10px;
+padding-right: 70px;}
+#botonInit{
+display: flex;
+padding-right: 100px;
+}
+#google{margin-bottom: 12px;
+margin-top: 12px; display: flex; justify-content: center;}
+#iniciar{padding-left: 90px; display: flex; justify-content: center;}
+
+#registrate{margin-top: -10px;}
+
+
+
+
+
+
+
+@media (max-width: 860px){
+  col-md-6.row:nth-child(1) {
+    display: flex;
+    flex-direction: row-reverse;
+}
+  }
+    
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    max-width: 50%;
+  }
+  
+@media (max-width: 767px) {
+    .col-md-6 {
+      width: 100%;
+      max-width: 100%;
+    }
+ 
+
+    .row:nth-child(1) {
+      flex-direction: row-reverse;
+    }
+}
+  
