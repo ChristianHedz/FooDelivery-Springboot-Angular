@@ -134,6 +134,7 @@ export class PromotionService {
     this.promotionApiService.getAllPromotions()
         .subscribe( {
           next: response => {
+            console.log('Promotions: ', response);
             this.promotions.set(response);
           },
           error: (error) => {
