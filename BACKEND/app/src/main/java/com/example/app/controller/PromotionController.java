@@ -1,8 +1,11 @@
 package com.example.app.controller;
 
+import com.example.app.dto.promotion.PromoWithProductsDTO;
 import com.example.app.dto.promotion.PromotionDto;
 import com.example.app.exeption.promotion.PromotionNotFoundExepcion;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -203,6 +206,31 @@ public class PromotionController {
     public ResponseEntity<Page<PromotionDto>> getAllActivePromotions(Pageable pageable) {
         Page<PromotionDto> promotionsPage = promotionService.findAllByActiveTrue(pageable);
         return ResponseEntity.status(200).body(promotionsPage);
+    }
+
+    @Operation(
+      summary = "Get all products from one promotion.",
+      description = "Get all products with the same promotion."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "Promotion with product list successfully generated",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = PromotionDto.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {
+        @Content}),
+      @ApiResponse(responseCode = "404", description = "Promotion Not Found", content = {
+        @Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
+        @Content})
+    })
+    @GetMapping("/{id}/products")
+    @SecurityRequirements()
+    public ResponseEntity<PromoWithProductsDTO> getPromotionWithProducts(@PathVariable Long id) {
+        PromoWithProductsDTO promoWithProductsDTO = promotionService.getPromotionWithProducts(id);
+        return ResponseEntity.ok(promoWithProductsDTO);
     }
 
 }

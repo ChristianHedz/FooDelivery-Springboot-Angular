@@ -1,5 +1,6 @@
 package com.example.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,18 +37,9 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Promotion> promotions;
-
-    //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/
-    public void addPromotion(Promotion promotion) {
-        this.promotions.add(promotion);
-        promotion.setProduct(this);
-    }
-
-    public void removePromotion(Promotion promotion) {
-        promotion.setProduct(null);
-        this.promotions.remove(promotion);
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
+    @JsonBackReference
+    private Promotion promotion;
 
 }
