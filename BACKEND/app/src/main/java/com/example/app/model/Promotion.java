@@ -1,22 +1,22 @@
 package com.example.app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Entity
 @Table(name = "Promotion")
 public class Promotion {
@@ -28,4 +28,19 @@ public class Promotion {
     private String code;
     private Double percentage;
     private Boolean active;
+
+    @OneToMany(mappedBy = "promotion")
+    @JsonManagedReference
+    private List<Product> products;
+
+    //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/
+    public void addProduct(Product product) {
+        this.products.add(product);
+        product.setPromotion(this);
+    }
+
+    public void removeProduct(Product product) {
+        product.setPromotion(null);
+        this.products.remove(product);
+    }
 }

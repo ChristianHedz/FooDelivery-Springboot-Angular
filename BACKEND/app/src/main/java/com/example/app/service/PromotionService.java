@@ -1,5 +1,6 @@
 package com.example.app.service;
 
+import com.example.app.dto.promotion.PromoWithProductsDTO;
 import com.example.app.dto.promotion.PromotionDto;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,6 @@ public interface PromotionService {
     void cancelPromotion(Long id);
     
     Page<PromotionDto> findAllByActiveTrue(Pageable pageable);
+
+    PromoWithProductsDTO getPromotionWithProducts(Long id);
 }

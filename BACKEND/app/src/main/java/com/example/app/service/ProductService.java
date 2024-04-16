@@ -1,5 +1,7 @@
 package com.example.app.service;
 
+import com.example.app.dto.product.ProductPromotionMessagesDto;
+import com.example.app.dto.product.ProductWithPromoDto;
 import com.example.app.model.Product;
 
 
@@ -18,5 +20,11 @@ public interface ProductService {
     Optional<Product> update(Long id, Product product);
 
     Optional<Product> delete(Long id);
+
+    ProductPromotionMessagesDto addPromotion(Long idProduct, Long promotionId);
+
+    void removePromotion(Long idProduct);
+
+    ProductWithPromoDto getProductWithPromotion(Long idProduct);
 
 }

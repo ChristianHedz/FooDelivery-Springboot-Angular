@@ -1,5 +1,6 @@
 package com.example.app.service.impl;
 
+import com.example.app.dto.promotion.PromoWithProductsDTO;
 import com.example.app.mapper.PromotionMapper;
 import com.example.app.service.PromotionService;
 import com.example.app.model.Promotion;
@@ -78,6 +79,12 @@ public class PromotionServiceImp implements PromotionService {
     @Transactional(readOnly = true)
     public Page<PromotionDto> findAllByActiveTrue(Pageable pageable) {
         return promotionRepository.findAllByActiveTrue(pageable).map(promotionMapper::toDto);
+    }
+
+    @Override
+    public PromoWithProductsDTO getPromotionWithProducts(Long id) {
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(() -> new PromotionNotFoundExepcion("This Promotion Does Not Exist with that ID: " + id));
+        return promotionMapper.promotionPromoWithProductsDTO(promotion);
     }
 
 }
