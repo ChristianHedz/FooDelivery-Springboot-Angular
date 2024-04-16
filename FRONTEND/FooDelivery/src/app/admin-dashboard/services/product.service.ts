@@ -4,7 +4,7 @@ import { ProductApiService } from "../../core/api/product-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IProductDTO} from "../interfaces/product.interface";
+import {IProductDTO, IProductWithPromoDTO} from "../interfaces/product.interface";
 
 interface State {
   products: any[],
@@ -147,6 +147,18 @@ export class ProductService {
           },
         }
       );
+  }
+
+  getPromoFromProduct(id: number): Observable<IProductWithPromoDTO> {
+    return this.productApiService
+      .getPromoFromProduct(id)
+      .pipe(map((response) => response));
+  }
+
+  addPromoToProduct(idProduct: number, idPromo: number): Observable<any> {
+    return this.productApiService
+      .addPromoToProduct(idProduct, idPromo)
+      .pipe(map((response) => response ));
   }
 
   private goRouteUpdate(id: number) {

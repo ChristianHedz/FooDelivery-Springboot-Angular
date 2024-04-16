@@ -1,5 +1,6 @@
 import {FormControl} from "@angular/forms";
 import {ICategoryReq} from "./category.interface";
+import {IPromDto} from "./promotion.interface";
 
 export interface IProductDTO {
   id?: number,
@@ -8,6 +9,15 @@ export interface IProductDTO {
   description: string,
   price: number,
   category?: ICategoryReq
+}
+
+export interface IProductWithPromoDTO {
+  id: number,
+  name: string,
+  img: string,
+  description: string,
+  price: number,
+  promotion: IPromDto
 }
 
 export interface IFormProduct {
