@@ -10,7 +10,7 @@
   margin: .2rem;
 }
 
-::ng-deep .p-element {
+::ng-deep .p-element > svg {
   color: white;
 }
 

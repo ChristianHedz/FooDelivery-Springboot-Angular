@@ -16,7 +16,7 @@ export class PromotionApiService {
   private authService = inject(AuthService);
 
   createPromotionByAdmin( prom: IPromReq ): Observable<any> {
-    return this.http.post<any>(`${this.url}/promotion/save`, prom, {
+    return this.http.post<any>(`${this.url}/promotions/save`, prom, {
       headers: this.authService.addTokenToHeaders()
     });
   }
@@ -24,13 +24,13 @@ export class PromotionApiService {
   updatePromotionByAdmin( prom: IPromReq ): Observable<IPromDto> {
     const { id, ...body } = prom;
 
-    return this.http.put<any>(`${this.url}/promotion/update/${ id }`, body, {
+    return this.http.put<any>(`${this.url}/promotions/update/${ id }`, body, {
       headers: this.authService.addTokenToHeaders()
     });
   }
 
   deletePromotionByAdmin( promo: IPromDto ): Observable<string | void> {
-    return this.http.delete<void>(`${this.url}/promotion/delete/${ promo.id }`, { headers: this.authService.addTokenToHeaders() })
+    return this.http.delete<void>(`${this.url}/promotions/${ promo.id }`, { headers: this.authService.addTokenToHeaders() })
       .pipe(
         catchError( (err) => {
           if (err.status === 200) {
@@ -43,13 +43,13 @@ export class PromotionApiService {
   }
 
   getPromotionByAdmin( promId: number ): Observable<any> {
-    return this.http.get<any>(`${this.url}/promotion/findById/${ promId }`, {
+    return this.http.get<any>(`${this.url}/promotions/search/${ promId }`, {
       headers: this.authService.addTokenToHeaders()
     });
   }
 
   getAllPromotions(): Observable<any> {
-    return this.http.get<any>(`${this.url}/promotion/list`, { headers: this.authService.addTokenToHeaders() });
+    return this.http.get<any>(`${this.url}/promotions/list`, { headers: this.authService.addTokenToHeaders() });
   }
 
 }
