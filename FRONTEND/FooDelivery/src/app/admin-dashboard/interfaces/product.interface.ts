@@ -7,7 +7,8 @@ export interface IProductDTO {
   img: string,
   description: string,
   price: number,
-  category?: ICategoryReq
+  category?: ICategoryReq,
+  count?: number | undefined
 }
 
 export interface IFormProduct {
