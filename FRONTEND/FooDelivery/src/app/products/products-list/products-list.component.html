@@ -11,22 +11,21 @@
       @for (product of newProducts; track $index || product.id) {
       @if ($index < 2) { <!-- inicio de la card -->
         <div class="d-inline-flex gap-2 shadow max-container mb-4">
-          <img src="{{product.img}}" alt="image-burger"
-            class="align-items-center img-fluid mx-2 my-2 rounded-4 image-size">
+          <img src="{{product.img}}" alt="image-burger" class="my-auto rounded-4 image-size">
           <div>
             <p class="mb-1 fw-semibold">{{product.name}}</p>
             <p class="fs-7 fw-medium mb-1">{{product.description}}</p>
             <p class="fw-bold">${{product.price}}</p>
           </div>
           <div class="d-flex flex-column align-items-center justify-content-center px-3">
-            <div class="d-inline-flex justify-content-center border border-black rounded-3">
+            <div class="d-inline-flex justify-content-center border border-black rounded-pill">
               <div class="flex-row btn-group align-items-center">
                 <button class="btn-light border-0 bg-transparent" (click)="decrement(product.id)">-</button>
                 <span class="mx-3">{{ product.count }}</span>
                 <button class="btn-light border-0 bg-transparent" (click)="increment(product.id)">+</button>
               </div>
             </div>
-            <p class="text-orange d-flex align-items-center gap-1 fw-bold">
+            <p class="text-orange d-flex align-items-center gap-1 fw-bold mt-3">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill"
                 viewBox="0 0 16 16">
                 <path
@@ -45,22 +44,21 @@
       @for (product of newProducts; track $index || product.id) {
       <!-- inicio de la card -->
       <div class="d-inline-flex gap-2 shadow max-container mb-4">
-        <img src="{{product.img}}" alt="image-burger"
-          class="align-items-center img-fluid mx-2 my-2 rounded-4 image-size">
+        <img src="{{product.img}}" alt="image-burger" class="my-auto rounded-4 image-size">
         <div>
           <p class="mb-1 fw-semibold">{{product.name}}</p>
           <p class="fs-7 fw-medium mb-1">{{product.description}}</p>
           <p class="fw-bold">${{product.price}}</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center px-3">
-          <div class="d-inline-flex justify-content-center border border-black rounded-3">
+          <div class="d-inline-flex justify-content-center border border-black rounded-pill">
             <div class="flex-row btn-group align-items-center">
               <button class="btn-light border-0 bg-transparent" (click)="decrement(product.id)">-</button>
               <span class="mx-3">{{ product.count }}</span>
               <button class="btn-light border-0 bg-transparent" (click)="increment(product.id)">+</button>
             </div>
           </div>
-          <p class="text-orange d-flex align-items-center gap-1 fw-bold">
+          <p class="text-orange d-flex align-items-center gap-1 fw-bold mt-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill"
               viewBox="0 0 16 16">
               <path
@@ -74,14 +72,14 @@
       }
     </div>
   </div>
-  <div class="col-lg-3 mt-3"> provident.
-    Minus itaque nulla impedit, illum perferendis laborum ullam suscipit voluptate saepe facilis eveniet tenetur
-    assumenda fugiat nisi sequi repellat porro ea? Fuga deleniti nostrum commodi accusamus ipsam magni modi officia?
-    Libero beatae ut veniam unde id optio, labore magni accusamus praesentium in odit reprehenderit dolorum quisquam
-    rerum ad veritatis quasi ipsa provident quo illum distinctio hic ex nulla. Repellendus, quaerat?
-    Suscipit optio, excepturi odit recusandae ut eligendi, rem mollitia architecto quo repudiandae, et laborum quae
-    earum laboriosam! Aperiam non ipsa similique, enim deleniti ea doloremque sunt reiciendis placeat quos rem.
-    Nisi, asperiores dicta beatae placeat, rerum vel illo necessitatibus maxime laudantium a voluptatum dolore,
-    inventore quidem consequatur? Sunt sed officia facere ad nihil! Nam assumenda, cupiditate sequi atque fuga quasi?
-  </div>
+  <app-modal-buy class="col-lg-3 mt-3"
+  [products]="newProducts"
+  [incrementMethod]="increment.bind(this)"
+  [decrementMethod]="decrement.bind(this)"
+  [deleteMethod]="deleteProduct.bind(this)"
+  [cantidadDeProductosCarrito]="cantidadDeProductosCarrito"
+  [totalPriceProduct]="precioTotalProductos"
+  [priceTotal]="totalFinal"
+  [priceDelivery]="priceDelivery"
+  />
 </section>
