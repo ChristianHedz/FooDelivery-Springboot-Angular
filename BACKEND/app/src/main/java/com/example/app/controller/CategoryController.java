@@ -35,10 +35,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private CategoryMapper categoryMapper;
-
-
     @Operation(summary = "Create a new category", description = "Create a new category.")
     @ApiResponses(value = {
             @ApiResponse(
