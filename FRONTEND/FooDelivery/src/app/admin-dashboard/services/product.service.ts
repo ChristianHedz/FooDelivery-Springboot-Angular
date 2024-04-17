@@ -18,7 +18,7 @@ export class ProductService {
 
   private productApiService = inject(ProductApiService);
   private router = inject(Router);
-  private confirmationService = inject(ConfirmationService);
+  public confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
 
   products = signal<any[]>([]);
@@ -73,7 +73,6 @@ export class ProductService {
 
   confirmDeleteProduct(id: number | undefined) {
     if (id === undefined) return;
-    console.log('id', id);
 
     return this.confirmationService.confirm({
       target: document.body,
@@ -160,6 +159,15 @@ export class ProductService {
       .addPromoToProduct(idProduct, idPromo)
       .pipe(map((response) => response ));
   }
+
+  public deletePromoFromProduct(productId: number) {
+    return this.productApiService.deletePromoFromProduct(productId).pipe(
+      catchError(({ error }) => {
+        console.log('Error al eliminar la promocion del producto: ', error);
+        return throwError( () => "Error al eliminar la promocion del producto");
+      })
+    );
+  };
 
   private goRouteUpdate(id: number) {
     this.router.navigate([

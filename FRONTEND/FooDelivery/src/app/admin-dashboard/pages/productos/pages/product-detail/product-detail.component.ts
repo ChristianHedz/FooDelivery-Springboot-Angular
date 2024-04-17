@@ -20,6 +20,7 @@ import {TooltipModule} from "primeng/tooltip";
 import {AddPromoDialogComponent} from "../../../../components/add-promo-dialog/add-promo-dialog.component";
 import {PromotionService} from "../../../../services/promotion.service";
 import {BadgeModule} from "primeng/badge";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-detail',
@@ -70,7 +71,7 @@ export default class ProductDetailComponent implements OnInit {
 
   // Signals
   public product = signal<IProductDTO | null>(null);
-  public promotion = signal<IPromDto | undefined>(undefined);
+  public promotion = signal<IPromDto | null>(null);
 
   constructor( private productService: ProductService, private promotionService: PromotionService) {
     this.productId = this.route.snapshot.paramMap.get('id');
@@ -98,7 +99,7 @@ export default class ProductDetailComponent implements OnInit {
     }
   }
 
-  confirmDeleteUser() {
+  confirmDeleteProduct() {
     this.productService.confirmDeleteProduct(this.product()!.id);
   }
 
@@ -121,6 +122,7 @@ export default class ProductDetailComponent implements OnInit {
         next: (res) => {
 
           if( res.promotion === null) {
+            this.promotion.set(null);
             this.messagePromoSignal.set([{severity: 'info', summary: 'Sin promoción', detail: 'Agregue una promoción.'}]);
             return;
           }
@@ -151,6 +153,51 @@ export default class ProductDetailComponent implements OnInit {
   onNewPromo(prom: IPromDto) {
     this.messagePromoSignal.set([{severity: 'success', summary: `${prom.code}.`, detail: `${prom.description}`}]);
     this.promotion.set(prom);
+  }
+
+  deletePromo() {
+    if (this.promotion() === null) return;
+    this.confirmDeletePromoFromProduct(this.product()!.id);
+  }
+
+  confirmDeletePromoFromProduct(id: number | undefined) {
+
+    if (id === undefined) return;
+
+    return this.productService.confirmationService.confirm({
+      target: document.body,
+      message: '¿Estas seguro de que quieres eliminar la promocion?',
+      header: 'Eliminar la promocion del producto',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => this.productService.deletePromoFromProduct(id)
+        .pipe(
+          tap(() => {
+            this.promotion.set(null);
+            this.messagePromoSignal.set([{severity: 'info', summary: 'Sin promoción', detail: 'Agregue una promoción.'}]);
+          })
+          )
+        .subscribe({
+        next: (response) => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Promocion eliminada del producto!',
+            detail: "El producto esta ya sin promocion.",
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: 'Error al eliminar la promocion del producto',
+            detail: error,
+          });
+        },
+      }),
+    });
   }
 
 }

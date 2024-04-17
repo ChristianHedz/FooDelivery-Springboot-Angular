@@ -52,4 +52,8 @@ export class ProductApiService {
       { headers: this.authService.addTokenToHeaders() }
     );
   }
+
+  deletePromoFromProduct(productId: number) {
+    return this.http.delete<void>(`${this.url}/products/${productId}/promotion`, { headers: this.authService.addTokenToHeaders() });
+  }
 }
