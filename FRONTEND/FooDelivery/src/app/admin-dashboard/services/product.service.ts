@@ -4,7 +4,7 @@ import { ProductApiService } from "../../core/api/product-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IProductDTO} from "../interfaces/product.interface";
+import {IProductDTO, IProductWithPromoDTO} from "../interfaces/product.interface";
 
 interface State {
   products: any[],
@@ -18,7 +18,7 @@ export class ProductService {
 
   private productApiService = inject(ProductApiService);
   private router = inject(Router);
-  private confirmationService = inject(ConfirmationService);
+  public confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
 
   products = signal<any[]>([]);
@@ -73,7 +73,6 @@ export class ProductService {
 
   confirmDeleteProduct(id: number | undefined) {
     if (id === undefined) return;
-    console.log('id', id);
 
     return this.confirmationService.confirm({
       target: document.body,
@@ -148,6 +147,27 @@ export class ProductService {
         }
       );
   }
+
+  getPromoFromProduct(id: number): Observable<IProductWithPromoDTO> {
+    return this.productApiService
+      .getPromoFromProduct(id)
+      .pipe(map((response) => response));
+  }
+
+  addPromoToProduct(idProduct: number, idPromo: number): Observable<any> {
+    return this.productApiService
+      .addPromoToProduct(idProduct, idPromo)
+      .pipe(map((response) => response ));
+  }
+
+  public deletePromoFromProduct(productId: number) {
+    return this.productApiService.deletePromoFromProduct(productId).pipe(
+      catchError(({ error }) => {
+        console.log('Error al eliminar la promocion del producto: ', error);
+        return throwError( () => "Error al eliminar la promocion del producto");
+      })
+    );
+  };
 
   private goRouteUpdate(id: number) {
     this.router.navigate([

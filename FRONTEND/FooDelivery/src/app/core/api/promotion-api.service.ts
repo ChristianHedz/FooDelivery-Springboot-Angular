@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {catchError, Observable, of, throwError} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IPromDto, IPromReq} from "../../admin-dashboard/interfaces/promotion.interface";
+import {IPromDto, IPromoWithProducts, IPromReq} from "../../admin-dashboard/interfaces/promotion.interface";
 import {tap} from "rxjs/operators";
 
 @Injectable({
@@ -50,6 +50,10 @@ export class PromotionApiService {
 
   getAllPromotions(): Observable<any> {
     return this.http.get<any>(`${this.url}/promotions/list`, { headers: this.authService.addTokenToHeaders() });
+  }
+
+  getProductsFromPromo( id: number ): Observable<IPromoWithProducts> {
+    return this.http.get<IPromoWithProducts>(`${this.url}/promotions/${ id }/products`);
   }
 
 }
