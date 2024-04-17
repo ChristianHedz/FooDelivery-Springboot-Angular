@@ -1,21 +1,23 @@
 package com.example.app.service;
 
+import com.example.app.dto.category.CategoryDTO;
+import com.example.app.dto.category.CategoryUpdateDTO;
 import com.example.app.model.Category;
-import com.example.app.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
 
 
-    List<Category> findAll();
+    Page<CategoryDTO> findAll(Pageable pageable);
 
-    Optional<Category> findById(Long id);
+    Optional<CategoryDTO> findById(Long id);
 
-    Category save(Category category);
+    CategoryDTO save(CategoryDTO categoryDTO);
 
-    Optional<Category> update(Long id, Category category);
+    Optional<Category> update(Long id, CategoryUpdateDTO categoryUpdateDTO);
 
-    Optional<Category> delete(Long id);
+    void delete(Long id);
 }
