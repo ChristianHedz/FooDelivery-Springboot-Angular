@@ -1,16 +1,14 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { MainContentService } from './services/main-content.service';
-import { Observable, of } from 'rxjs';
+import { RouterModule } from '@angular/router';
 import { IProductDTO } from '../admin-dashboard/interfaces/product.interface';
+import { MainContentService } from './services/main-content.service';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
   templateUrl: './main-content.component.html',
   styleUrls: ['./main-content.component.css'],
-  imports: [AsyncPipe],
+  imports: [RouterModule],
 })
 export class MainContentComponent implements OnInit{
   mainService = inject(MainContentService);
