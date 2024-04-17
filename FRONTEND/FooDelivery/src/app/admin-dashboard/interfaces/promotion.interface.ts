@@ -1,4 +1,5 @@
 import {FormControl} from "@angular/forms";
+import {IProduct} from "./product.interface";
 
 export interface IPromReq {
   id?: number,
@@ -19,4 +20,14 @@ export interface IFormProm {
   description: FormControl<string>;
   code: FormControl<string>;
   percentage: FormControl<number>;
+}
+
+export interface IPromoWithProducts {
+  isError:     boolean;
+  id:          number;
+  description: string;
+  code:        string;
+  percentage:  number;
+  active:      boolean;
+  products:    IProduct[];
 }

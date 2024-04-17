@@ -16,6 +16,11 @@ import {ImageModule} from "primeng/image";
 import {IPromDto} from "../../../../interfaces/promotion.interface";
 import {PromotionService} from "../../../../services/promotion.service";
 import {BadgeModule} from "primeng/badge";
+import {TooltipModule} from "primeng/tooltip";
+import {AddPromoDialogComponent} from "../../../../components/add-promo-dialog/add-promo-dialog.component";
+import {TableProductsPromoComponent} from "../../../../components/table-products-promo/table-products-promo.component";
+import {IProduct} from "../../../../interfaces/product.interface";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-promotion-detail',
@@ -36,6 +41,9 @@ import {BadgeModule} from "primeng/badge";
     CurrencyPipe,
     ImageModule,
     BadgeModule,
+    TooltipModule,
+    AddPromoDialogComponent,
+    TableProductsPromoComponent,
   ],
   templateUrl: './promotion-detail.component.html',
   styleUrl: './promotion-detail.component.css',
@@ -48,23 +56,26 @@ export default class PromotionDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private router = inject(Router);
+  private promotionService = inject(PromotionService);
 
-  messageNotData = [
+  messageData = signal([
     { severity: 'info', summary: 'Sin informacion ', detail: '' },
-  ];
+  ]);
 
   // Variables
   public promoId: string | null = null;
 
   // Signals
   public promotion = signal<IPromDto | null>(null);
-  public percentage = signal<string>('0%');
+  public percentage = signal<string>('0%');// Inputs
+  public products = signal<IProduct[]>([]);
 
   constructor( private promoService: PromotionService ) {
     this.promoId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+
     if (this.promoId) {
       const id = Number(this.promoId);
       this.promoService
@@ -74,10 +85,14 @@ export default class PromotionDetailComponent implements OnInit {
           next: (promo) => {
             this.percentage.set(promo.percentage + '%');
             this.promotion.set(promo);
+            this.messageData.set([
+              { severity: 'info', summary: 'Cargando... ', detail: '' },
+            ]);
+            this.getProducts();
           },
           error: (err) => {
             console.error('Error: ', {...err});
-            this.showMessage(`No se pudo obtener datos de la promocion.`, 'error', 'Ocurrio un error');
+            this.showMessage(`No se pudo obtener datos de la promoción.`, 'error', 'Ocurrio un error');
             setTimeout(() => {
               this.router.navigate(['/admin/dashboard/promociones']);
             }, 1200);
@@ -96,5 +111,26 @@ export default class PromotionDetailComponent implements OnInit {
       summary: summary,
       detail: message,
     });
+  }
+
+  updateProducts() {
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.promotionService.getProductsFromPromo(this.promotion()!.id).pipe(
+      tap(res => this.products.set(res.products))
+    ).subscribe({
+      error: (err) => {
+        console.error(err);
+        this.messageData.set([
+          { severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los productos' },
+        ]);
+      }
+    });
+  }
+
+  getMessage() {
+    return this.messageData();
   }
 }
