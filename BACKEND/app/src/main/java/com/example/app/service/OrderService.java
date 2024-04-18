@@ -1,6 +1,8 @@
 package com.example.app.service;
 
 import com.example.app.dto.order.AddProductInOrderDTO;
+import com.example.app.dto.order.OrderCreatedDTO;
+import com.example.app.dto.order.OrderRequestDTO;
 import com.example.app.model.Order;
 import com.example.app.model.Product;
 import org.springframework.http.ResponseEntity;
@@ -22,4 +24,5 @@ public interface OrderService {
 
     Optional<Order> delete(Long id);
 
+    OrderCreatedDTO createOrder(OrderRequestDTO orderRequestDTO);
 }

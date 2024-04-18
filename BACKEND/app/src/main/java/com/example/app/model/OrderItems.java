@@ -10,22 +10,22 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItems {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long id;
 
     private BigDecimal price;
 
     private Long quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    /*@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
@@ -37,7 +37,7 @@ public class OrderItems {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Order order;*/
 
 
 
