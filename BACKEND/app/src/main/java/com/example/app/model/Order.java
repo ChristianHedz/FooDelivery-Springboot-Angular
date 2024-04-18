@@ -3,12 +3,9 @@ package com.example.app.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -44,6 +41,10 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
+    private Promotion promotion;
 
     /*@ManyToOne
     @JoinColumn(name = "promotion_id")

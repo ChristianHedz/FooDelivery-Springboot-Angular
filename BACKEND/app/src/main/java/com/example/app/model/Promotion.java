@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,7 +32,7 @@ public class Promotion {
 
     @OneToMany(mappedBy = "promotion")
     @JsonManagedReference
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/
     public void addProduct(Product product) {
@@ -42,5 +43,20 @@ public class Promotion {
     public void removeProduct(Product product) {
         product.setPromotion(null);
         this.products.remove(product);
+    }
+
+    @OneToMany(mappedBy = "promotion")
+    @JsonManagedReference
+    private List<Order> orders = new ArrayList<>();
+
+    //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        order.setPromotion(this);
+    }
+
+    public void removeOrder(Order order) {
+        order.setPromotion(null);
+        this.orders.remove(order);
     }
 }

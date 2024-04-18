@@ -1,5 +1,6 @@
 package com.example.app.dto.order;
 
+import com.example.app.dto.promotion.PromotionDto;
 import com.example.app.dto.user.SignedUserDTO;
 import com.example.app.dto.user.UserWithAddressDTO;
 import com.example.app.model.PaymentMethod;
@@ -21,7 +22,8 @@ public record OrderCreatedDTO(
   PaymentMethod paymentMethod,
   Date createdAt,
   Date updatedAt,
-  UserWithAddressDTO user
+  UserWithAddressDTO user,
+  PromotionDto promotion
 
 ) implements Serializable {
 }

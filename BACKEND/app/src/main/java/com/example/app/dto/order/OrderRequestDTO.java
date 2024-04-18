@@ -20,7 +20,9 @@ public record OrderRequestDTO(
   @NotNull(message = "La fecha de creacion de la orden es requerida") Date createdAt,
 
   @Valid
-  @NotNull(message = "El ID del usuario es requerido") UserToSaveOrder user
+  @NotNull(message = "El ID del usuario es requerido") UserToSaveOrder user,
+
+  PromotionToSaveOrder promotion
 
 ) implements Serializable {
 }

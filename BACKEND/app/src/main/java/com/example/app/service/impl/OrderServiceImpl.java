@@ -3,18 +3,15 @@ package com.example.app.service.impl;
 import com.example.app.dto.order.AddProductInOrderDTO;
 import com.example.app.dto.order.OrderCreatedDTO;
 import com.example.app.dto.order.OrderRequestDTO;
+import com.example.app.exception.promotion.PromotionNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.OrderMapper;
-import com.example.app.model.Order;
-import com.example.app.model.OrderItems;
-import com.example.app.model.Product;
-import com.example.app.model.User;
+import com.example.app.model.*;
 import com.example.app.repository.OrderRepository;
-import com.example.app.repository.ProductRepository;
+import com.example.app.repository.PromotionRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +25,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
-    private final ProductRepository productRepository;
     private final OrderMapper orderMapper;
+    private final PromotionRepository promotionRepository;
 
 
     @Override
@@ -70,8 +67,13 @@ public class OrderServiceImpl implements OrderService {
         User user = userRepository.findById(orderRequestDTO.user().id())
           .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
 
+        Promotion promotion = promotionRepository.findById(orderRequestDTO.promotion().id())
+          .orElseThrow(() -> new PromotionNotFoundException("Promotion not found in the database"));
+
         Order order = orderMapper.toEntity(orderRequestDTO);
+
         user.addOrder(order);
+        promotion.addOrder(order);
 
         return orderMapper.orderToOrderCreatedDTO(orderRepository.save(order));
     }
