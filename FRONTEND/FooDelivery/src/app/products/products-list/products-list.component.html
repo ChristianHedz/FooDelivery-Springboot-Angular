@@ -7,7 +7,7 @@
   <div class="col container-fluid mx-3 mt-3">
     <h3 class="fw-bold fs-2">Nuestras hamburguesas</h3>
     <p class="fw-medium fs-4 mt-4">Promos</p>
-    <div class="d-flex flex-wrap justify-content-evenly gap-2 mb-5">
+    <div class="row justify-content-evenly gap-2 mb-5">
       @for (product of newProducts; track $index || product.id) {
       @if ($index < 2) { <!-- inicio de la card -->
         <div class="d-inline-flex gap-2 shadow max-container mb-4">
@@ -40,7 +40,7 @@
         }
     </div>
     <h3 class="fw-medium fs-4 mb-3">Hamburguesas</h3>
-    <div class="d-flex flex-wrap justify-content-evenly gap-2 mb-5">
+    <div class="row justify-content-evenly gap-2 mb-5">
       @for (product of newProducts; track $index || product.id) {
       <!-- inicio de la card -->
       <div class="d-inline-flex gap-2 shadow max-container mb-4">
