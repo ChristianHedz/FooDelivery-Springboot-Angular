@@ -18,70 +18,55 @@
             <p class="card-text text-center mb-2">Tu orden estará siendo procesada, en 30 minutos</p>
             <p class="card-text text-center mb-4">Tendrás tu pedido en tu domicilio.</p>
             <div class="row">
-              <div class="col-md-6">
+
+              <div class="col-md-12">
+                <div class="d-flex justify-content-end pe-4 fw-bolder fs-5">Precio</div>
+              </div>
+
+              <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <img src="https://source.unsplash.com/1100x800/?burger" class="card-img" alt="Burger">
+                    <div class="col-md-2">
+                      <img src="https://source.unsplash.com/1100x800/?burger" class="card-img img-fluid w-100 h-100" alt="Burger">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4 col-xl-6">
                       <div class="card-body">
-                        <h5 class="card-title">Triple burger</h5>
-                        <p class="card-text">$10.99</p>
+                        <h6 class="card-title">Triple burger</h6>
+                        <p class="fw-light">Ingredientes de la hamburguesa</p>
                       </div>
+                    </div>
+                    <div class="col-md-3 col-xl-2">
+                      <div class="card-body">
+                        <h6 class="card-title text-center">Cantidad</h6>
+                        <p class="card-text text-center fw-light">10</p>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xl-2 m-auto text-orange-400">
+                        <p class="card-text text-center text-orange">$17000</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="card mb-3">
-                  <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <img src="https://source.unsplash.com/1100x800/?burger" class="card-img" alt="Burger">
-                    </div>
-                    <div class="col-md-8">
+
+              <div class="col-md-12">
+                <div class="card ">
+                  <div class="row">
+                    <div class="col-md-6 col-xl-8"></div>
+                    <div class="col-md-3 col-xl-2">
                       <div class="card-body">
-                        <h5 class="card-title">Triple burger</h5>
-                        <p class="card-text">$10.99</p>
+                        <h6 class="card-title text-center fw-bold">Total</h6>
                       </div>
+                    </div>
+                    <div class="col-md-3 col-xl-2 m-auto text-orange-400">
+                      <p class="card-text text-center text-orange">$17000</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="card mb-3">
-                  <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <img src="https://source.unsplash.com/1100x800/?burger" class="card-img" alt="Burger">
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-title">Triple burger</h5>
-                        <p class="card-text">$10.99</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card mb-3">
-                  <div class="row no-gutters">
-                    <div class="col-md-4">
-                      <img src="https://source.unsplash.com/1100x800/?burger" class="card-img" alt="Fries">
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-title">Papas fritas</h5>
-                        <p class="card-text">$4.99</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
             </div>
-            <div class="text-right">
-              <p class="mb-0">Total: $15.98</p>
-              <button class="btn btn-warning" (click)="paypalPayment()">Confirmar</button>
+            <div class="text-right d-flex justify-content-center my-4">
+              <button class="btn btn-warning text-white p-2" (click)="paypalPayment()">Ir al Seguimiento</button>
             </div>
           </div>
         </div>
