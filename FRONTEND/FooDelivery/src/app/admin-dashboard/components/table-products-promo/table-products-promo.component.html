@@ -1,0 +1,24 @@
+<div class="card">
+  <p-table [value]="products" [paginator]="true" [rows]="products.length" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Imagen</th>
+        <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="price">Precio <p-sortIcon field="price"></p-sortIcon></th>
+        <th>Ver</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td style="width: 15%; min-width: 5rem;">
+          <img src="{{product.img}}" class="shadow-4" alt="{{product.name}}" width="70">
+        <td style="width: 35%; min-width: 7rem;">{{product.name}}</td>
+        <td style="width: 35%; min-width: 8rem;">{{product.price | currency }}</td>
+        <td style="width: 15%;">
+          <button (click)="routeProductToDetail(product.id)" pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
+        </td>
+      </tr>
+<!--      </a>-->
+    </ng-template>
+  </p-table>
+</div>

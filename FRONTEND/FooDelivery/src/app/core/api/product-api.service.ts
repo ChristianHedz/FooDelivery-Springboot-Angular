@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IFormProduct, IProductDTO} from "../../admin-dashboard/interfaces/product.interface";
+import {IFormProduct, IProductDTO, IProductWithPromoDTO} from "../../admin-dashboard/interfaces/product.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,21 @@ export class ProductApiService {
   }
 
   getAllProducts(): Observable<IProductDTO[]> {
-    return this.http.get<any>(`${this.url}/products`, { headers: this.authService.addTokenToHeaders() });
+    return this.http.get<any>(`${this.url}/products`);
   }
 
+  getPromoFromProduct(productId: number): Observable<IProductWithPromoDTO> {
+    return this.http.get<IProductWithPromoDTO>(`${this.url}/products/${productId}/promotion`);
+  }
+
+  addPromoToProduct(idProduct: number, idPromo: number) {
+    return this.http.post(`${this.url}/products/${idProduct}/promotion/${idPromo}`,
+      null,
+      { headers: this.authService.addTokenToHeaders() }
+    );
+  }
+
+  deletePromoFromProduct(productId: number) {
+    return this.http.delete<void>(`${this.url}/products/${productId}/promotion`, { headers: this.authService.addTokenToHeaders() });
+  }
 }
