@@ -6,6 +6,7 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { ProfileComponent } from './profile/profile.component';
 import {authGuardAdmin} from "./core/guards/authGuardAdmin";
 import {notAuthGuard} from "./core/guards/not-auth.guard";
+import { ContactComponent } from './shared/contact/contact.component';
 
 export const routes: Routes = [
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path:"profile", component:ProfileComponent},
     {path: "register", component: RegisterComponent,canActivate: [notAuthGuard] },
     {path: "products", component: ProductsListComponent},
+    {path:"contact", component:ContactComponent},
     {
       path:"admin",
       canMatch: [authGuardAdmin],
