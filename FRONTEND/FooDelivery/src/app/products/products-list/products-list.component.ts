@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../services/product.service';
 import { IProductDTO } from '../../admin-dashboard/interfaces/product.interface';
 import { ModalBuyComponent } from './modal-buy/modal-buy.component';
@@ -10,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
-  imports: [ProductDetailComponent, ModalBuyComponent, FormsModule],
+  imports: [ModalBuyComponent, FormsModule],
 })
 export class ProductsListComponent {
   private productService = inject(ProductService);
@@ -23,6 +22,7 @@ export class ProductsListComponent {
   priceDelivery: number = 500;
   showInput: boolean = false;
   address: string = 'Caseros 3445 (N)';
+  selectedProduct?: IProductDTO;
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -96,5 +96,9 @@ export class ProductsListComponent {
 
   submitAddress(): void {
     this.address;
+  }
+
+  openModal(product: IProductDTO): void {
+    this.selectedProduct = product;
   }
 }
