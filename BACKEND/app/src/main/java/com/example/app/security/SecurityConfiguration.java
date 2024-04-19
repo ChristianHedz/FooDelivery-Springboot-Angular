@@ -55,6 +55,8 @@ public class SecurityConfiguration {
                 .permitAll()
               .requestMatchers(HttpMethod.GET, "/products/{productId}/promotion")
                 .permitAll()
+              .requestMatchers(HttpMethod.GET, "/products/promotions")
+                .permitAll()
               .requestMatchers(HttpMethod.POST, "/products")
                     .permitAll()
                .requestMatchers(HttpMethod.GET, "/products")
