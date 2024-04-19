@@ -66,7 +66,7 @@ FOO DELIVERY........
 | ------------ | ------------ |
 
 
-| Pablo Ifantidis  | Angelo Biancotti  | David Gauthier  |
+| | Angelo Biancotti  | |
 | ------------ | ------------ | ------------ |
 | <img src="https://i.ibb.co/q5BHtkk/Foto-Angelo-CV.jpg" alt="Foto-Angelo-CV" border="0" width="200px" height="150px"> 
 | PM - Full Stack  | Tester  | Diseñador UX-UI  |
