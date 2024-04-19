@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -116,6 +117,28 @@ public class OrderController {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<OrderDto>> getUserOrderByAdmin(HttpServletRequest request, @PathVariable Long id) {
         return ResponseEntity.status(200).body(orderService.getUserOrderByAdmin(request, id));
+    }
+
+    @Operation(summary = "Delete order by ID", description = "Delete a order by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204", description = "Order deleted successfully",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {
+                    @Content}),
+            @ApiResponse(responseCode = "404", description = "Order not found", content = {
+                    @Content}),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
+                    @Content})
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 }
