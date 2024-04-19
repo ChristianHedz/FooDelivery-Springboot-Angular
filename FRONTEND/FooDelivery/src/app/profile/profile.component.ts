@@ -3,6 +3,8 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
+import { Order } from '../services/order';
+import { StatusOrder } from '../services/order';
 
 @Component({
   selector: 'app-profile',
@@ -21,13 +23,28 @@ export class ProfileComponent implements OnInit {
   editedProfileImage: string = ''; 
   showCurrentOrdersScreen: boolean = false;
   showOrderHistoryScreen: boolean = false;
+  currentOrders: Order[] = []; 
+  orderHistory: Order[] = []; 
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getUserProfile();
+    this.getUserOrders();
   }
 
+  getUserOrders(): void {
+    this.authService.getUserOrders().subscribe(
+      (orders: Order[]) => {
+        this.currentOrders = orders.filter(order => order.status !== StatusOrder.DELIVERED && order.status !== StatusOrder.CANCELED);
+        this.orderHistory = orders.filter(order => order.status === StatusOrder.DELIVERED || order.status === StatusOrder.CANCELED);
+      },
+      (error) => {
+        console.error('Error fetching user orders:', error);
+      }
+    );
+  }
+  
   getUserProfile(): void {
     this.authService.getUserProfile().subscribe(
       (user: User) => {
@@ -71,7 +88,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // Método para cancelar la edición y restablecer los valores originales
+ 
   cancelEdit(): void {
     this.isEditing = false;
     // Restablecer los valores originales
@@ -81,13 +98,11 @@ export class ProfileComponent implements OnInit {
     this.editedEmail = this.user?.email || '';
     
   }
- // Método para mostrar la pantalla de "Ordenes en Curso"
  showCurrentOrders(): void {
   this.showCurrentOrdersScreen = true;
   this.showOrderHistoryScreen = false;
 }
 
-// Método para mostrar la pantalla de "Historial de Pedidos"
 showOrderHistory(): void {
   this.showCurrentOrdersScreen = false;
   this.showOrderHistoryScreen = true;
