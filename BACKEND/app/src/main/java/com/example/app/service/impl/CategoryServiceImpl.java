@@ -3,6 +3,7 @@ package com.example.app.service.impl;
 
 import com.example.app.dto.category.CategoryDTO;
 import com.example.app.dto.category.CategoryUpdateDTO;
+import com.example.app.exception.category.CategoryNotFoundException;
 import com.example.app.mapper.CategoryMapper;
 import com.example.app.model.Category;
 import com.example.app.repository.CategoryRepository;
@@ -69,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void delete(Long id) {
                 Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + id));
 
         categoryRepository.delete(category);
     }
