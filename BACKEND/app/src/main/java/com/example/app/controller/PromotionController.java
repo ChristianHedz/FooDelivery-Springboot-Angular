@@ -209,8 +209,8 @@ public class PromotionController {
     }
 
     @Operation(
-      summary = "Get all products from one promotion.",
-      description = "Get all products with the same promotion."
+      summary = "Get all orderProducts from one promotion.",
+      description = "Get all orderProducts with the same promotion."
     )
     @ApiResponses(value = {
       @ApiResponse(

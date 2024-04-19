@@ -31,7 +31,7 @@ public class Promotion {
     private Boolean active;
 
     @OneToMany(mappedBy = "promotion")
-    @JsonManagedReference
+    @JsonManagedReference(value = "promotion")
     private List<Product> products = new ArrayList<>();
 
     //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/
@@ -46,7 +46,6 @@ public class Promotion {
     }
 
     @OneToMany(mappedBy = "promotion")
-    @JsonManagedReference
     private List<Order> orders = new ArrayList<>();
 
     //****** Helper Methods for Promotions: Keep Both Sides of the Association in SYNC.********/

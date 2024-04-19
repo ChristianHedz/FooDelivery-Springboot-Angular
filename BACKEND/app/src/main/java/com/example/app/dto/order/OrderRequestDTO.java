@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * DTO for {@link com.example.app.model.Order}
@@ -22,7 +23,8 @@ public record OrderRequestDTO(
   @Valid
   @NotNull(message = "El ID del usuario es requerido") UserToSaveOrder user,
 
-  PromotionToSaveOrder promotion
+  PromotionToSaveOrder promotion,
+  Set<ProductToSaveOrder> products
 
 ) implements Serializable {
 }

@@ -1,11 +1,12 @@
 package com.example.app.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -13,7 +14,6 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class Order {
 
     @Id
@@ -46,19 +46,40 @@ public class Order {
     @JoinColumn(name = "promotion_id", referencedColumnName = "id")
     private Promotion promotion;
 
-    /*@ManyToOne
-    @JoinColumn(name = "promotion_id")
-    private Promotion promotionId;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "order-orderproduct")
+    private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product productId;
+    //****** Helper Methods for OrderProducts: Keep Both Sides of the Association in SYNC.********/
+    public void addOrderProducts(OrderProduct orderProduct) {
+        this.orderProducts.add(orderProduct);
+        orderProduct.setOrder(this);
+    }
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user-id", referencedColumnName = "id")
-    private User user;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order order)) return false;
+        return Objects.equals(id, order.id) && Objects.equals(totalPrice, order.totalPrice) && status == order.status && paymentMethod == order.paymentMethod && Objects.equals(createdAt, order.createdAt) && Objects.equals(updatedAt, order.updatedAt) && Objects.equals(user, order.user) && Objects.equals(promotion, order.promotion) && Objects.equals(orderProducts, order.orderProducts);
+    }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderItems> orderItems;*/
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, totalPrice, status, paymentMethod, createdAt, updatedAt);
+    }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+          "id=" + id +
+          ", totalPrice=" + totalPrice +
+          ", status=" + status +
+          ", paymentMethod=" + paymentMethod +
+          ", createdAt=" + createdAt +
+          ", updatedAt=" + updatedAt +
+          ", user=" + user +
+          ", promotion=" + promotion +
+          ", orderProducts=" + orderProducts +
+          '}';
+    }
 }

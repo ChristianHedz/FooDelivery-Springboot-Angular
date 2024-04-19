@@ -1,17 +1,23 @@
 package com.example.app.service.impl;
 
 import com.example.app.dto.order.AddProductInOrderDTO;
-import com.example.app.dto.order.OrderCreatedDTO;
+import com.example.app.dto.order.OrderDto;
 import com.example.app.dto.order.OrderRequestDTO;
+import com.example.app.exception.product.ProductNotFoundException;
 import com.example.app.exception.promotion.PromotionNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.OrderMapper;
 import com.example.app.model.*;
 import com.example.app.repository.OrderRepository;
+import com.example.app.repository.ProductRepository;
 import com.example.app.repository.PromotionRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.service.OrderService;
+import com.example.app.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
     private final PromotionRepository promotionRepository;
+    private final ProductRepository productRepository;
+    private final UserService userService;
 
 
     @Override
@@ -63,18 +71,60 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderCreatedDTO createOrder(OrderRequestDTO orderRequestDTO) {
+    public OrderDto createOrder(OrderRequestDTO orderRequestDTO) {
         User user = userRepository.findById(orderRequestDTO.user().id())
           .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+        user.getOrders().size();
 
-        Promotion promotion = promotionRepository.findById(orderRequestDTO.promotion().id())
-          .orElseThrow(() -> new PromotionNotFoundException("Promotion not found in the database"));
+        Promotion promotion = null;
+        if( orderRequestDTO.promotion() != null) {
+            promotion = promotionRepository.findById(orderRequestDTO.promotion().id())
+              .orElseThrow(() -> new PromotionNotFoundException("Promotion not found in the database"));
+
+            promotion.getOrders().size();
+        }
 
         Order order = orderMapper.toEntity(orderRequestDTO);
 
         user.addOrder(order);
-        promotion.addOrder(order);
 
-        return orderMapper.orderToOrderCreatedDTO(orderRepository.save(order));
+        if( promotion != null)
+            promotion.addOrder(order);
+
+        /*Find orderProducts by Id and add them to OrderProduct */
+        orderRequestDTO.products().forEach( product -> {
+
+            Product productEntity = productRepository.findById(product.id())
+              .orElseThrow(() -> new ProductNotFoundException("Product not found in the database"));
+
+            OrderProduct orderProduct = new OrderProduct();
+            orderProduct.setProduct(productEntity);
+            orderProduct.setQuantity(product.quantity());
+            order.addOrderProducts(orderProduct);
+            productEntity.addOrderProducts(orderProduct);
+        });
+
+        return orderMapper.toDto(orderRepository.save(order));
     }
+
+    @Override
+    public Page<OrderDto> getAllOrdersByAdmin(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(orderMapper::toDto);
+    }
+
+    @Override
+    public List<OrderDto> getUserOrder(HttpServletRequest request) {
+        User user = userService.getUserByPhoneFromDatabase(request);
+
+        return orderRepository.findAllByUser(user).stream().map(orderMapper::toDto).toList();
+    }
+
+    @Override
+    public List<OrderDto> getUserOrderByAdmin(HttpServletRequest request, Long id) {
+        User user = userRepository.findById(id)
+          .orElseThrow(() -> new UserNotFoundException("User not found in the database"));
+
+        return orderRepository.findAllByUser(user).stream().map(orderMapper::toDto).toList();
+    }
+
 }
