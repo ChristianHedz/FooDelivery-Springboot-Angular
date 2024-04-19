@@ -14,18 +14,6 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    ResponseEntity<?> addProductToOrder(AddProductInOrderDTO addProductInOrderDTO);
-
-    List<Order> findAll();
-
-    Optional<Order> findById(Long id);
-
-    Order save(Order order);
-
-    Order update(Long id, Order order);
-
-    Optional<Order> delete(Long id);
-
     OrderDto createOrder(OrderRequestDTO orderRequestDTO);
 
     Page<OrderDto> getAllOrdersByAdmin(Pageable pageable);
@@ -33,4 +21,7 @@ public interface OrderService {
     List<OrderDto> getUserOrder(HttpServletRequest request);
 
     List<OrderDto> getUserOrderByAdmin(HttpServletRequest request, Long id);
+
+    void deleteOrder(Long id);
+
 }
