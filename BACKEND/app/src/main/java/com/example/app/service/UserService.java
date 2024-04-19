@@ -174,7 +174,7 @@ public class UserService {
      * @param request HttpServletRequest
      * @return User
      */
-    private User getUserByPhoneFromDatabase(HttpServletRequest request) {
+    public User getUserByPhoneFromDatabase(HttpServletRequest request) {
         String token = tokenService.getTokenFromHeader(request); //Get token from the header
         String userPhone = tokenService.getVerifier(token).getSubject(); //Get the user phone from the token
 

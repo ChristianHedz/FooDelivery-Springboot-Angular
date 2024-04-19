@@ -1,8 +1,12 @@
 package com.example.app.service;
 
 import com.example.app.dto.order.AddProductInOrderDTO;
+import com.example.app.dto.order.OrderDto;
+import com.example.app.dto.order.OrderRequestDTO;
 import com.example.app.model.Order;
-import com.example.app.model.Product;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,4 +26,11 @@ public interface OrderService {
 
     Optional<Order> delete(Long id);
 
+    OrderDto createOrder(OrderRequestDTO orderRequestDTO);
+
+    Page<OrderDto> getAllOrdersByAdmin(Pageable pageable);
+
+    List<OrderDto> getUserOrder(HttpServletRequest request);
+
+    List<OrderDto> getUserOrderByAdmin(HttpServletRequest request, Long id);
 }

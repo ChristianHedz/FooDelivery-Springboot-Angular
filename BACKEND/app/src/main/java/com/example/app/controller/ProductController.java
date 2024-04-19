@@ -114,7 +114,7 @@ public class ProductController {
     )
     @ApiResponses(value = {
       @ApiResponse(
-        responseCode = "204", description = "Not content. Promotion successfully remove it.",
+        responseCode = "201", description = "Promotion successfully  created.",
         content = {@Content}),
       @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
       @ApiResponse(responseCode = "404", description = "Product not found", content = {@Content}),
@@ -167,7 +167,7 @@ public class ProductController {
     )
     @ApiResponses(value = {
       @ApiResponse(
-        responseCode = "204", description = "Not content. Promotion successfully remove it.",
+        responseCode = "200", description = "Promotion successfully found it.",
         content = {@Content}),
       @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
       @ApiResponse(responseCode = "404", description = "Product not found", content = {@Content}),
@@ -179,5 +179,23 @@ public class ProductController {
     public ResponseEntity<ProductWithPromoDto> getProductWithPromotion(@PathVariable Long productId) {
         ProductWithPromoDto productWithPromoDto = service.getProductWithPromotion(productId);
         return ResponseEntity.status(200).body(productWithPromoDto);
+    }
+
+    @Operation(
+      summary = "Get all products with promotions.",
+      description = "Let a user without a token get all products with promotions."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "Products with promotions successfully found them.",
+        content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "Product not found", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "Promotion not found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @GetMapping("/promotions")
+    @SecurityRequirements()
+    public ResponseEntity<List<ProductWithPromoDto>> getProductsWithPromotions() {
+        return ResponseEntity.status(200).body(service.getProductsWithPromotions());
     }
 }

@@ -27,4 +27,5 @@ public interface ProductService {
 
     ProductWithPromoDto getProductWithPromotion(Long idProduct);
 
+    List<ProductWithPromoDto> getProductsWithPromotions();
 }

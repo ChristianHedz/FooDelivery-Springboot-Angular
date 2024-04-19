@@ -108,4 +108,11 @@ public class ProductServiceImpl implements ProductService {
 
         return productMapper.productToProductWithPromosDto(product);
     }
+
+    @Override
+    public List<ProductWithPromoDto> getProductsWithPromotions() {
+        return productRepository.findAllWithPromotion().stream()
+          .map(productMapper::productToProductWithPromosDto)
+          .toList();
+    }
 }
