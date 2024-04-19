@@ -100,7 +100,6 @@
 
 </div>
 </div>
-
 <div class="container">
   <!-- Botones del switch -->
   <div class="row mt-3">
@@ -115,15 +114,12 @@
         <div class="col-md-8" *ngIf="showCurrentOrdersScreen">
           <div class="card mb-3">
             <!-- Contenido de la primera pantalla -->
-            <p>Contenido de Ordenes en Curso</p>
-          </div>
-          <div class="card mb-3">
-            <!-- Contenido de la primera pantalla -->
-            <p>Contenido de Ordenes en Curso</p>
-          </div>
-          <div class="card mb-3">
-            <!-- Contenido de la primera pantalla -->
-            <p>Contenido de Ordenes en Curso</p>
+            <h3>Ordenes en Curso</h3>
+            <div *ngFor="let order of currentOrders">
+              <p>{{ order.id }}</p>
+              <p>Tiempo previsto de llegada en :  <!-- {{ order.deliveryTime }} --></p> <!-- Aquí deberías mostrar el tiempo previsto de llegada -->
+              <p>Estado: {{ order.status }}</p> <!-- Aquí deberías mostrar el estado de la orden -->
+            </div>
           </div>
         </div>
 
@@ -143,7 +139,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Aquí deberías iterar sobre tus datos y mostrar cada pedido en una fila de la tabla -->
+                  <tr *ngFor="let order of orderHistory">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.createdAt | date }}</td>
+                    <td>{{ order.totalPrice }}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
