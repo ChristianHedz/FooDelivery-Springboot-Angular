@@ -23,4 +23,11 @@ public class AddressExceptionHandler {
         ApplicationExceptionResponse errorResponse = ExceptionUtils.createResponse(HttpStatus.NOT_FOUND, req, errors);
         return ResponseEntity.status(404).body(errorResponse);
     }
+
+    @ExceptionHandler(AddressLimitException.class)
+    public ResponseEntity<ApplicationExceptionResponse> AddressLimitException(AddressLimitException ex, HttpServletRequest req){
+        Map<String, String> errors = new HashMap<>(Map.of(ex.getClass().getSimpleName(), ex.getMessage()));
+        ApplicationExceptionResponse errorResponse = ExceptionUtils.createResponse(HttpStatus.CONFLICT, req, errors);
+        return ResponseEntity.status(409).body(errorResponse);
+    }
 }
