@@ -47,7 +47,7 @@ public class InvoiceServiceImp implements InvoiceService{
         
         invoice.setAmount(updateInvoice.amount());
         invoice.setIdOrder(updateInvoice.idOrder());
-        invoice.setTolalPrice(updateInvoice.tolalPrice());
+        invoice.setTotalPrice(updateInvoice.totalPrice());
         invoice.setDateAndTime(updateInvoice.dateAndTime());
         invoice.setPayment(updateInvoice.payment());
         

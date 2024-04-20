@@ -18,7 +18,7 @@ public record InvoiceDto(
         
         @NotNull(message = "El precio total es requerido")
         @Positive(message = "El precio total debe ser un número positivo")
-        Double tolalPrice,
+        Double totalPrice,
         
         @NotNull(message = "La fecha y hora son requeridas")
         LocalDateTime dateAndTime,

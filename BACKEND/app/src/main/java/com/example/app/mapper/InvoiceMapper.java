@@ -13,9 +13,9 @@ public interface InvoiceMapper {
 
     @Mappings({
         @Mapping(source = "dateAndTime", target = "dateAndTime",
-                dateFormat = "yyyy-MM-dd' T 'HH:mm:ss")
+                dateFormat = "yyyy-MM-dd HH:mm:ss")
     })
-            
+
     Invoice toEntity(InvoiceDto invoiceDto);
 
     InvoiceDto ToDto(Invoice invoice);

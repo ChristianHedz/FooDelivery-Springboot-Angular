@@ -38,7 +38,7 @@ public class Invoice {
 //    private Order items;
 
     @Column(name = "Total_Price", nullable = false)
-    private Double tolalPrice;
+    private Double totalPrice;
 
     @Column(name = "Date_And_Time", nullable = false)
     private LocalDateTime dateAndTime;
