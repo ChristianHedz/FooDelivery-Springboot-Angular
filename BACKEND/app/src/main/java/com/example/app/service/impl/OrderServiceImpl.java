@@ -1,8 +1,8 @@
 package com.example.app.service.impl;
 
-import com.example.app.dto.order.AddProductInOrderDTO;
 import com.example.app.dto.order.OrderDto;
 import com.example.app.dto.order.OrderRequestDTO;
+import com.example.app.exception.order.OrderNotFoundException;
 import com.example.app.exception.product.ProductNotFoundException;
 import com.example.app.exception.promotion.PromotionNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
@@ -18,12 +18,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,38 +34,12 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final UserService userService;
 
-
-    @Override
-    public ResponseEntity<?> addProductToOrder(AddProductInOrderDTO addProductInOrderDTO) {
-        return null;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Order> findAll() {
-        return (List<Order>) orderRepository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
-    }
-
     @Override
     @Transactional
-    public Order save(Order order) {
-        return orderRepository.save(order);
-    }
-
-    @Override
-    public Order update(Long id, Order order) {
-        return null;
-    }
-
-    @Override
-    public Optional<Order> delete(Long id) {
-        return Optional.empty();
+    public void deleteOrder(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
+        orderRepository.delete(order);
     }
 
     @Override
