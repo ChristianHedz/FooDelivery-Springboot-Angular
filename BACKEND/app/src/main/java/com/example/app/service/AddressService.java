@@ -9,11 +9,12 @@ import java.util.List;
 
 public interface AddressService {
 
-    void registerAddress(AddressDTO addressDTO, HttpServletRequest request);
+    void registerAddress(AddressDTO addressDTO,
+                         HttpServletRequest request);
 
     AddressPublicDataDTO updateAddress(Long id, AddressUpdateDataDTO addressUpdateDataDTO);
 
-    List<AddressPublicDataDTO> findAllByUserId(Long id);
+    List<AddressPublicDataDTO> findAllByUserId(HttpServletRequest request);
 
     void deleteAddress(Long id);
 }

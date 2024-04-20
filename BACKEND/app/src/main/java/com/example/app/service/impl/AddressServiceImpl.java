@@ -4,12 +4,10 @@ import com.example.app.dto.address.AddressDTO;
 import com.example.app.dto.address.AddressPublicDataDTO;
 import com.example.app.dto.address.AddressUpdateDataDTO;
 import com.example.app.exception.address.AddressNotFoundException;
-import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.AddressMapper;
 import com.example.app.model.Address;
 import com.example.app.model.User;
 import com.example.app.repository.AddressRepository;
-import com.example.app.repository.UserRepository;
 import com.example.app.service.AddressService;
 import com.example.app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +26,6 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressMapper addressMapper;
 
-    private final UserRepository userRepository;
     private  final UserService userService;
 
     @Override
@@ -58,13 +55,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AddressPublicDataDTO> findAllByUserId(Long id) {
+    public List<AddressPublicDataDTO> findAllByUserId(HttpServletRequest request) {
+        User user = userService.getUserByPhoneFromDatabase(request);
 
-        userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException
-                        ("El usuario con id " + id + " no se encuentra registrado"));
-
-        List<Address> addresses = addressRepository.findAllByUserId(id);
+        List<Address> addresses = addressRepository.findAllByUserId(user.getId());
 
         return addressMapper.toAddressPublicDataDTO(addresses);
     }

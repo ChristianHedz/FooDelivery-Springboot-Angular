@@ -63,10 +63,10 @@ public class AddressController {
             @ApiResponse(responseCode = "404", description = "Unregistered user", content = {@Content}),
             @ApiResponse(responseCode = "500", description = "There is a database problem", content = {@Content})
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<List<AddressPublicDataDTO>> findAllAddressByUserId(
-            @PathVariable Long id) {
-        return ResponseEntity.ok().body(addressService.findAllByUserId(id));
+    @GetMapping()
+    public ResponseEntity<List<AddressPublicDataDTO>> findAllAddressByUser(
+            HttpServletRequest request) {
+        return ResponseEntity.ok().body(addressService.findAllByUserId(request));
     }
 
     @Operation(summary = "allows to update the addresses of a user",
