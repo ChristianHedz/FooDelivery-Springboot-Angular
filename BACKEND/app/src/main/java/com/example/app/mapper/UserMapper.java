@@ -1,6 +1,5 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.address.UserToSaveAddress;
 import com.example.app.dto.user.*;
 import com.example.app.model.User;
 import org.mapstruct.*;
@@ -20,8 +19,6 @@ public interface UserMapper {
     SignedUserGoogleDto userToSignedUserGoogleDto(User user);
 
     User toEntity(UserToLoginDto userToLoginDto);
-
-    User toEntity(UserToSaveAddress userToSaveAddress);
 
     UserToLoginDto userToUserToLoginDto(User user);
 
