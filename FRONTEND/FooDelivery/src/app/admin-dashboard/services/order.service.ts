@@ -130,9 +130,10 @@ export class OrderService {
   }
 
   getAllOrders() {
-    this.orderApiService.getAllOrdersOrders()
+    this.orderApiService.getAllOrders()
         .subscribe( {
           next: response => {
+            console.log('response: ', response);
             this.orders.set(response.content);
           },
           error: (error) => {
@@ -140,7 +141,7 @@ export class OrderService {
               key: 'toast',
               severity: 'error',
               summary: 'Error al obtener lista de ordenes',
-              detail: error,
+              detail: error.message ? error.message : 'Error desconocido'
             });
             return error;
           },

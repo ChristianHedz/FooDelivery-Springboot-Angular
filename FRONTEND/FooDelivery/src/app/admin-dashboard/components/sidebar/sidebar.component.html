@@ -10,13 +10,19 @@
         <div
           class="relative h-full w-full flex justify-content-center align-items-center"
         >
-          <img
-            alt="logo"
-            ngSrc="assets/LogoLogo.png"
-            class="pr-2"
-            height="36"
-            width="174"
-          />
+          <a
+            pRipple
+            [routerLink]="['/']"
+            class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
+          >
+            <img
+              alt="logo"
+              ngSrc="assets/LogoLogo.png"
+              class="pr-2"
+              height="36"
+              width="174"
+            />
+          </a>
         </div>
       </div>
       <!--menus-->
@@ -59,6 +65,7 @@
       <div class="mt-auto footer">
         <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
         <a
+          [routerLink]="['/profile']"
           pRipple
           class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
         >

@@ -38,8 +38,8 @@ export class OrderApiService {
     });
   }
 
-  getAllOrdersOrders(): Observable<any> {
-    return this.http.get<any>(`${this.url}/orders/list`, { headers: this.authService.addTokenToHeaders() });
+  getAllOrders(): Observable<any> {
+    return this.http.get<any>(`${this.url}/orders?size=10`, { headers: this.authService.addTokenToHeaders() });
   }
 
 }
