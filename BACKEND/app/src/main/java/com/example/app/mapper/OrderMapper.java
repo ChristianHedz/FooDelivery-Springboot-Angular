@@ -19,6 +19,7 @@ public interface OrderMapper {
 
     Order toEntity(OrderDto orderDto);
 
+    @Mapping(target = "products", source = "orderProducts")
     OrderDto toDto(Order order);
 
     @AfterMapping

@@ -23,7 +23,7 @@ public record OrderDto(
   Date updatedAt,
   UserWithAddressDTO user,
   PromotionDto promotion,
-  Set<OrderProductDto> orderProducts
+  Set<OrderProductDto> products
 
 ) implements Serializable {
 }
