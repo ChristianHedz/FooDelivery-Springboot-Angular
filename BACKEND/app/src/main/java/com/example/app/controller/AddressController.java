@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,8 @@ public class AddressController {
             @ApiResponse(responseCode = "500", description = "There is a database problem", content = {@Content})
     })
     @PostMapping
-    public ResponseEntity<?> registerAddress(@RequestBody @Valid AddressDTO addressDTO)
-            throws URISyntaxException {
-        addressService.registerAddress(addressDTO);
+    public ResponseEntity<?> registerAddress(@RequestBody @Valid AddressDTO addressDTO, HttpServletRequest request) throws URISyntaxException {
+        addressService.registerAddress(addressDTO, request);
         return ResponseEntity.created(new URI("/addresses")).build();
     }
 
@@ -94,7 +94,7 @@ public class AddressController {
     @Operation(summary = "allows to delete the addresses of a user",
             description = "you must add the id of the address to delete")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Addresses deleted successfully",content = {@Content}),
+            @ApiResponse(responseCode = "204", description = "Addresses deleted successfully", content = {@Content}),
             @ApiResponse(responseCode = "403", description = "Requires authentication/permission", content = {@Content}),
             @ApiResponse(responseCode = "404", description = "Unregistered address", content = {@Content}),
             @ApiResponse(responseCode = "500", description = "There is a database problem", content = {@Content})
