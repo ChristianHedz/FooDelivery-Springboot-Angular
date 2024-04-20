@@ -3,6 +3,7 @@ package com.example.app.controller;
 import com.example.app.dto.address.AddressDTO;
 import com.example.app.dto.address.AddressPublicDataDTO;
 import com.example.app.dto.address.AddressUpdateDataDTO;
+import com.example.app.exception.address.AddressLimitException;
 import com.example.app.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,8 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    private final int MAX_ADDRESSES = 3;
+
     @Operation(summary = "allows to register an address",
             description = "you must send a valid request body ")
     @ApiResponses(value = {
@@ -42,10 +46,17 @@ public class AddressController {
             @ApiResponse(responseCode = "400", description = "Valid data required", content = {@Content}),
             @ApiResponse(responseCode = "403", description = "Requires authentication/permission", content = {@Content}),
             @ApiResponse(responseCode = "404", description = "Unregistered user", content = {@Content}),
+            @ApiResponse(responseCode = "409", description = "Addresses limit", content = {@Content}),
             @ApiResponse(responseCode = "500", description = "There is a database problem", content = {@Content})
     })
     @PostMapping
     public ResponseEntity<?> registerAddress(@RequestBody @Valid AddressDTO addressDTO, HttpServletRequest request) throws URISyntaxException {
+
+        if (addressService.findAllByUserId(request).size() >= MAX_ADDRESSES) {
+            throw new AddressLimitException("El limite maximo de direcciones por usuario es de "+MAX_ADDRESSES+
+                    ". Por favor elimine una dirección existente si desea registrar una nueva.");
+        }
+
         addressService.registerAddress(addressDTO, request);
         return ResponseEntity.created(new URI("/addresses")).build();
     }
