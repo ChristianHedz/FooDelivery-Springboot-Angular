@@ -25,14 +25,14 @@
 
               <div class="col-md-12">
                 <div class="card mb-3">
-                  <div class="row no-gutters">
+                  <div class="row no-gutters" *ngFor="let product of products">
                     <div class="col-md-2">
                       <img src="https://source.unsplash.com/1100x800/?burger" class="card-img img-fluid w-100 h-100" alt="Burger">
                     </div>
                     <div class="col-md-4 col-xl-6">
                       <div class="card-body">
-                        <h6 class="card-title">Triple burger</h6>
-                        <p class="fw-light">Ingredientes de la hamburguesa</p>
+                        <h6 class="card-title">{{product.name}}</h6>
+                        <p class="fw-light">{{product.ingredients.join(', ')}}</p>
                       </div>
                     </div>
                     <div class="col-md-3 col-xl-2">
@@ -42,7 +42,7 @@
                       </div>
                     </div>
                     <div class="col-md-3 col-xl-2 m-auto text-orange-400">
-                        <p class="card-text text-center text-orange">$17000</p>
+                        <p class="card-text text-center text-orange">{{product.price}}</p>
                     </div>
                   </div>
                 </div>

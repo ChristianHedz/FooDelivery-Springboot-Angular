@@ -8,7 +8,7 @@ import { DataPayment } from '../common/data-payment';
   providedIn: 'root'
 })
 export class PaymentService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'https://foodelivery-d2d7a5204308.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
