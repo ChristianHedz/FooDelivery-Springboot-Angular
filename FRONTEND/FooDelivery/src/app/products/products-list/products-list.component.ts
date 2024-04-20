@@ -1,25 +1,28 @@
 import { Component, inject } from '@angular/core';
-import { ProductDetailComponent } from '../product-detail/product-detail.component';
 import { ProductService } from '../services/product.service';
 import { IProductDTO } from '../../admin-dashboard/interfaces/product.interface';
 import { ModalBuyComponent } from './modal-buy/modal-buy.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
-  imports: [ProductDetailComponent, ModalBuyComponent],
+  imports: [ModalBuyComponent, FormsModule],
 })
 export class ProductsListComponent {
   private productService = inject(ProductService);
   products: IProductDTO[] = [];
   newProducts: IProductDTO[] = [];
-  public carritoProducts: Map<number, IProductDTO> = new Map();
-  public cantidadDeProductosCarrito: number = 0;
-  public precioTotalProductos: number = 0;
-  public totalFinal: number = 0;
+  carritoProducts: Map<number, IProductDTO> = new Map();
+  cantidadDeProductosCarrito: number = 0;
+  precioTotalProductos: number = 0;
+  totalFinal: number = 0;
   priceDelivery: number = 500;
+  showInput: boolean = false;
+  address: string = 'Caseros 3445 (N)';
+  selectedProduct?: IProductDTO;
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -73,17 +76,29 @@ export class ProductsListComponent {
   deleteProduct(productId: number | undefined) {
     this.newProducts.forEach((product) => {
       if (product.count != undefined && product.id != undefined)
-      if (product.id === productId && product.count > 0) {
-        this.cantidadDeProductosCarrito -= product.count;
-        this.precioTotalProductos -= product.price * product.count;
-        product.count = 0;
-        this.carritoProducts.delete(productId);
-        this.updateTotal();
-      }
+        if (product.id === productId && product.count > 0) {
+          this.cantidadDeProductosCarrito -= product.count;
+          this.precioTotalProductos -= product.price * product.count;
+          product.count = 0;
+          this.carritoProducts.delete(productId);
+          this.updateTotal();
+        }
     });
   }
 
-  updateTotal() {
+  updateTotal(): void {
     this.totalFinal = this.precioTotalProductos + this.priceDelivery;
+  }
+
+  toggleInput(): void {
+    this.showInput = !this.showInput; // Cambia el estado de visibilidad
+  }
+
+  submitAddress(): void {
+    this.address;
+  }
+
+  openModal(product: IProductDTO): void {
+    this.selectedProduct = product;
   }
 }

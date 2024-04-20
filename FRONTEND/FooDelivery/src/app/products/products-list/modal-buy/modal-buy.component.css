@@ -11,3 +11,14 @@
 .text-orange {
   color: #EE9B01;
 }
+.fs-8 {
+  font-size: small;
+  color: #1E293B;
+  font-weight: 100;
+}
+.fs-7 {
+  font-size: small;
+  color: #EE9B01;
+  font-weight: 400;
+  text-decoration: underline;
+}
