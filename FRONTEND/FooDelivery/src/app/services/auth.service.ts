@@ -5,6 +5,7 @@ import { User } from '../services/user';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { socialUser } from './socialUser';
+import { Order } from './order';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,6 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     this.isLoggedInSubject.next(false);
   }
-
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
@@ -114,6 +114,21 @@ export class AuthService {
   updateUserProfile(user: User): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/users`, user, { headers: this.addTokenToHeaders() });
   }
+
+
+  getUserOrders(): Observable<Order[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.get<Order[]>(`${this.baseUrl}/orders/user`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al obtener las órdenes del usuario:', error);
+        throw error; 
+      })
+    );
+  }
+
 
   private getStorage(): Storage | null {
     if (typeof window !== 'undefined') {

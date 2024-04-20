@@ -6,53 +6,64 @@
       <form [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="row g-3 align-items-center">
 
-        <div class="row-container">
-        <img id="logoimg" src="../../../assets/logo.png">
-        <h1 class="row-g2 align-items-right"> FoodDelivery</h1>
-        </div>
-        <h4>¡Bienvenido de Nuevo!</h4>
-        <h6>¡Ingresá y disfrutá de una hamburguesa!</h6>
+          <div class="row-container">
+            <a routerLink="/home">
+              <img id="logoimg" src="../../../assets/logo.png">
+            </a>
+            <h1 class="row-g2 align-items-right"> FoodDelivery</h1>
+          </div>
+          <h4>¡Bienvenido de Nuevo!</h4>
+          <h6>¡Ingresá y disfrutá de una hamburguesa!</h6>
         </div>
         <!--email-->
         <div class="row g-3 align-items-center">
-        <div class="col-md-12" id="email">
-        <label for="inputEmail" class="col-form-label">Email</label>
-        <div class="input-group">
-        <input type="email" id="inputEmail" class="form-control" formControlName="email" placeholder="ejemplo@gmail.com">
-        <div *if="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-        <span class="form-text text-danger" *if="loginForm.get('email').errors?.required">Email is required</span>
-        <span class="form-text text-danger" *if="loginForm.get('email').errors?.email">Invalid email</span>
-        </div>
-        </div>
-        </div>
+          <div class="col-md-12" id="email">
+            <label for="inputEmail" class="col-form-label">Email</label>
+            <div class="input-group">
+              <input type="email" id="inputEmail" class="form-control" formControlName="email"
+                placeholder="ejemplo@gmail.com">
+              <div
+                *if="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <span class="form-text text-danger" *if="loginForm.get('email').errors?.required">Email is
+                  required</span>
+                <span class="form-text text-danger" *if="loginForm.get('email').errors?.email">Invalid email</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!--password-->
         <div class="row g-3 align-items-center">
-        <div class="col-md-12" id="password">
-        <label for="inputPassword" class="col-form-label">Contraseña</label>
-        <div class="input-group">
-        <input type="password" id="inputPassword" class="form-control" formControlName="password" placeholder="Enter your password">
-        <div *if="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-        <span class="form-text text-danger" *if="loginForm.get('password').errors?.required">Password is required</span>
-        <span class="form-text text-danger" *if="loginForm.get('password').errors?.minlength">Password must be at least 8 characters</span>
-        <span class="form-text text-danger" *if="loginForm.get('password').errors?.maxlength">Password cannot be more than 20 characters</span>
-        </div>
-        </div>
-        <span class="form-text"><!-- Must be 8-20 characters long. --></span>
-        </div>
+          <div class="col-md-12" id="password">
+            <label for="inputPassword" class="col-form-label">Contraseña</label>
+            <div class="input-group">
+              <input type="password" id="inputPassword" class="form-control" formControlName="password"
+                placeholder="Enter your password">
+              <div
+                *if="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.required">Password is
+                  required</span>
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.minlength">Password must be
+                  at least 8 characters</span>
+                <span class="form-text text-danger" *if="loginForm.get('password').errors?.maxlength">Password cannot be
+                  more than 20 characters</span>
+              </div>
+            </div>
+            <span class="form-text"><!-- Must be 8-20 characters long. --></span>
+          </div>
         </div>
 
         <!--contraseña olvidaste-->
-        <div class="row g-3 align-items-center mt-2" >
-        <div class="col-auto" style="margin-left: auto;"id="olvidaste">
-        <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto" style="margin-left: auto;" id="olvidaste">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
         </div>
         <div class="row g-3 mt-2" id="iniciar">
-        <div class="col-auto d-flex justify-content-center align-items-center" id="botonInit">
-        <button type="submit" class="btn-color btn btn-primary text-center" [disabled]="loginForm.invalid">Iniciar Sesión</button>
-        </div>
+          <div class="col-auto d-flex justify-content-center align-items-center" id="botonInit">
+            <button type="submit" class="btn-color btn btn-primary text-center" [disabled]="loginForm.invalid">Iniciar
+              Sesión</button>
+          </div>
         </div>
 
         <div class="separator mx-2 my-2">o</div>
@@ -62,33 +73,37 @@
 
         <!-- facebook -->
         <div class="">
-        <button type="button" class="btn btn-primary-light border w-50 m-auto my-2" (click)="facebookLogin()">
-        <svg width="20" height="20" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_268_959)">
-        <path d="M28.5 14.0625C28.5 6.33051 22.232 0.0625 14.5 0.0625C6.76801 0.0625 0.5 6.33051 0.5 14.0625C0.5 21.0502 5.61957 26.8421 12.3125 27.8924V18.1094H8.75781V14.0625H12.3125V10.9781C12.3125 7.46937 14.4027 5.53125 17.6005 5.53125C19.1318 5.53125 20.7344 5.80469 20.7344 5.80469V9.25H18.9691C17.23 9.25 16.6875 10.3293 16.6875 11.4375V14.0625H20.5703L19.9496 18.1094H16.6875V27.8924C23.3804 26.8421 28.5 21.0502 28.5 14.0625Z" fill="#1877F2"/>
-        <path d="M19.9496 18.1094L20.5703 14.0625H16.6875V11.4375C16.6875 10.3304 17.23 9.25 18.9691 9.25H20.7344V5.80469C20.7344 5.80469 19.1323 5.53125 17.6005 5.53125C14.4027 5.53125 12.3125 7.46938 12.3125 10.9781V14.0625H8.75781V18.1094H12.3125V27.8924C13.762 28.1192 15.238 28.1192 16.6875 27.8924V18.1094H19.9496Z" fill="white"/>
-        </g>
-        <defs>
-        <clipPath id="clip0_268_959">
-        <rect width="28" height="28" fill="white" transform="translate(0.5 0.0625)"/>
-        </clipPath>
-        </defs>
-        </svg>
-        Ingresar con Facebook</button>
+          <button type="button" class="btn btn-primary-light border w-50 m-auto my-2" (click)="facebookLogin()">
+            <svg width="20" height="20" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_268_959)">
+                <path
+                  d="M28.5 14.0625C28.5 6.33051 22.232 0.0625 14.5 0.0625C6.76801 0.0625 0.5 6.33051 0.5 14.0625C0.5 21.0502 5.61957 26.8421 12.3125 27.8924V18.1094H8.75781V14.0625H12.3125V10.9781C12.3125 7.46937 14.4027 5.53125 17.6005 5.53125C19.1318 5.53125 20.7344 5.80469 20.7344 5.80469V9.25H18.9691C17.23 9.25 16.6875 10.3293 16.6875 11.4375V14.0625H20.5703L19.9496 18.1094H16.6875V27.8924C23.3804 26.8421 28.5 21.0502 28.5 14.0625Z"
+                  fill="#1877F2" />
+                <path
+                  d="M19.9496 18.1094L20.5703 14.0625H16.6875V11.4375C16.6875 10.3304 17.23 9.25 18.9691 9.25H20.7344V5.80469C20.7344 5.80469 19.1323 5.53125 17.6005 5.53125C14.4027 5.53125 12.3125 7.46938 12.3125 10.9781V14.0625H8.75781V18.1094H12.3125V27.8924C13.762 28.1192 15.238 28.1192 16.6875 27.8924V18.1094H19.9496Z"
+                  fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_268_959">
+                  <rect width="28" height="28" fill="white" transform="translate(0.5 0.0625)" />
+                </clipPath>
+              </defs>
+            </svg>
+            Ingresar con Facebook</button>
         </div>
 
         <!-- regístrate -->
-        <div class="row g-3 align-items-center mt-2" >
-        <div class="col-auto"id="registrate">
-        <span>¿No estás registrado? <a href="/register">Registrate</a></span>
-        </div>
+        <div class="row g-3 align-items-center mt-2">
+          <div class="col-auto" id="registrate">
+            <span>¿No estás registrado? <a href="/register">Registrate</a></span>
+          </div>
         </div>
 
       </form>
     </div>
 
     <div class="col-md-6">
-      <img src="../../../assets/loginimg.jpg" alt="HamburguesaLogin">
+      <img src="../../../assets/login-hamb.webp" alt="HamburguesaLogin">
     </div>
 
   </div>

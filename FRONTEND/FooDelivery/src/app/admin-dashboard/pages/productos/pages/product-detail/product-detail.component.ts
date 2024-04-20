@@ -15,6 +15,12 @@ import {MessagesModule} from "primeng/messages";
 import {IProductDTO} from "../../../../interfaces/product.interface";
 import {ProductService} from "../../../../services/product.service";
 import {ImageModule} from "primeng/image";
+import {IPromDto} from "../../../../interfaces/promotion.interface";
+import {TooltipModule} from "primeng/tooltip";
+import {AddPromoDialogComponent} from "../../../../components/add-promo-dialog/add-promo-dialog.component";
+import {PromotionService} from "../../../../services/promotion.service";
+import {BadgeModule} from "primeng/badge";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-detail',
@@ -34,6 +40,9 @@ import {ImageModule} from "primeng/image";
     RouterLinkActive,
     CurrencyPipe,
     ImageModule,
+    TooltipModule,
+    AddPromoDialogComponent,
+    BadgeModule,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
@@ -41,21 +50,30 @@ import {ImageModule} from "primeng/image";
   encapsulation: ViewEncapsulation.Emulated,
 })
 export default class ProductDetailComponent implements OnInit {
+
   // Services
   private destroyRef = inject(DestroyRef);
   private route = inject(ActivatedRoute);
   private messageService = inject(MessageService);
   private router = inject(Router);
 
-  messageNotData = [
-    { severity: 'info', summary: 'Sin informacion ', detail: '' },
-  ];
+  //signals
+  messagePromoSignal = signal(
+    [{ severity: 'info', summary: 'Sin informacion ', detail: '' }],
+  );
+  messageNotDataSignal = signal(
+    [{ severity: 'info', summary: 'Sin informacion ', detail: '' }],
+  );
+
 
   // Variables
   public productId: string | null = null;
-  public product = signal<IProductDTO | null>(null);
 
-  constructor( private productService: ProductService ) {
+  // Signals
+  public product = signal<IProductDTO | null>(null);
+  public promotion = signal<IPromDto | null>(null);
+
+  constructor( private productService: ProductService, private promotionService: PromotionService) {
     this.productId = this.route.snapshot.paramMap.get('id');
   }
 
@@ -66,7 +84,10 @@ export default class ProductDetailComponent implements OnInit {
         .getProductByAdmin(id)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (product) => this.product.set(product),
+          next: (product) => {
+            this.product.set(product);
+            this.getPromoFromProduct(product.id);
+          },
           error: (err) => {
             console.error('Error: ', {...err});
             this.showMessage(`No se pudo obtener datos del producto.`, 'error', 'Ocurrio un error');
@@ -78,7 +99,7 @@ export default class ProductDetailComponent implements OnInit {
     }
   }
 
-  confirmDeleteUser() {
+  confirmDeleteProduct() {
     this.productService.confirmDeleteProduct(this.product()!.id);
   }
 
@@ -89,4 +110,94 @@ export default class ProductDetailComponent implements OnInit {
       detail: message,
     });
   }
+
+  private getPromoFromProduct(id: number | undefined) {
+    this.messagePromoSignal.set([{severity: 'info', summary: 'Cargando datos...', detail: ''}]);
+    if(id === undefined) return;
+
+    this.productService
+      .getPromoFromProduct(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+
+          if( res.promotion === null) {
+            this.promotion.set(null);
+            this.messagePromoSignal.set([{severity: 'info', summary: 'Sin promoción', detail: 'Agregue una promoción.'}]);
+            return;
+          }
+
+
+          this.messagePromoSignal.set([{severity: 'success', summary: `${res.promotion.code}.`, detail: `${res.promotion.description}`}]);
+          this.promotion.set(res.promotion);
+        },
+        error: (err) => {
+          console.error('Error: ', {...err});
+          this.messagePromoSignal.set([{severity: `No se pudo obtener datos de la promoción.`, summary: 'error', detail: 'Ocurrio un error'}]);
+        },
+      });
+  }
+
+  getMessagePromo() {
+    return this.messagePromoSignal();
+  }
+
+  getMessageNotData() {
+    return this.messageNotDataSignal();
+  }
+
+  updatePromo() {
+    this.getPromoFromProduct(this.product()!.id);
+  }
+
+  onNewPromo(prom: IPromDto) {
+    this.messagePromoSignal.set([{severity: 'success', summary: `${prom.code}.`, detail: `${prom.description}`}]);
+    this.promotion.set(prom);
+  }
+
+  deletePromo() {
+    if (this.promotion() === null) return;
+    this.confirmDeletePromoFromProduct(this.product()!.id);
+  }
+
+  confirmDeletePromoFromProduct(id: number | undefined) {
+
+    if (id === undefined) return;
+
+    return this.productService.confirmationService.confirm({
+      target: document.body,
+      message: '¿Estas seguro de que quieres eliminar la promocion?',
+      header: 'Eliminar la promocion del producto',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => this.productService.deletePromoFromProduct(id)
+        .pipe(
+          tap(() => {
+            this.promotion.set(null);
+            this.messagePromoSignal.set([{severity: 'info', summary: 'Sin promoción', detail: 'Agregue una promoción.'}]);
+          })
+          )
+        .subscribe({
+        next: (response) => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Promocion eliminada del producto!',
+            detail: "El producto esta ya sin promocion.",
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: 'Error al eliminar la promocion del producto',
+            detail: error,
+          });
+        },
+      }),
+    });
+  }
+
 }

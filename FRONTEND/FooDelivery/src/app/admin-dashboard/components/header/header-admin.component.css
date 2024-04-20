@@ -10,6 +10,14 @@
   margin: .2rem;
 }
 
+::ng-deep .p-element > svg {
+  color: white;
+}
+
+::ng-deep .p-icon {
+  fill: white !important;
+}
+
 .p-menubar-button {
   position: absolute;
   right: 0;

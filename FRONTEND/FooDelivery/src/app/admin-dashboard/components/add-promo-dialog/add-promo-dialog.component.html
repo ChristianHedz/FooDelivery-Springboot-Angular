@@ -1,0 +1,56 @@
+<button
+  pButton
+  pRipple
+  type="button"
+  icon="pi pi-plus"
+  class="p-button-rounded p-button-text"
+  pTooltip="Agregar promoción"
+  (click)="addPromo()"
+></button>
+
+<form [formGroup]="promoAddForm" class="">
+  <p-dialog [visible]="productDialog()" [style]="{width: '450px', height: '80%'}" header="Agregar una promoción" [modal]="true" class="p-fluid">
+      <ng-template pTemplate="content">
+
+        <div class="field">
+            <!-- Category -->
+            <div class="field col-12 md:col-6 flex flex-column gap-2">
+              <label for="promotion">Seleccionar</label>
+              <p-dropdown
+                id="promotion"
+                optionLabel="code"
+                [options]="promotions()"
+                formControlName="promotion"
+                placeholder="Seleccione una promoción"
+                (onChange)="onPromotionChange($event)"
+              ></p-dropdown>
+              @if (inputValid('promotion')) {
+                <small class="text-red-700 font-bold">
+                  La promoción es requerida
+                </small>
+              }
+            </div>
+          @if(selectedPromotion()) {
+            <div class="flex flex-column sm:flex-row my-4 justify-content-start align-items-center gap-4 mb-1 font-bold text-2xl">
+              <div class="promo-container" pBadge [value]="percentage()">
+                <span [class]="'promo-badge'" >{{ selectedPromotion()?.code }}</span>
+              </div>
+            </div>
+            <span class="font-medium">{{ selectedPromotion()?.description }}</span>
+          }
+          </div>
+
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <div class="flex">
+          <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+          <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="savePromo()"></button>
+        </div>
+      </ng-template>
+</p-dialog>
+</form>
+
+<div class="card flex justify-content-center">
+  <p-toast></p-toast>
+</div>
