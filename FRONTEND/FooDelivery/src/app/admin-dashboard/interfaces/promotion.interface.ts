@@ -12,7 +12,8 @@ export interface IPromDto {
   id: number,
   description: string,
   code: string,
-  percentage: number
+  percentage: number,
+  active?: boolean
 }
 
 export interface IFormProm {

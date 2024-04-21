@@ -4,7 +4,7 @@ import { OrderApiService } from "../../core/api/order-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IOrderReq} from "../interfaces/order.interface";
+import {IOrderReq, OrderResponse, OrderResponseAll} from "../interfaces/order.interface";
 
 interface State {
   products: any[],
@@ -21,16 +21,17 @@ export class OrderService {
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
 
-  orders = signal<any[]>([]);
+  orders = signal< OrderResponse[]>([]);
+  allOrdersResponse = signal<OrderResponseAll | null>(null);
 
   constructor() {
-    this.getAllOrders();
+    this.getAllOrders(0);
   }
 
   createOrderByAdmin( order: IOrderReq ) {
     return this.orderApiService.createOrderByAdmin(order).pipe(
       tap((response) => this.showMessage("Orden creada exitosamente")),
-      tap( () => this.getAllOrders()),
+      tap( () => this.getAllOrders(0)),
       tap((_) => {
         setTimeout(() => {
           this.router.navigate(['/admin/dashboard/ordenes'])
@@ -52,7 +53,7 @@ export class OrderService {
   updateOrderByAdmin( order: IOrderReq ) {
     return this.orderApiService.updateOrderByAdmin( order ).pipe(
       tap((response) => this.showMessage("Orden actualizada exitosamente")),
-      tap( () => this.getAllOrders()),
+      tap( () => this.getAllOrders(0)),
       tap((_) => {
         setTimeout(() => {
           this.goRouteUpdate(order!.id);
@@ -129,12 +130,12 @@ export class OrderService {
       .pipe(map((response) => response));
   }
 
-  getAllOrders() {
-    this.orderApiService.getAllOrders()
+  getAllOrders(page: number) {
+    this.orderApiService.getAllOrders(page)
         .subscribe( {
           next: response => {
-            console.log('response: ', response);
             this.orders.set(response.content);
+            this.allOrdersResponse.set(response);
           },
           error: (error) => {
             this.messageService.add({

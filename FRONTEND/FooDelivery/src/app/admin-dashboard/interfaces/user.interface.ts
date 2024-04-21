@@ -1,4 +1,5 @@
 import {FormControl} from "@angular/forms";
+import {Address} from "./address.interface";
 
 export interface IUser {
   isError?:  boolean;
@@ -74,4 +75,15 @@ export type UserToUpdate = {
   fullName: string;
   alias?: string;
   id: number;
+}
+
+export interface UserWithAdress {
+  id:       number;
+  fullName: string;
+  phone:    string;
+  email:    string;
+  alias:    null;
+  role:     string;
+  active:   boolean;
+  address:  Address;
 }

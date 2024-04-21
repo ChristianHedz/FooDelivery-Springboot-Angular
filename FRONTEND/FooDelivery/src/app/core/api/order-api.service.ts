@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IOrderReq} from "../../admin-dashboard/interfaces/order.interface";
+import {IOrderReq, OrderResponseAll} from "../../admin-dashboard/interfaces/order.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,8 @@ export class OrderApiService {
     });
   }
 
-  getAllOrders(): Observable<any> {
-    return this.http.get<any>(`${this.url}/orders?size=10`, { headers: this.authService.addTokenToHeaders() });
-  }
+  getAllOrders(page: number): Observable<OrderResponseAll> {
+    return this.http.get<OrderResponseAll>(`${this.url}/orders`, { headers: this.authService.addTokenToHeaders() });
+  } //?size=${ 10 }&page=${ page }
 
 }

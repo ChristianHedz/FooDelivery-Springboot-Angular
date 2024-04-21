@@ -7,14 +7,14 @@ import {
   inject,
   signal, OnInit
 } from '@angular/core';
-import {IUser} from "../../core/interfaces/user/User.interface";
+import {IUser} from "../../admin-dashboard/interfaces/user.interface";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {BadgeModule} from "primeng/badge";
 import {Router, RouterLink} from "@angular/router";
 import {MenuModule} from "primeng/menu";
 import {UserService} from "../../admin-dashboard/services/user.service";
-import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
+import { MenuItem } from "primeng/api";
 import {RippleModule} from "primeng/ripple";
 import {MenubarModule} from "primeng/menubar";
 import {StyleClassModule} from "primeng/styleclass";
