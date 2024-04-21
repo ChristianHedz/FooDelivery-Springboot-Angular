@@ -1,8 +1,6 @@
 package com.example.app.dto.address;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
@@ -11,10 +9,6 @@ import java.io.Serializable;
  * DTO for {@link com.example.app.model.Address}
  */
 public record AddressDTO(
-
-        @Valid
-        @NotNull(message = "El usuario es requerido")
-        UserToSaveAddress user,
 
         @NotBlank(message = "La provincia es requerida")
         @Size(max = 30, message = "La provincia debe contener menos de 30 caracteres")
