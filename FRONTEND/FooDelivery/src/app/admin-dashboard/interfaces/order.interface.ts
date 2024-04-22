@@ -1,5 +1,5 @@
 import {UserWithAdress} from "./user.interface";
-import {IProductWithPromoDTO} from "./product.interface";
+import {IProductWithPromoDTO, ProductRegister} from "./product.interface";
 import {IPromDto} from "./promotion.interface";
 
 export interface IOrderReq {
@@ -22,7 +22,7 @@ export interface OrderResponse {
   updatedAt:     null;
   user:          UserWithAdress;
   promotion?:     IPromDto;
-  products:      IProductWithPromoDTO[];
+  products:      ProductRegister[];
 }
 
 export interface OrderResponseAll {

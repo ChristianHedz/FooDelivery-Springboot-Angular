@@ -35,11 +35,5 @@ import {OrdersTableComponent} from "../orders-table/orders-table.component";
   encapsulation: ViewEncapsulation.Emulated
 })
 export default class OrdersGridComponent {
-  orderService = inject(OrderService);
-
-  messageNotData = [
-    { severity: 'info', summary: 'No hay ordenes que mostrar', detail: '' },
-  ];
-
 
 }
