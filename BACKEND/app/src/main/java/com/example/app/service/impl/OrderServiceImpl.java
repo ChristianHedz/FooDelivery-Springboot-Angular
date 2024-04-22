@@ -115,4 +115,19 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUser(user).stream().map(orderMapper::toDto).toList();
     }
 
+    @Override
+    public OrderDto updateOrderStatus(Long id, String status) {
+        Order order = orderRepository.findById(id)
+          .orElseThrow(() -> new OrderNotFoundException("Order not found in the database"));
+
+        StatusOrder statusOrder = Arrays.stream(StatusOrder.values())
+          .filter(statusOrder1 -> statusOrder1.name().equals( status ))
+          .findFirst()
+          .orElseThrow(() -> new OrderNotFoundException("Status not found in the database"));
+
+        order.setStatus(statusOrder);
+
+        return orderMapper.toDto(orderRepository.save(order));
+    }
+
 }
