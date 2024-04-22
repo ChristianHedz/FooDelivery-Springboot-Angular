@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, signal, ViewChild} from '@angular/core';
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
 import {Table, TableModule} from "primeng/table";
@@ -17,6 +17,8 @@ import {MenuItem, MessageService} from "primeng/api";
 import {SplitButtonModule} from "primeng/splitbutton";
 import {OrderService} from "../../../../services/order.service";
 import {MessagesModule} from "primeng/messages";
+import {TableProductsPromoComponent} from "../../../../components/table-products-promo/table-products-promo.component";
+import {IProduct} from "../../../../interfaces/product.interface";
 
 @Component({
   selector: 'app-orders-table',
@@ -40,7 +42,8 @@ import {MessagesModule} from "primeng/messages";
     TitleCasePipe,
     ReactiveFormsModule,
     SplitButtonModule,
-    MessagesModule
+    MessagesModule,
+    TableProductsPromoComponent
   ],
   templateUrl: './orders-table.component.html',
   styleUrl: './orders-table.component.css'
@@ -52,6 +55,7 @@ export class OrdersTableComponent {
   ];
 
   @ViewChild('dt') table: Table | undefined;
+  @ViewChild('orderStatus') orderStatus: any;
 
   items: MenuItem[] = [];
 
@@ -60,6 +64,8 @@ export class OrdersTableComponent {
 
   orders: OrderResponse[] = this.orderService.orders();
   order: OrderResponse = {} as OrderResponse;
+
+  products= signal<IProduct[]>([]);
 
   orderDialog: boolean = false;
   deleteOrderDialog: boolean = false;
@@ -113,8 +119,8 @@ export class OrdersTableComponent {
     ];
 
     this.statuses = [
-      { label: 'IN_PROGRESS', value: 'inprogress' },
-      { label: 'ON_ROUTE', value: 'onroute' },
+      { label: 'IN_PROGRESS', value: 'in_progress' },
+      { label: 'ON_ROUTE', value: 'on_route' },
       { label: 'DELIVERED', value: 'delivered' },
       { label: 'CANCELED', value: 'canceled' }
     ];
@@ -129,6 +135,12 @@ export class OrdersTableComponent {
   editProduct(order: OrderResponse) {
     this.order = { ...order };
     this.orderDialog = true;
+
+    const prods = this.order.products.map(({product}) => {
+      return product;
+    });
+
+    this.products.set(prods);
   }
 
   deleteProduct(order: OrderResponse) {
@@ -155,30 +167,12 @@ export class OrdersTableComponent {
     this.submitted = false;
   }
 
-  /*saveProduct() {
+  updateStatusProduct() {
     this.submitted = true;
+    console.log('Guardando status... ', this.orderStatus.value);
 
-    if (this.order.name?.trim()) {
-      if (this.order.id) {
-        // @ts-ignore
-        this.order.inventoryStatus = this.order.inventoryStatus.value ? this.order.inventoryStatus.value : this.order.inventoryStatus;
-        this.orders[this.findIndexById(this.order.id)] = this.order;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-      } else {
-        this.order.id = this.createId();
-        this.order.code = this.createId();
-        this.order.image = 'product-placeholder.svg';
-        // @ts-ignore
-        this.order.inventoryStatus = this.order.inventoryStatus ? this.order.inventoryStatus.value : 'INSTOCK';
-        this.orders.push(this.order);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
-
-      this.orders = [...this.orders];
-      this.orderDialog = false;
-      this.order = {};
-    }
-  }*/
+    this.orderService.updateOrderStatus(this.order.id, this.orderStatus.value);
+  }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

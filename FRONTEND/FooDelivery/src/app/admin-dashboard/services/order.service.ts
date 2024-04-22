@@ -154,7 +154,6 @@ export class OrderService {
     this.orderApiService.getOrdersByStatus(status)
       .subscribe( {
           next: orders => {
-            console.log('Ordenes por estado: ', orders);
             this.orders.set(orders);
           },
           error: (error) => {
@@ -162,6 +161,28 @@ export class OrderService {
               key: 'toast',
               severity: 'error',
               summary: `Error al obtener lista de ordenes por estado: ${status}`,
+              detail: error.message ? error.message : 'Error desconocido'
+            });
+            return error;
+          },
+        }
+      );
+  }
+
+  updateOrderStatus(id: number, status: string) {
+    this.orderApiService.updateOrderStatus(id, status)
+      .subscribe( {
+          next: orders => {
+            this.getOrdersByStatus('ALL');
+            setTimeout(() => {
+              this.router.navigate(['/admin/dashboard/ordenes'])
+            }, 650);
+          },
+          error: (error) => {
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: `Error al actualizar el estado de la orden: ${id} a ${status}`,
               detail: error.message ? error.message : 'Error desconocido'
             });
             return error;
@@ -186,5 +207,4 @@ export class OrderService {
       detail: message,
     });
   }
-
 }

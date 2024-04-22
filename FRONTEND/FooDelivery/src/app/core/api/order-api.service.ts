@@ -45,4 +45,8 @@ export class OrderApiService {
   getOrdersByStatus(status: string) {
     return this.http.get<OrderResponse[]>(`${this.url}/orders/status?status=${status}`, { headers: this.authService.addTokenToHeaders() });
   }
+
+  updateOrderStatus(id: number, status: string) {
+    return this.http.put<any>(`${this.url}/orders/${id}/status?status=${status}`, { headers: this.authService.addTokenToHeaders() });
+  }
 }
