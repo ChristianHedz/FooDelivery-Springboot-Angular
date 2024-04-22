@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,6 +41,21 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + id));
         orderRepository.delete(order);
+    }
+
+    @Override
+    public List<OrderDto> getOrdersByStatusByAdmin(String status) {
+
+        try {
+            StatusOrder statusOrder = Arrays.stream(StatusOrder.values())
+              .filter(statusOrder1 -> statusOrder1.name().equals( status ))
+              .findFirst()
+              .orElseThrow(() -> new OrderNotFoundException("Status not found in the database"));
+
+            return this.orderRepository.findAllByStatus(statusOrder).stream().map(orderMapper::toDto).toList();
+        } catch (OrderNotFoundException e) {
+            return this.orderRepository.findAll().stream().map(orderMapper::toDto).toList();
+        }
     }
 
     @Override
