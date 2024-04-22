@@ -37,3 +37,9 @@ export interface IProduct {
   description: string,
   price: number,
 }
+
+export interface ProductRegister {
+  id: number,
+  quantity: number,
+  product: IProduct
+}
