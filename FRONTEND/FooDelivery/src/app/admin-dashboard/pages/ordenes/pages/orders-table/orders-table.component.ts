@@ -1,19 +1,24 @@
-import {Component, Input, signal} from '@angular/core';
+import {Component, signal, ViewChild} from '@angular/core';
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
-import {Table, TableLazyLoadEvent, TableModule, TablePageEvent} from "primeng/table";
+import {Table, TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
 import {CurrencyPipe, DatePipe, NgClass, TitleCasePipe} from "@angular/common";
 import {RatingModule} from "primeng/rating";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {PaginatorModule} from "primeng/paginator";
-import {OrderResponse, OrderResponseAll} from "../../../../interfaces/order.interface";
-import {MessageService} from "primeng/api";
+import {OrderResponse} from "../../../../interfaces/order.interface";
+import {MenuItem, MessageService} from "primeng/api";
+import {SplitButtonModule} from "primeng/splitbutton";
+import {OrderService} from "../../../../services/order.service";
+import {MessagesModule} from "primeng/messages";
+import {TableProductsPromoComponent} from "../../../../components/table-products-promo/table-products-promo.component";
+import {IProduct} from "../../../../interfaces/product.interface";
 
 @Component({
   selector: 'app-orders-table',
@@ -34,21 +39,33 @@ import {MessageService} from "primeng/api";
     RadioButtonModule,
     PaginatorModule,
     DatePipe,
-    TitleCasePipe
+    TitleCasePipe,
+    ReactiveFormsModule,
+    SplitButtonModule,
+    MessagesModule,
+    TableProductsPromoComponent
   ],
   templateUrl: './orders-table.component.html',
   styleUrl: './orders-table.component.css'
 })
 export class OrdersTableComponent {
 
-  @Input({ required: true }) ordersResponse!: OrderResponse[];
-  @Input({ required: true }) allOrdersResponse!: OrderResponseAll;
+  messageNotData = [
+    { severity: 'info', summary: 'No hay ordenes que mostrar', detail: '' },
+  ];
 
-  rows = 0;
-  totalRecords = 0;
+  @ViewChild('dt') table: Table | undefined;
+  @ViewChild('orderStatus') orderStatus: any;
 
-  orders: OrderResponse[] = [];
+  items: MenuItem[] = [];
+
+  rows = 10;
+  totalRecords = this.orderService.orders().length;
+
+  orders: OrderResponse[] = this.orderService.orders();
   order: OrderResponse = {} as OrderResponse;
+
+  products= signal<IProduct[]>([]);
 
   orderDialog: boolean = false;
   deleteOrderDialog: boolean = false;
@@ -58,18 +75,40 @@ export class OrdersTableComponent {
   cols: any[] = [];
   statuses: any[] = [];
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+      private messageService: MessageService,
+      public orderService: OrderService
+  ) { }
 
   ngOnInit() {
-    console.log(this.ordersResponse);
-    console.log(this.allOrdersResponse);
 
-    this.orders = this.ordersResponse;
-
-    console.log(this.allOrdersResponse.size, this.allOrdersResponse.totalElements);
-
-    this.rows = Number(this.allOrdersResponse.size);
-    this.totalRecords = Number(this.allOrdersResponse.totalElements);
+    this.items = [
+      {
+        label: 'Todos',
+        icon: 'pi pi-warehouse',
+        command: () => {this.onChangeListByStatus('ALL')}
+      },
+      {
+        label: 'En Proceso',
+        icon: 'pi pi-box',
+        command: () => {this.onChangeListByStatus('IN_PROGRESS')}
+      },
+      {
+        label: 'En Camino',
+        icon: 'pi pi-truck',
+        command: () => {this.onChangeListByStatus('ON_ROUTE')}
+      },
+      {
+        label: 'Entregados',
+        icon: 'pi pi-thumbs-up',
+        command: () => {this.onChangeListByStatus('DELIVERED')}
+      },
+      {
+        label: 'Cancelados',
+        icon: 'pi pi-times-circle',
+        command: () => {this.onChangeListByStatus('CANCELED')}
+      },
+    ];
 
     this.cols = [
       { field: 'user.fullName', header: 'Cliente' },
@@ -80,11 +119,13 @@ export class OrdersTableComponent {
     ];
 
     this.statuses = [
-      { label: 'IN_PROGRESS', value: 'inprogress' },
-      { label: 'ON_ROUTE', value: 'onroute' },
+      { label: 'IN_PROGRESS', value: 'in_progress' },
+      { label: 'ON_ROUTE', value: 'on_route' },
       { label: 'DELIVERED', value: 'delivered' },
       { label: 'CANCELED', value: 'canceled' }
     ];
+
+
   }
 
   deleteSelectedProducts() {
@@ -94,6 +135,12 @@ export class OrdersTableComponent {
   editProduct(order: OrderResponse) {
     this.order = { ...order };
     this.orderDialog = true;
+
+    const prods = this.order.products.map(({product}) => {
+      return product;
+    });
+
+    this.products.set(prods);
   }
 
   deleteProduct(order: OrderResponse) {
@@ -120,46 +167,22 @@ export class OrdersTableComponent {
     this.submitted = false;
   }
 
-  /*saveProduct() {
+  updateStatusProduct() {
     this.submitted = true;
-
-    if (this.order.name?.trim()) {
-      if (this.order.id) {
-        // @ts-ignore
-        this.order.inventoryStatus = this.order.inventoryStatus.value ? this.order.inventoryStatus.value : this.order.inventoryStatus;
-        this.orders[this.findIndexById(this.order.id)] = this.order;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-      } else {
-        this.order.id = this.createId();
-        this.order.code = this.createId();
-        this.order.image = 'product-placeholder.svg';
-        // @ts-ignore
-        this.order.inventoryStatus = this.order.inventoryStatus ? this.order.inventoryStatus.value : 'INSTOCK';
-        this.orders.push(this.order);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
-
-      this.orders = [...this.orders];
-      this.orderDialog = false;
-      this.order = {};
-    }
-  }*/
+    this.orderService.updateOrderStatus(this.order.id, this.orderStatus.value);
+    this.messageService.add({ severity: 'success', summary: 'Correcto', detail: 'Estatus del pedido actualizado exitosamente', life: 2000 });
+    this.orderDialog = false;
+  }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  onPageChange($event: TablePageEvent) {
-    console.log('Cambiando de pagina: ', $event);
-    const page = $event.first / $event.rows;
+  onChangeListByStatus(status: string) {
+    this.orderService.getOrdersByStatus(status);
   }
 
-  loadOrders($event: TableLazyLoadEvent) {
-
-    if (!$event.first || !$event.rows) return;
-
-    const page = $event.first / $event.rows;
-
-    console.log('Cargando ordenes: ', page);
+  generateCSV() {
+    this.table?.exportCSV();
   }
 }

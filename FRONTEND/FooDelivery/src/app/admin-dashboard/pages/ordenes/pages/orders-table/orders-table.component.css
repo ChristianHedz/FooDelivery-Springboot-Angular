@@ -76,3 +76,7 @@
   background: #ECCFFF;
   color: #694382;
 }
+
+::ng-deep .p-element > svg {
+  color: lightgray;
+}

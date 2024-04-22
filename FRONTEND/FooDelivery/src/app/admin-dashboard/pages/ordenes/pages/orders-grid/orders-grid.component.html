@@ -1,18 +1,7 @@
-<div class="lotterys__list">
-  <section class="p-2 grid">
-    @if ( orderService.orders().length > 0) {
-      <article class="col-12">
-        <!-- Obtiene todas las ordenes paginadas: primera pagina -->
-        <app-orders-table
-          [ordersResponse]="orderService.orders()"
-          [allOrdersResponse]="orderService.allOrdersResponse()!"
-        />
-      </article>
-    }@else {
-      <div class="col-12 flex justify-content-center align-items-center">
-        <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
-      </div>
-    }
+<div class="w-full">
+
+  <section>
+    <app-orders-table />
   </section>
 
 </div>
