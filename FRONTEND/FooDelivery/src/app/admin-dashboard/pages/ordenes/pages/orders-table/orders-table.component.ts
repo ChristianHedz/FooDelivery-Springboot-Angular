@@ -7,13 +7,14 @@ import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
 import {CurrencyPipe, DatePipe, NgClass, TitleCasePipe} from "@angular/common";
 import {RatingModule} from "primeng/rating";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {PaginatorModule} from "primeng/paginator";
 import {OrderResponse, OrderResponseAll} from "../../../../interfaces/order.interface";
-import {MessageService} from "primeng/api";
+import {MenuItem, MenuItemCommandEvent, MessageService} from "primeng/api";
+import {SplitButtonModule} from "primeng/splitbutton";
 
 @Component({
   selector: 'app-orders-table',
@@ -34,7 +35,9 @@ import {MessageService} from "primeng/api";
     RadioButtonModule,
     PaginatorModule,
     DatePipe,
-    TitleCasePipe
+    TitleCasePipe,
+    ReactiveFormsModule,
+    SplitButtonModule
   ],
   templateUrl: './orders-table.component.html',
   styleUrl: './orders-table.component.css'
@@ -43,6 +46,8 @@ export class OrdersTableComponent {
 
   @Input({ required: true }) ordersResponse!: OrderResponse[];
   @Input({ required: true }) allOrdersResponse!: OrderResponseAll;
+
+  items: MenuItem[] = [];
 
   rows = 0;
   totalRecords = 0;
@@ -84,6 +89,34 @@ export class OrdersTableComponent {
       { label: 'ON_ROUTE', value: 'onroute' },
       { label: 'DELIVERED', value: 'delivered' },
       { label: 'CANCELED', value: 'canceled' }
+    ];
+
+    this.items = [
+      {
+        label: 'Todos',
+        icon: 'pi pi-warehouse',
+        command: () => {this.onChangeListByStatus('ALL')}
+      },
+      {
+        label: 'En Proceso',
+        icon: 'pi pi-box',
+        command: () => {this.onChangeListByStatus('IN_PROGRESS')}
+      },
+      {
+        label: 'En Camino',
+        icon: 'pi pi-truck',
+        command: () => {this.onChangeListByStatus('ON_ROUTE')}
+      },
+      {
+        label: 'Entregados',
+        icon: 'pi pi-thumbs-up',
+        command: () => {this.onChangeListByStatus('DELIVERED')}
+      },
+      {
+        label: 'Cancelados',
+        icon: 'pi pi-times-circle',
+        command: () => {this.onChangeListByStatus('CANCELED')}
+      },
     ];
   }
 
@@ -149,17 +182,8 @@ export class OrdersTableComponent {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  onPageChange($event: TablePageEvent) {
-    console.log('Cambiando de pagina: ', $event);
-    const page = $event.first / $event.rows;
+  onChangeListByStatus(status: string) {
+    console.log('Cambiando la lista: ', status);
   }
 
-  loadOrders($event: TableLazyLoadEvent) {
-
-    if (!$event.first || !$event.rows) return;
-
-    const page = $event.first / $event.rows;
-
-    console.log('Cargando ordenes: ', page);
-  }
 }

@@ -4,9 +4,24 @@
       <p-toast></p-toast>
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <div class="my-2">
-            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedOrders || !selectedOrders.length"></button>
+          <!-- Pedidos por estatus -->
+          <div class="p-toolbar-group-right">
+            <p-splitButton label="Estatus" icon="pi pi-filter" [model]="items"></p-splitButton>
           </div>
+          <!--<div class="field col-12 md:col-6 flex flex-column gap-2">
+            <label for="category">Por estatus</label>
+            <p-dropdown
+              id="status"
+              optionLabel="status"
+              [options]="statuses()"
+              formControlName="status"
+              placeholder="Seleccione un estatus"
+            ></p-dropdown>
+          </div>-->
+<!--    </div>-->
+          <!--<div class="my-2">
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedOrders || !selectedOrders.length"></button>
+          </div>-->
         </ng-template>
 
         <ng-template pTemplate="right">
