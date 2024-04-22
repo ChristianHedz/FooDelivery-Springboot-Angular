@@ -22,20 +22,5 @@ export class PurchaseSuccessComponent{
 
   constructor(private paymentService: PaymentService){}
 
-  paypalPayment(){
-        //redireccion y pago con paypal
 
-        let urlPayment;
-        let dataPayment = new DataPayment ('PAYPAL', '100', 'USD', 'COMPRA');
-
-        console.log('Data Payment:', dataPayment);
-
-        this.paymentService.getUrlPaypalPayment(dataPayment).subscribe(
-          data => {
-            urlPayment = data.url;
-            console.log('Respuesta exitosa...');
-            window.location.href = urlPayment;
-          }
-        );
-  }
 }
