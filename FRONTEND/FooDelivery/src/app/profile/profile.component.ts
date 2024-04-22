@@ -37,7 +37,8 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserOrders().subscribe(
       (orders: Order[]) => {
         this.currentOrders = orders.filter(order => order.status !== StatusOrder.DELIVERED && order.status !== StatusOrder.CANCELED);
-        this.orderHistory = orders.filter(order => order.status === StatusOrder.DELIVERED || order.status === StatusOrder.CANCELED);
+        this.orderHistory = orders
+
       },
       (error) => {
         console.error('Error fetching user orders:', error);
@@ -71,8 +72,8 @@ export class ProfileComponent implements OnInit {
         ...this.user,
         fullName: this.editedFullName,
         alias: this.editedAlias,
-        phone: this.editedPhone,
-        email: this.editedEmail,
+    /*     phone: this.editedPhone,
+        email: this.editedEmail, */
      
       };
 
@@ -89,7 +90,7 @@ export class ProfileComponent implements OnInit {
   }
 
  
-  cancelEdit(): void {
+/*   cancelEdit(): void {
     this.isEditing = false;
     // Restablecer los valores originales
     this.editedFullName = this.user?.fullName || '';
@@ -97,7 +98,7 @@ export class ProfileComponent implements OnInit {
     this.editedPhone = this.user?.phone || '';
     this.editedEmail = this.user?.email || '';
     
-  }
+  } */
  showCurrentOrders(): void {
   this.showCurrentOrdersScreen = true;
   this.showOrderHistoryScreen = false;

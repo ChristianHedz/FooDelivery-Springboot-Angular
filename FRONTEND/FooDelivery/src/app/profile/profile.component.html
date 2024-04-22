@@ -23,21 +23,21 @@
      <p>Caseros 3445, República de Córdoba</p>          </div>
   
               <div class="info-row">
-                <span class="info-label">{{ user?.alias }}     </span>
+                <span class="info-label">Alias : </span>
                 <input class="form-control" type="text" [(ngModel)]="editedAlias" *ngIf="isEditing">
-                <span *ngIf="!isEditing"><!-- {{ user?.alias }} --></span>
+                <span *ngIf="!isEditing">{{ user?.alias }}</span>
               </div>
   
               <div class="info-row">
                 <span class="info-label">Phone:</span>
-                <input class="info-value form-control" type="text" [(ngModel)]="editedPhone" *ngIf="isEditing">
-                <span *ngIf="!isEditing">{{ user?.phone }}</span>
+<!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedPhone" *ngIf="isEditing">
+ -->                <span *ngIf="!isEditing">{{ user?.phone }}</span>
               </div>
   
               <div class="info-row">
                 <span class="info-label">Email:</span>
-                <input class="info-value form-control" type="text" [(ngModel)]="editedEmail" *ngIf="isEditing">
-                <span *ngIf="!isEditing">{{ user?.email }}</span>
+<!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedEmail" *ngIf="isEditing">
+ -->                <span *ngIf="!isEditing">{{ user?.email }}</span>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@
     </div>
 
     
-    <div class="col-md-3"><br><br><br>
+    <div class="col-md-3"><br><br>
       <button class="btn btn-primary w-100 mb-2" id="btn1">
 
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,8 +104,8 @@
   <!-- Botones del switch -->
   <div class="row mt-3">
     <div class="col-md-3">
-      <button class="btn btn-primary" (click)="showCurrentOrders()">Ordenes en Curso</button>
-      <button class="btn btn-primary" (click)="showOrderHistory()">Historial de Pedidos</button>
+      <button class="btn btn-primary" id="btnIf"  (click)="showCurrentOrders()">Ordenes en Curso</button>
+      <button class="btn btn-primary" id="btnIf" (click)="showOrderHistory()">Historial de Pedidos</button>
     </div>
     <div class="col-md-9">
       <!-- Pantallas de Ordenes en Curso o Historial de Pedidos -->
@@ -116,13 +116,13 @@
             <!-- Contenido de la primera pantalla -->
             <h3>Ordenes en Curso</h3>
             <div *ngFor="let order of currentOrders">
-              <p>{{ order.id }}</p>
+              <p>OrderId: {{ order.id }}</p>
               <p>Tiempo previsto de llegada en : 30 min  <!-- {{ order.deliveryTime }} --></p> 
+              <p>${{ order.totalPrice }}</p>
               <p>Estado: {{ order.status }}</p> 
             </div>
           </div>
         </div>
-
         <!-- Pantalla de Historial de Pedidos -->
         <div class="col-md-8" *ngIf="showOrderHistoryScreen">
           <div class="card mb-3">
@@ -143,7 +143,7 @@
                     <td>{{ order.id }}</td>
                     <td>{{ order.status }}</td>
                     <td>{{ order.createdAt | date }}</td>
-                    <td>{{ order.totalPrice }}</td>
+                    <td>${{ order.totalPrice }}</td>
                   </tr>
                 </tbody>
               </table>
