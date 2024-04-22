@@ -161,4 +161,9 @@ public class OrderController {
         return ResponseEntity.status(200).body(orderService.getOrdersByStatusByAdmin(status));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDto> updateOrderStatus(@PathVariable Long id, @PathParam("status") String status) {
+        return ResponseEntity.status(200).body(orderService.updateOrderStatus(id, status));
+    }
+
 }

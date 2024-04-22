@@ -21,4 +21,6 @@ public interface OrderService {
     void deleteOrder(Long id);
 
     List<OrderDto> getOrdersByStatusByAdmin(String status);
+
+    OrderDto updateOrderStatus(Long id, String status);
 }

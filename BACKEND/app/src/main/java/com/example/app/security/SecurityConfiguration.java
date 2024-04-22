@@ -81,6 +81,8 @@ public class SecurityConfiguration {
                 .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
               .requestMatchers(HttpMethod.GET, "/orders/status")
                 .hasAuthority(Role.ADMIN.name())
+              .requestMatchers(HttpMethod.GET, "/orders/{id}")
+                .hasAuthority(Role.ADMIN.name())
               .requestMatchers(HttpMethod.GET, "/orders/user/{id}")
                 .hasAuthority(Role.ADMIN.name())
               .requestMatchers(HttpMethod.POST, "/api/payments")
