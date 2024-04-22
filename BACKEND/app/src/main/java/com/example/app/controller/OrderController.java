@@ -2,7 +2,6 @@ package com.example.app.controller;
 
 import com.example.app.dto.order.OrderDto;
 import com.example.app.dto.order.OrderRequestDTO;
-import com.example.app.dto.user.SignedUserDTO;
 import com.example.app.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -139,6 +139,26 @@ public class OrderController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @Operation(summary = "Let an Admin get orders by status.", description = "Let an admin gets orders by status using the authorization token. Only for admins.")
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "Orders found successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = OrderDto.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {
+        @Content}),
+      @ApiResponse(responseCode = "404", description = "Orders not found", content = {
+        @Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
+        @Content})
+    })
+    @GetMapping("/status")
+    public ResponseEntity<List<OrderDto>> getOrdersByStatusByAdmin(@PathParam("status") String status) {
+        return ResponseEntity.status(200).body(orderService.getOrdersByStatusByAdmin(status));
     }
 
 }
