@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
-import {IUser, IUsers, UserDTO, UserToUpdate} from "../interfaces/user/User.interface";
+import {IUser, IUsers, UserDTO, UserToUpdate} from "../../admin-dashboard/interfaces/user.interface";
 import {AuthService} from "../../services/auth.service";
 
 @Injectable({
