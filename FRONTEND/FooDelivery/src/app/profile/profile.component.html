@@ -10,7 +10,7 @@
           <h3 class="card-title">Informacion Personal</h3>
           <div class="row">
             <div class="col-md-4">
-              <figure>
+              <figure> <!-- waiting atribute of db -->
                 <img src="{{ editedProfileImage }}" alt="Profile Picture" class="profile-image img-fluid" *ngIf="!isEditing">
                 <input class="form-control" type="text" [(ngModel)]="editedProfileImage" *ngIf="isEditing" placeholder="URL de la imagen de perfil">
               </figure>
@@ -23,7 +23,7 @@
      <p>Caseros 3445, República de Córdoba</p>          </div>
   
               <div class="info-row">
-                <span class="info-label">Alias : </span>
+                <span class="info-label">Alias :   </span>
                 <input class="form-control" type="text" [(ngModel)]="editedAlias" *ngIf="isEditing">
                 <span *ngIf="!isEditing">{{ user?.alias }}</span>
               </div>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    
+   <!--  BOTONES ADICIONALES -->
     <div class="col-md-3"><br><br>
       <button class="btn btn-primary w-100 mb-2" id="btn1">
 
@@ -74,7 +74,6 @@
           <path d="M21.5 29H34.5" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M16 38V19C16 18.7348 16.1054 18.4804 16.2929 18.2929C16.4804 18.1054 16.7348 18 17 18H39C39.2652 18 39.5196 18.1054 39.7071 18.2929C39.8946 18.4804 40 18.7348 40 19V38L36 36L32 38L28 36L24 38L20 36L16 38Z" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          
         <span class="badge badge-pill badge-primary float-right">50</span>
         Pedidos Totales
       </button>
@@ -96,10 +95,14 @@
     </div>
     
 </div>
-<div class="col-md-3" style="background-color: white;">
 
 </div>
-</div>
+
+
+
+
+
+
 <div class="container">
   <!-- Botones del switch -->
   <div class="row mt-3">
@@ -110,46 +113,49 @@
     <div class="col-md-9">
       <!-- Pantallas de Ordenes en Curso o Historial de Pedidos -->
       <div class="row">
-        <!-- Pantalla de Ordenes en Curso -->
-        <div class="col-md-8" *ngIf="showCurrentOrdersScreen">
-          <div class="card mb-3">
-            <!-- Contenido de la primera pantalla -->
-            <h3>Ordenes en Curso</h3>
-            <div *ngFor="let order of currentOrders">
-              <p>OrderId: {{ order.id }}</p>
-              <p>Tiempo previsto de llegada en : 30 min  <!-- {{ order.deliveryTime }} --></p> 
-              <p>${{ order.totalPrice }}</p>
-              <p>Estado: {{ order.status }}</p> 
-            </div>
-          </div>
-        </div>
-        <!-- Pantalla de Historial de Pedidos -->
-        <div class="col-md-8" *ngIf="showOrderHistoryScreen">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h3 class="card-title">Historial de Pedidos</h3>
-              <!-- Tabla con historial de pedidos -->
-              <table class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>ORDER ID</th>
-                    <th>STATUS</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let order of orderHistory">
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>{{ order.createdAt | date }}</td>
-                    <td>${{ order.totalPrice }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+<!-- Pantalla de Ordenes en Curso -->
+<div class="col-md-8" *ngIf="showCurrentOrdersScreen">
+  <div class="card mb-3">
+    <!-- Contenido de la primera pantalla -->
+    <h3>Ordenes en Curso</h3> <br>
+    <div *ngFor="let order of currentOrders">
+      <div style="display: inline-block;">
+        <p style="display: inline;">OrderId: {{ order.id }}</p>
+        <p style="display: inline; margin-left: 10px;">Tiempo previsto de llegada en : 30 min</p> 
+        <p style="display: inline; margin-left: 10px;">${{ order.totalPrice }}</p>
+      </div>
+      <p>Estado: {{ order.status }}</p> 
+    </div>
+  </div>
+</div>
+
+<!-- Pantalla de Historial de Pedidos -->
+<div class="col-md-8" *ngIf="showOrderHistoryScreen">
+  <div class="card mb-3">
+    <div class="card-body">
+      <h3 class="card-title">Historial de Pedidos</h3>
+      <!-- Tabla con historial de pedidos -->
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ORDER ID</th>
+            <th>STATUS</th>
+            <th>DATE</th>
+            <th>TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orderHistory">
+            <td>{{ order.id }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.createdAt | date }}</td>
+            <td>${{ order.totalPrice }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   </div>

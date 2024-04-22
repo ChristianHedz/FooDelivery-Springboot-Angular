@@ -52,9 +52,9 @@ export class ProfileComponent implements OnInit {
         this.user = user;
         this.editedFullName = this.user?.fullName || '';
         this.editedAlias = this.user?.alias || '';
-        this.editedPhone = this.user?.phone || '';
+/*         this.editedPhone = this.user?.phone || '';
         this.editedEmail = this.user?.email || '';
-   
+    */
       },
       (error) => {
         console.error('Error fetching user profile:', error);
@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
         ...this.user,
         fullName: this.editedFullName,
         alias: this.editedAlias,
-    /*     phone: this.editedPhone,
+     /*    phone: this.editedPhone,
         email: this.editedEmail, */
      
       };
