@@ -96,6 +96,7 @@ public class OrderController {
     })
     @GetMapping("/user")
     public ResponseEntity<List<OrderDto>> getUserOrder(HttpServletRequest request) {
+        System.out.println("ENTRO A GET: /user/orders");
         return ResponseEntity.status(200).body(orderService.getUserOrder(request));
     }
 
@@ -116,6 +117,7 @@ public class OrderController {
     })
     @GetMapping("/user/{id}")
     public ResponseEntity<List<OrderDto>> getUserOrderByAdmin(HttpServletRequest request, @PathVariable Long id) {
+        System.out.println("ENTRO A GET: /user/orders/{id}");
         return ResponseEntity.status(200).body(orderService.getUserOrderByAdmin(request, id));
     }
 
