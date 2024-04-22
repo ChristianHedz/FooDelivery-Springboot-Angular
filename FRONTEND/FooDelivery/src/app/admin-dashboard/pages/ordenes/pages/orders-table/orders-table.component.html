@@ -85,7 +85,7 @@
                             <td>
                                 <div class="flex">
                                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(order)"></button>
-                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(order)"></button>
+<!--                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(order)"></button>-->
                                 </div>
                             </td>
                         </tr>
@@ -122,8 +122,10 @@
                 </ng-template>
 
                 <ng-template pTemplate="footer">
-                  <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                  <button pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text" (click)="updateStatusProduct()"></button>
+                    <div class="flex">
+                      <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                      <button pButton pRipple label="Actualizar" icon="pi pi-check" class="p-button-text" (click)="updateStatusProduct()"></button>
+                    </div>
                 </ng-template>
             </p-dialog>
 

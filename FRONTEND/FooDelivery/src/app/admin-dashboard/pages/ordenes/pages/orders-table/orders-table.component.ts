@@ -169,9 +169,9 @@ export class OrdersTableComponent {
 
   updateStatusProduct() {
     this.submitted = true;
-    console.log('Guardando status... ', this.orderStatus.value);
-
     this.orderService.updateOrderStatus(this.order.id, this.orderStatus.value);
+    this.messageService.add({ severity: 'success', summary: 'Correcto', detail: 'Estatus del pedido actualizado exitosamente', life: 2000 });
+    this.orderDialog = false;
   }
 
   onGlobalFilter(table: Table, event: Event) {

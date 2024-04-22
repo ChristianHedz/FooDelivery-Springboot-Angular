@@ -8,6 +8,7 @@
   height: 3.5rem;
   background-color: var(--primary-900);
   margin: .2rem;
+  z-index: 1000;
 }
 
 ::ng-deep .p-element > svg {
