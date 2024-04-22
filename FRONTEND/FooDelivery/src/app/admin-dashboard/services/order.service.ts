@@ -150,6 +150,26 @@ export class OrderService {
       );
   }
 
+  getOrdersByStatus(status: string) {
+    this.orderApiService.getOrdersByStatus(status)
+      .subscribe( {
+          next: orders => {
+            console.log('Ordenes por estado: ', orders);
+            this.orders.set(orders);
+          },
+          error: (error) => {
+            this.messageService.add({
+              key: 'toast',
+              severity: 'error',
+              summary: `Error al obtener lista de ordenes por estado: ${status}`,
+              detail: error.message ? error.message : 'Error desconocido'
+            });
+            return error;
+          },
+        }
+      );
+  }
+
   private goRouteUpdate(id: number) {
     this.router.navigate([
       '/admin/dashboard/ordenes',

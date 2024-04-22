@@ -1,7 +1,7 @@
-import {Component, Input, signal} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
-import {Table, TableLazyLoadEvent, TableModule, TablePageEvent} from "primeng/table";
+import {Table, TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
@@ -12,9 +12,11 @@ import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {PaginatorModule} from "primeng/paginator";
-import {OrderResponse, OrderResponseAll} from "../../../../interfaces/order.interface";
-import {MenuItem, MenuItemCommandEvent, MessageService} from "primeng/api";
+import {OrderResponse} from "../../../../interfaces/order.interface";
+import {MenuItem, MessageService} from "primeng/api";
 import {SplitButtonModule} from "primeng/splitbutton";
+import {OrderService} from "../../../../services/order.service";
+import {MessagesModule} from "primeng/messages";
 
 @Component({
   selector: 'app-orders-table',
@@ -37,22 +39,26 @@ import {SplitButtonModule} from "primeng/splitbutton";
     DatePipe,
     TitleCasePipe,
     ReactiveFormsModule,
-    SplitButtonModule
+    SplitButtonModule,
+    MessagesModule
   ],
   templateUrl: './orders-table.component.html',
   styleUrl: './orders-table.component.css'
 })
 export class OrdersTableComponent {
 
-  @Input({ required: true }) ordersResponse!: OrderResponse[];
-  @Input({ required: true }) allOrdersResponse!: OrderResponseAll;
+  messageNotData = [
+    { severity: 'info', summary: 'No hay ordenes que mostrar', detail: '' },
+  ];
+
+  @ViewChild('dt') table: Table | undefined;
 
   items: MenuItem[] = [];
 
-  rows = 0;
-  totalRecords = 0;
+  rows = 10;
+  totalRecords = this.orderService.orders().length;
 
-  orders: OrderResponse[] = [];
+  orders: OrderResponse[] = this.orderService.orders();
   order: OrderResponse = {} as OrderResponse;
 
   orderDialog: boolean = false;
@@ -63,33 +69,12 @@ export class OrdersTableComponent {
   cols: any[] = [];
   statuses: any[] = [];
 
-  constructor(private messageService: MessageService) { }
+  constructor(
+      private messageService: MessageService,
+      public orderService: OrderService
+  ) { }
 
   ngOnInit() {
-    console.log(this.ordersResponse);
-    console.log(this.allOrdersResponse);
-
-    this.orders = this.ordersResponse;
-
-    console.log(this.allOrdersResponse.size, this.allOrdersResponse.totalElements);
-
-    this.rows = Number(this.allOrdersResponse.size);
-    this.totalRecords = Number(this.allOrdersResponse.totalElements);
-
-    this.cols = [
-      { field: 'user.fullName', header: 'Cliente' },
-      { field: 'totalPrice', header: 'Total' },
-      { field: 'paymentMethod', header: 'Pago' },
-      { field: 'createdAt', header: 'Pedido el' },
-      { field: 'status', header: 'Estatus' }
-    ];
-
-    this.statuses = [
-      { label: 'IN_PROGRESS', value: 'inprogress' },
-      { label: 'ON_ROUTE', value: 'onroute' },
-      { label: 'DELIVERED', value: 'delivered' },
-      { label: 'CANCELED', value: 'canceled' }
-    ];
 
     this.items = [
       {
@@ -118,6 +103,23 @@ export class OrdersTableComponent {
         command: () => {this.onChangeListByStatus('CANCELED')}
       },
     ];
+
+    this.cols = [
+      { field: 'user.fullName', header: 'Cliente' },
+      { field: 'totalPrice', header: 'Total' },
+      { field: 'paymentMethod', header: 'Pago' },
+      { field: 'createdAt', header: 'Pedido el' },
+      { field: 'status', header: 'Estatus' }
+    ];
+
+    this.statuses = [
+      { label: 'IN_PROGRESS', value: 'inprogress' },
+      { label: 'ON_ROUTE', value: 'onroute' },
+      { label: 'DELIVERED', value: 'delivered' },
+      { label: 'CANCELED', value: 'canceled' }
+    ];
+
+
   }
 
   deleteSelectedProducts() {
@@ -183,7 +185,10 @@ export class OrdersTableComponent {
   }
 
   onChangeListByStatus(status: string) {
-    console.log('Cambiando la lista: ', status);
+    this.orderService.getOrdersByStatus(status);
   }
 
+  generateCSV() {
+    this.table?.exportCSV();
+  }
 }
