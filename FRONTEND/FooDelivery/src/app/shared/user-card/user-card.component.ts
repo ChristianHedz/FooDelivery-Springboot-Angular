@@ -5,16 +5,16 @@ import {
   ChangeDetectionStrategy,
   ViewEncapsulation,
   inject,
-  signal
+  signal, OnInit
 } from '@angular/core';
-import {IUser} from "../../core/interfaces/user/User.interface";
+import {IUser} from "../../admin-dashboard/interfaces/user.interface";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {BadgeModule} from "primeng/badge";
 import {Router, RouterLink} from "@angular/router";
 import {MenuModule} from "primeng/menu";
 import {UserService} from "../../admin-dashboard/services/user.service";
-import {ConfirmationService, MenuItem, MessageService} from "primeng/api";
+import { MenuItem } from "primeng/api";
 import {RippleModule} from "primeng/ripple";
 import {MenubarModule} from "primeng/menubar";
 import {StyleClassModule} from "primeng/styleclass";
@@ -43,7 +43,7 @@ import {MessagesModule} from "primeng/messages";
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated
 })
-export class UserCardComponent {
+export class UserCardComponent implements OnInit {
 
   noName: string = 'NoName';
 
@@ -54,32 +54,34 @@ export class UserCardComponent {
   @Input({ required: true }) user!: IUser;
   @Input({ transform: booleanAttribute }) isAdmin: boolean = false;
 
-
-  constructor(
-    private userAdminService: UserService
-  ) { }
+  public menus = signal<MenuItem[]>([]);
 
 
-// Menu
-  public menus = signal<MenuItem[]>([
-    {
-      label: 'Opciones',
-      items: [
-        {
-          label: 'Actualizar',
-          icon: 'pi pi-pencil',
-          command: () => {
-            this.goRuteUpdate();
+  constructor( private userAdminService: UserService ) {}
+
+  ngOnInit(): void {
+    // Menu
+    this.menus.set([
+      {
+        label: 'Opciones',
+        items: [
+          {
+            label: 'Actualizar',
+            icon: 'pi pi-pencil',
+            command: () => {
+              this.goRuteUpdate();
+            },
           },
-        },
-        {
-          label: 'Eliminar',
-          icon: 'pi pi-trash',
-          command: () => this.userAdminService.confirmDeleteUser(this.user.id) //this.confirm1(this.user.id!),
-        },
-      ],
-    },
-  ]);
+          {
+            label: 'Eliminar',
+            icon: 'pi pi-trash',
+            disabled: this.user && this.user.role === 'ADMIN',
+            command: () => this.userAdminService.confirmDeleteUser(this.user.id) //this.confirm1(this.user.id!),
+          },
+        ],
+      },
+    ]);
+  }
 
   goRuteUpdate() {
     this.router.navigate([

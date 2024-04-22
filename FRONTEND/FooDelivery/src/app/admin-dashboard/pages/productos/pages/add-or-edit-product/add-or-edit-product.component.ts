@@ -32,6 +32,7 @@ import {ImageModule} from "primeng/image";
 import {ICategoryReq} from "../../../../interfaces/category.interface";
 
 type controlType = 'name' | 'img' | 'description' | 'price' | 'category';
+
 @Component({
   selector: 'app-add-or-edit-product',
   standalone: true,
@@ -114,10 +115,10 @@ export default class AddOrEditProductComponent implements OnInit {
     }
 
     this.categories.set( [
-      { name: 'Hamburguesas', id: 2 },
-      { name: 'Bebidas', id: 3 },
-      { name: 'Snacks', id: 4 },
-      { name: 'Juguetes', id: 5 },
+      { name: 'Hamburguesas', id: 1 },
+      { name: 'Bebidas', id: 2 },
+      { name: 'Snacks', id: 3 },
+      { name: 'Otros', id: 4 },
     ]);
 
   }
