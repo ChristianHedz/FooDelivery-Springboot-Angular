@@ -1,12 +1,11 @@
-*{
-    margin: auto;
+.list-group-item{
+  border: none;
+  svg{
+    margin-right: 5px;
+  }
 }
 
-h1{
-    margin-top: 20px;
-    margin-left: 100px;
-}
-h3{
-    margin-top: 20px;
-    margin-left: 100px;
+.btn-orange{
+  color: white;
+  background-color: #FFC107;
 }
