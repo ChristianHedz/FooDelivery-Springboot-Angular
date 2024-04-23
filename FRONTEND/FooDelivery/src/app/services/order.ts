@@ -15,16 +15,15 @@ export interface Order {
       id: number;
     };
   }
-  
+
   export enum StatusOrder {
     IN_PROGRESS,
     ON_ROUTE,
     DELIVERED,
     CANCELED
   }
-  
+
   export enum PaymentMethod {
     PAYPAL,
     CASH
   }
-  
