@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { Order } from '../services/order';
 import { StatusOrder } from '../services/order';
 
@@ -21,13 +21,14 @@ export class ProfileComponent implements OnInit {
   editedAlias: string = '';
   editedPhone: string = '';
   editedEmail: string = '';
-  editedProfileImage: string = ''; 
+  editedProfileImage: string = '';
   showCurrentOrdersScreen: boolean = false;
   showOrderHistoryScreen: boolean = false;
-  currentOrders: Order[] = []; 
-  orderHistory: Order[] = []; 
+  currentOrders: Order[] = [];
+  orderHistory: Order[] = [];
   statusOrder = StatusOrder;
-  progressWidth: string = '50%';
+  // progressWidth: string = '0%';
+  progressWidth = signal('0%');
 
   constructor(private authService: AuthService) { }
 
@@ -35,16 +36,21 @@ export class ProfileComponent implements OnInit {
     this.getUserProfile();
     this.getUserOrders();
   }
-  
+
   // Actualiza la barra de progreso cuando se recibe el estado de la orden
   updateProgress(status: StatusOrder): void {
-    const progressPercentage = {
+    const progressPercentage: Record<string, string> = {
       [StatusOrder.IN_PROGRESS]: '50%',
       [StatusOrder.ON_ROUTE]: '75%',
       [StatusOrder.DELIVERED]: '100%',
-      [StatusOrder.CANCELED]: '0%' 
+      [StatusOrder.CANCELED]: '0%'
     };
-    this.progressWidth = progressPercentage[status];
+
+    if (status in StatusOrder) {
+      const statusString = StatusOrder[status];
+      this.progressWidth.set(progressPercentage[statusString]);
+    }
+
   }
 
 
@@ -53,13 +59,14 @@ export class ProfileComponent implements OnInit {
       (orders: Order[]) => {
         this.currentOrders = orders.filter(order => order.status !== StatusOrder.DELIVERED && order.status !== StatusOrder.CANCELED);
         this.orderHistory = orders;
+        this.updateProgress(orders[0].status);
       },
       (error) => {
         console.error('Error fetching user orders:', error);
       }
     );
   }
-  
+
   getUserProfile(): void {
     this.authService.getUserProfile().subscribe(
       (user: User) => {
