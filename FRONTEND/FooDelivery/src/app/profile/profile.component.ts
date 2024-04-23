@@ -30,6 +30,11 @@ export class ProfileComponent implements OnInit {
   // progressWidth: string = '0%';
   progressWidth = signal('0%');
 
+  statusBarClass = signal('');
+  statusTextClass = signal('text-orange-500');
+  svgStrokeColor = signal('#FA8232');
+  svgFillColor = signal('#FD7E14');
+
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -40,13 +45,17 @@ export class ProfileComponent implements OnInit {
   // Actualiza la barra de progreso cuando se recibe el estado de la orden
   updateProgress(status: StatusOrder): void {
     const progressPercentage: Record<string, string> = {
-      [StatusOrder.IN_PROGRESS]: '50%',
-      [StatusOrder.ON_ROUTE]: '75%',
+      [StatusOrder.IN_PROGRESS]: '40%',
+      [StatusOrder.ON_ROUTE]: '67%',
       [StatusOrder.DELIVERED]: '100%',
       [StatusOrder.CANCELED]: '0%'
     };
 
     if (status in StatusOrder) {
+      this.statusBarClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_bar' : '');
+      this.statusTextClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_text' : 'text-orange-500');
+      this.svgStrokeColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FA8232');
+      this.svgFillColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FD7E14');
       const statusString = StatusOrder[status];
       this.progressWidth.set(progressPercentage[statusString]);
     }
