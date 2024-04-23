@@ -4,9 +4,9 @@
       <br>
       <h2>Perfil</h2>
       <div class="card mb-3">
-        
+
         <div class="card-body">
-        
+
           <h3 class="card-title">Informacion Personal</h3>
           <div class="row">
             <div class="col-md-4">
@@ -15,26 +15,26 @@
                 <input class="form-control" type="text" [(ngModel)]="editedProfileImage" *ngIf="isEditing" placeholder="URL de la imagen de perfil">
               </figure>
             </div>
-           
+
             <div class="col-md-8">
               <div class="info-row">
                 <span class="info-label"></span>
                 <input class="form-control" type="text" [(ngModel)]="editedFullName" *ngIf="isEditing">
                 <span *ngIf="!isEditing"><strong>{{ user?.fullName }}</strong></span>
      <p>Caseros 3445, La Plata Argentina</p>          </div>
-  
+
               <div class="info-row">
                 <span class="info-label">Alias :   </span>
                 <input class="form-control" type="text" [(ngModel)]="editedAlias" *ngIf="isEditing">
                 <span *ngIf="!isEditing">{{ user?.alias }}</span>
               </div>
-  
+
               <div class="info-row">
                 <span class="info-label">Phone:</span>
 <!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedPhone" *ngIf="isEditing">
  -->                <span *ngIf="!isEditing">{{ user?.phone }}</span>
               </div>
-  
+
               <div class="info-row">
                 <span class="info-label">Email:</span>
 <!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedEmail" *ngIf="isEditing">
@@ -44,7 +44,7 @@
           </div>
           <button class="btn-modify" *ngIf="!isEditing" (click)="enableEdit()">Modificar</button>
           <button class="btn-save" *ngIf="isEditing" (click)="saveChanges()">Guardar</button>
-          
+
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@
         <span class="badge badge-pill badge-primary float-right">100</span>
         Puntos
       </button>
-    
+
       <button class="btn btn-warning w-100 mb-2" id="btn2">
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="56" height="56" rx="2" fill="white"/>
@@ -78,9 +78,9 @@
         <span class="badge badge-pill badge-primary float-right">50</span>
         Pedidos Totales
       </button>
-      
+
       <button class="btn btn-success w-100" id="btn3">
-  
+
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="56" height="56" rx="2" fill="white"/>
           <path opacity="0.2" d="M16.1375 21.3252C16.0469 21.4808 15.9995 21.6577 16 21.8377V34.1627C16.001 34.3407 16.0488 34.5154 16.1388 34.669C16.2288 34.8226 16.3577 34.9498 16.5125 35.0377L27.5125 41.2252C27.6608 41.3099 27.8292 41.3531 28 41.3502L28.1125 28.0002L16.1375 21.3252Z" fill="#2DB324"/>
@@ -89,12 +89,12 @@
           <path d="M39.8625 21.3252L28.1125 28.0002L16.1375 21.3252" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M28.1125 28L28 41.35" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          
-        <span class="badge badge-pill badge-primary float-right">30</span> 
+
+        <span class="badge badge-pill badge-primary float-right">30</span>
         Pedidos Completados
       </button>
     </div>
-    
+
 </div>
 
 </div>
@@ -108,7 +108,7 @@
   <!-- Botones del switch -->
   <div class="row mt-3">
 
-    
+
     <div class="col-md-3">
       <button class="btn btn-primary" id="btnIf"  (click)="showCurrentOrders()">Ordenes en Curso</button>
       <button class="btn btn-primary" id="btnIf" (click)="showOrderHistory()">Historial de Pedidos</button>
@@ -128,30 +128,30 @@
     <h3>Ordenes en Curso</h3> <br>
     <div *ngFor="let order of currentOrders">
       <p style="display: inline;">OrderId: {{ order.id }}</p>
-    
+
       <p style="display: inline; margin-left: 10px;">Total: ${{ order.totalPrice }}</p>
-  
-   
-      
+
+
+
       <!-- Agregar información del producto, cantidad y fecha -->
-     
+
         <li *ngFor="let product of order.products">
           Producto: {{product.id}} | Cantidad: {{ product.quantity }}
         </li>
-      
+
 
       <p>Fecha:{{ order.createdAt | date }}</p>
 
       <p style="display: inline; margin-left: 10px;">
-        Tiempo previsto de llegada en: 
-        {{ 
-          order.status === statusOrder.IN_PROGRESS ? '30' : 
-          order.status === statusOrder.ON_ROUTE ? '20' : 
+        Tiempo previsto de llegada en:
+        {{
+          order.status === statusOrder.IN_PROGRESS ? '30' :
+          order.status === statusOrder.ON_ROUTE ? '20' :
           'Desconocido'
         }} min
       </p>
       <p>Estado: {{ order.status }}</p>
-      
+
 
 
 
@@ -159,9 +159,9 @@
             <!-- BARRA DE PROGRESO -->
 
             <div class="progress-bar">
-              <div class="progress" [style.width]="progressWidth"></div>
+              <div class="progress" [style.width]="progressWidth()"></div>
             </div>
-            
+
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -176,13 +176,13 @@
                     <p>Orden Cargada</p>
                   </div>
                 </div>
-            
+
       <div class="col">
         <div class="base">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M29.2 20.05C29.15 18.9 28.9 16.65 28.1 14.95C26.4 11.35 23.2 8.65 19.45 7.65C19 6.7 18 6 16.8 6H15.25C14.1 6 13.1 6.65 12.65 7.55C7.39999 8.9 3.14999 14.3 2.74999 20.05C1.69999 20.35 0.899994 21.3 0.899994 22.45V23.5C0.899994 24.9 1.99999 26 3.39999 26H28.65C30.05 26 31.15 24.9 31.15 23.5V22.45C31.15 21.3 30.3 20.3 29.2 20.05ZM12.35 10V12.15C12.35 12.75 12.85 13.3 13.5 13.3C14.15 13.3 14.65 12.8 14.65 12.15V8.75C14.65 8.45 14.95 8.2 15.3 8.2H16.85C17.2 8.2 17.5 8.45 17.5 8.75V12.15C17.5 12.75 18 13.3 18.65 13.3C19.3 13.3 19.8 12.8 19.8 12.15V10C22.55 11 24.85 13.1 26.15 15.85C26.7 17.05 26.95 18.7 27.05 19.95H22.35V19.45C22.35 18.85 21.85 18.3 21.2 18.3C20.55 18.3 20.05 18.8 20.05 19.45V19.95H17.2V18.15C17.2 17.55 16.7 17 16.05 17C15.45 17 14.9 17.5 14.9 18.15V19.95H12.05V19.45C12.05 18.85 11.55 18.3 10.9 18.3C10.25 18.3 9.74999 18.8 9.74999 19.45V19.95H4.99999C5.39999 15.6 8.49999 11.45 12.35 10ZM28.9 23.5C28.9 23.65 28.8 23.75 28.65 23.75H3.39999C3.24999 23.75 3.14999 23.65 3.14999 23.5V22.45C3.14999 22.3 3.24999 22.2 3.39999 22.2H28.65C28.8 22.2 28.9 22.3 28.9 22.45V23.5Z" fill="#FD7E14"/>
             </svg>
-            
+
           <p>En Preparación</p>
         </div>        </div>
 
@@ -199,7 +199,7 @@
             <path d="M5.5 24H3C2.73478 24 2.48043 23.8946 2.29289 23.7071C2.10536 23.5196 2 23.2652 2 23V9C2 8.73478 2.10536 8.48043 2.29289 8.29289C2.48043 8.10536 2.73478 8 3 8H22V21.4" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M22 15H30V23C30 23.2652 29.8946 23.5196 29.7071 23.7071C29.5196 23.8946 29.2652 24 29 24H26.5" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            
+
           <p>En Camino</p>
         </div>
       </div>
@@ -214,17 +214,17 @@
             <path d="M9.075 8.97527L15.4875 7.10027C15.7153 7.03493 15.959 7.05265 16.175 7.15027L20.5 9.11277" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M14 26.6125L10.2375 25.6625C10.0842 25.6279 9.94221 25.5547 9.825 25.45L7 23" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            
+
           <p>Entregado</p>
         </div>
       </div>
-        
+
       </div>
-      
+
     </div>
   </div>
-    
-    
+
+
   </div>
 </div>
 
