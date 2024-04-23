@@ -3,13 +3,17 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Order } from '../services/order';
-import { StatusOrder } from '../services/order';
+import {Order, StatusOrder} from '../services/order';
+import {
+  TableProductsPromoComponent
+} from "../admin-dashboard/components/table-products-promo/table-products-promo.component";
+import {OrderItemsComponent} from "./components/order-card-customer/order-items.component";
+import {UserDTO} from "../admin-dashboard/interfaces/user.interface";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TableProductsPromoComponent, OrderItemsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -30,6 +34,11 @@ export class ProfileComponent implements OnInit {
   // progressWidth: string = '0%';
   progressWidth = signal('0%');
 
+  statusBarClass = signal('');
+  statusTextClass = signal('text-orange-500');
+  svgStrokeColor = signal('#FA8232');
+  svgFillColor = signal('#FD7E14');
+
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -40,13 +49,17 @@ export class ProfileComponent implements OnInit {
   // Actualiza la barra de progreso cuando se recibe el estado de la orden
   updateProgress(status: StatusOrder): void {
     const progressPercentage: Record<string, string> = {
-      [StatusOrder.IN_PROGRESS]: '50%',
-      [StatusOrder.ON_ROUTE]: '75%',
+      [StatusOrder.IN_PROGRESS]: '40%',
+      [StatusOrder.ON_ROUTE]: '67%',
       [StatusOrder.DELIVERED]: '100%',
       [StatusOrder.CANCELED]: '0%'
     };
 
     if (status in StatusOrder) {
+      this.statusBarClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_bar' : '');
+      this.statusTextClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_text' : 'text-orange-500');
+      this.svgStrokeColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FA8232');
+      this.svgFillColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FD7E14');
       const statusString = StatusOrder[status];
       this.progressWidth.set(progressPercentage[statusString]);
     }
@@ -112,5 +125,10 @@ export class ProfileComponent implements OnInit {
   showOrderHistory(): void {
     this.showCurrentOrdersScreen = false;
     this.showOrderHistoryScreen = true;
+  }
+
+  refreshOrders() {
+    console.log('Refresingh orders...');
+    this.getUserOrders();
   }
 }
