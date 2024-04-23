@@ -7,13 +7,16 @@ import { ProfileComponent } from './profile/profile.component';
 import {authGuardAdmin} from "./core/guards/authGuardAdmin";
 import {notAuthGuard} from "./core/guards/not-auth.guard";
 import { ContactComponent } from './shared/contact/contact.component';
+import {authGuardAnyUser} from "./core/guards/authGuardAnyUser";
+import {SettingsPageComponent} from "./settings/pages/settings-page/settings-page.component";
 
 export const routes: Routes = [
 
     {path: "home", component: MainContentComponent},
-    {path: "login", component: LoginComponent,canActivate: [notAuthGuard] },
-    {path:"profile", component:ProfileComponent},
-    {path: "register", component: RegisterComponent,canActivate: [notAuthGuard] },
+    {path: "login", component: LoginComponent, canActivate: [notAuthGuard] },
+    {path:"profile", component:ProfileComponent, canActivate: [authGuardAnyUser] },
+    {path:"settings", component:SettingsPageComponent, canActivate: [authGuardAnyUser] },
+    {path: "register", component: RegisterComponent, canActivate: [notAuthGuard] },
     {path: "products", component: ProductsListComponent},
     {path:"contact", component:ContactComponent},
     {

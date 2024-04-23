@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {catchError, map, Observable, throwError} from "rxjs";
 import { UserApiService } from "../../core/api/user-api.service";
-import {IUser, UserDTO, UserToUpdate} from "../../admin-dashboard/interfaces/user.interface";
+import {IUser, UserChangePassword, UserDTO, UserToUpdate} from "../../admin-dashboard/interfaces/user.interface";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -34,12 +34,12 @@ export class UserService {
             this.users.set(response.content);
           },
           error: (error) => {
-            this.messageService.add({
+            /*this.messageService.add({
               key: 'toast',
               severity: 'error',
               summary: 'Error al obtener lista de usuarios',
               detail: error,
-            });
+            });*/
             return error;
           },
         }
@@ -167,6 +167,22 @@ export class UserService {
           detail: "Ocurrio un problema al intentar actualizar el usuario.",
         });
         return throwError( () => "Error al actualizar el usuario");
+      })
+    );
+  }
+
+  changePassword( body: UserChangePassword ) {
+    return this.userApi.changePassword(body).pipe(
+      tap((response) => this.showMessage("Contraseña actualizada exitosamente")),
+      tap((_) => this.router.navigate(['/profile'])),
+      catchError(({ error } ) => {
+        this.messageService.add({
+          key: 'toast',
+          severity: 'error',
+          summary: 'Contraseña no actualizada!',
+          detail: error.statusCode === 400 ? "Corrobore su contraseña" : "Ocurrio un problema al intentar cambiar la contraseña.",
+        });
+        return throwError( () => "Error al cambiar la contraseña del usuario");
       })
     );
   }
