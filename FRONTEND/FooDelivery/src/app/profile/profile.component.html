@@ -123,40 +123,61 @@
 
 <!-- Pantalla de Ordenes en Curso -->
 <div class="col-md-8" *ngIf="showCurrentOrdersScreen">
-  <div class="card mb-3">
+  <div class="card mb-3 p-3">
     <!-- Contenido de la primera pantalla -->
-    <h3>Ordenes en Curso</h3> <br>
+    <div class="flex justify-content-between">
+      <p class="font-bold text-2xl mb-1">Ordenes en Curso</p>
+      <span class="pi pi-refresh cursor-pointer text-green-500" (click)="refreshOrders()"></span>
+    </div>
+
     <div *ngFor="let order of currentOrders">
-      <p style="display: inline;">OrderId: {{ order.id }}</p>
-      <p style="display: inline; margin-left: 10px;">Total: ${{ order.totalPrice }}</p>
+
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Id:</div>
+        <div class="text-500 font-medium">{{ order.id }}</div>
+      </div>
+
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Total:</div>
+        <div class="text-500 font-medium">{{ order.totalPrice | currency }}</div>
+      </div>
+
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Metodo de Pago:</div>
+        <div class="text-500 font-medium">{{ order.paymentMethod }}</div>
+      </div>
+
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Fecha:</div>
+        <div class="text-500 font-medium">{{ order.createdAt | date: 'dd/MMM/YYYY' }} </div>
+      </div>
 
       <!-- Agregar información del producto, cantidad y fecha -->
 
-      <li *ngFor="let product of order.products">
-        Producto: {{product.id}} | Cantidad: {{ product.quantity }}
-      </li>
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Tiempo previsto de llegada en:</div>
+        <div class="text-500 font-medium">
+          {{
+            order.status === statusOrder.IN_PROGRESS ? '30 min' :
+              order.status === statusOrder.ON_ROUTE ? '20 min' :
+                'Desconocido'
+          }}
+        </div>
+      </div>
 
-
-      <p>Fecha:{{ order.createdAt | date }}</p>
-
-      <p style="display: inline; margin-left: 10px;">
-        Tiempo previsto de llegada en:
-        {{
-          order.status === statusOrder.IN_PROGRESS ? '30' :
-          order.status === statusOrder.ON_ROUTE ? '20' :
-          'Desconocido'
-        }} min
-      </p>
-      <p>Estado: {{ order.status }}</p>
+      <div class="flex align-items-center gap-2">
+        <div class="text-700 font-medium">Estado:</div>
+        <div class="text-500 font-medium">{{ order.status }} </div>
+      </div>
 
 
       <!-- BARRA DE PROGRESO -->
 
-      <div [class]="'progress-bar ' + statusBarClass()">
+      <div [class]="'mt-4 progress-bar ' + statusBarClass()">
         <div class="progress" [style.width]="progressWidth()"></div>
       </div>
 
-      <div class="container">
+      <div class="container mb-4">
           <div class="row">
             <div class="col flex flex-column align-items-center">
               <div class="base">
@@ -218,6 +239,8 @@
 
         </div>
       </div>
+
+      <app-order-items [products]="order.products" />
     </div>
   </div>
 </div>

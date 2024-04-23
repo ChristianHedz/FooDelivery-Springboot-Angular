@@ -3,13 +3,17 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../services/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Order } from '../services/order';
-import { StatusOrder } from '../services/order';
+import {Order, StatusOrder} from '../services/order';
+import {
+  TableProductsPromoComponent
+} from "../admin-dashboard/components/table-products-promo/table-products-promo.component";
+import {OrderItemsComponent} from "./components/order-card-customer/order-items.component";
+import {UserDTO} from "../admin-dashboard/interfaces/user.interface";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TableProductsPromoComponent, OrderItemsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -121,5 +125,10 @@ export class ProfileComponent implements OnInit {
   showOrderHistory(): void {
     this.showCurrentOrdersScreen = false;
     this.showOrderHistoryScreen = true;
+  }
+
+  refreshOrders() {
+    console.log('Refresingh orders...');
+    this.getUserOrders();
   }
 }
