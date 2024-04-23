@@ -13,6 +13,7 @@ import { StatusOrder } from '../services/order';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
+
 export class ProfileComponent implements OnInit {
   user: User | undefined;
   isEditing: boolean = false;
@@ -25,6 +26,8 @@ export class ProfileComponent implements OnInit {
   showOrderHistoryScreen: boolean = false;
   currentOrders: Order[] = []; 
   orderHistory: Order[] = []; 
+  statusOrder = StatusOrder;
+  progressWidth: string = '50%';
 
   constructor(private authService: AuthService) { }
 
@@ -32,13 +35,24 @@ export class ProfileComponent implements OnInit {
     this.getUserProfile();
     this.getUserOrders();
   }
+  
+  // Actualiza la barra de progreso cuando se recibe el estado de la orden
+  updateProgress(status: StatusOrder): void {
+    const progressPercentage = {
+      [StatusOrder.IN_PROGRESS]: '50%',
+      [StatusOrder.ON_ROUTE]: '75%',
+      [StatusOrder.DELIVERED]: '100%',
+      [StatusOrder.CANCELED]: '0%' 
+    };
+    this.progressWidth = progressPercentage[status];
+  }
+
 
   getUserOrders(): void {
     this.authService.getUserOrders().subscribe(
       (orders: Order[]) => {
         this.currentOrders = orders.filter(order => order.status !== StatusOrder.DELIVERED && order.status !== StatusOrder.CANCELED);
-        this.orderHistory = orders
-
+        this.orderHistory = orders;
       },
       (error) => {
         console.error('Error fetching user orders:', error);
@@ -52,9 +66,6 @@ export class ProfileComponent implements OnInit {
         this.user = user;
         this.editedFullName = this.user?.fullName || '';
         this.editedAlias = this.user?.alias || '';
-/*         this.editedPhone = this.user?.phone || '';
-        this.editedEmail = this.user?.email || '';
-    */
       },
       (error) => {
         console.error('Error fetching user profile:', error);
@@ -72,9 +83,6 @@ export class ProfileComponent implements OnInit {
         ...this.user,
         fullName: this.editedFullName,
         alias: this.editedAlias,
-     /*    phone: this.editedPhone,
-        email: this.editedEmail, */
-     
       };
 
       this.authService.updateUserProfile(this.user).subscribe({
@@ -89,23 +97,13 @@ export class ProfileComponent implements OnInit {
     }
   }
 
- 
-/*   cancelEdit(): void {
-    this.isEditing = false;
-    // Restablecer los valores originales
-    this.editedFullName = this.user?.fullName || '';
-    this.editedAlias = this.user?.alias || '';
-    this.editedPhone = this.user?.phone || '';
-    this.editedEmail = this.user?.email || '';
-    
-  } */
- showCurrentOrders(): void {
-  this.showCurrentOrdersScreen = true;
-  this.showOrderHistoryScreen = false;
-}
+  showCurrentOrders(): void {
+    this.showCurrentOrdersScreen = true;
+    this.showOrderHistoryScreen = false;
+  }
 
-showOrderHistory(): void {
-  this.showCurrentOrdersScreen = false;
-  this.showOrderHistoryScreen = true;
-}
+  showOrderHistory(): void {
+    this.showCurrentOrdersScreen = false;
+    this.showOrderHistoryScreen = true;
+  }
 }
