@@ -2,7 +2,13 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
-import {IUser, IUsers, UserDTO, UserToUpdate} from "../../admin-dashboard/interfaces/user.interface";
+import {
+  IUser,
+  IUsers,
+  UserChangePassword,
+  UserDTO,
+  UserToUpdate
+} from "../../admin-dashboard/interfaces/user.interface";
 import {AuthService} from "../../services/auth.service";
 
 @Injectable({
@@ -46,4 +52,9 @@ export class UserApiService {
     });
   }
 
+  changePassword(body: UserChangePassword) {
+    return this.http.put<IUser>(`${this.url}/users/auth`, body, {
+      headers: this.authService.addTokenToHeaders()
+    });
+  }
 }
