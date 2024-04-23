@@ -10,6 +10,7 @@ import {UserCardComponent} from "../../../../../shared/user-card/user-card.compo
 import {StyleClassModule} from "primeng/styleclass";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
+import {OrdersTableComponent} from "../orders-table/orders-table.component";
 
 @Component({
   selector: 'orders-grid-admin',
@@ -25,7 +26,8 @@ import {ToastModule} from "primeng/toast";
     UserCardComponent,
     StyleClassModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    OrdersTableComponent
   ],
   templateUrl: './orders-grid.component.html',
   styleUrl: './orders-grid.component.css',
@@ -33,11 +35,5 @@ import {ToastModule} from "primeng/toast";
   encapsulation: ViewEncapsulation.Emulated
 })
 export default class OrdersGridComponent {
-  orderService = inject(OrderService);
-
-  messageNotData = [
-    { severity: 'info', summary: 'No hay ordenes que mostrar', detail: '' },
-  ];
-
 
 }

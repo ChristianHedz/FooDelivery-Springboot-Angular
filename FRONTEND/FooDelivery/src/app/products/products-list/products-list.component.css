@@ -1,0 +1,38 @@
+.text-orange {
+  color: #EE9B01;
+}
+
+.bg-btn-orange {
+  background-color: #EE9B01;
+  border: none;
+}
+
+.mx-title {
+  margin: 0 20%;
+}
+
+.image-size {
+  width: auto;
+  max-width: 100px;
+  height: auto;
+  max-height: 100px;
+}
+
+.image-modal {
+  width: auto;
+  max-width: 150px;
+  height: auto;
+}
+
+.fs-7 {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.max-container {
+  max-width: 47%;
+}
+
+.max-container-50 {
+  max-width: 45%;
+}

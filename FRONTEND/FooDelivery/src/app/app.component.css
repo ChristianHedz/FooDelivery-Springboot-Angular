@@ -4,6 +4,25 @@
   margin: 0 3em;
 }
 
+.img-size {
+  max-width: 3vw;
+}
+.btn-profile{
+  background-color: white;
+  color: #ffb800;
+  font-weight: bold;
+}
+.dropdown-menu{
+  a {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    svg {
+      margin-right: 5px;
+    }
+  }
+}
+
 .navigation {
   gap: 2em;
 }
@@ -53,7 +72,10 @@
 
 .footer {
   background-color: black;
-  padding: 50px 0;
+  padding: 10px 0;
+}
+hr {
+  color: grey;
 }
 
 .footer h4 {

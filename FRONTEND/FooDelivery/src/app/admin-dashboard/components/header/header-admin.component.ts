@@ -7,7 +7,7 @@ import {MenuItem} from "primeng/api";
 import {UserService} from "../../services/user.service";
 import {StyleClassModule} from "primeng/styleclass";
 import adminRoutes from "../../admin.routes";
-import {IUser, IUserAuth} from "../../../core/interfaces/user/User.interface";
+import {IUser, IUserAuth} from "../../interfaces/user.interface";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
@@ -81,7 +81,7 @@ export class HeaderAdminComponent implements OnInit {
       this.updateMenu(result.matches);
     });
 
-    this.isAdmin.set(this.user()?.role === 'ADMIN');
+    // this.isAdmin.set(this.user()?.role === 'ADMIN');
   };
 
   private updateMenu(isMobile: boolean): void {

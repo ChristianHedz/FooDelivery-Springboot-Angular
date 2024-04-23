@@ -1,0 +1,11 @@
+.list-group-item{
+  border: none;
+  svg{
+    margin-right: 5px;
+  }
+}
+
+.btn-orange{
+  color: white;
+  background-color: #FFC107;
+}
