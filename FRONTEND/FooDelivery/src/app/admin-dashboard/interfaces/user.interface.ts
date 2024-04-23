@@ -87,3 +87,13 @@ export interface UserWithAdress {
   active:   boolean;
   address:  Address;
 }
+
+export type UserChangePassword = {
+  oldPassword: string,
+  newPassword: string
+}
+
+export type UserFormChangePassword = {
+  oldPassword: FormControl<string>,
+  newPassword: FormControl<string>
+}
