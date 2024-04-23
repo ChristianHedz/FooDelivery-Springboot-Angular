@@ -32,11 +32,7 @@ export class ProductsListComponent {
   showInput: boolean = false;
   address: string = 'Caseros 3445 (N)';
   selectedProduct?: IProductDTO;
-  idUser?: number;
-
-
-
-// Ahora puedes pasar `paymentInfo` en lugar de los valores individuales
+  idUser!: number;
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -48,11 +44,19 @@ export class ProductsListComponent {
         console.error('Error al obtener productos', error);
       },
     });
+
+    this.authService.getUserProfile().subscribe({
+      next: (user: User) => {
+        this.idUser = user.id
+        console.log(this.idUser);
+
+      }
+    })
   }
 
   payOrderWithPaypal(){
     let urlPayment;
-    let dataPayment = new DataPayment ('PAYPAL', '100', 'USD', 'COMPRA');
+    let dataPayment = new DataPayment ('PAYPAL', this.totalFinal.toString(), 'USD', 'COMPRA');
 
     console.log('Data Payment:', dataPayment);
 
@@ -60,33 +64,23 @@ export class ProductsListComponent {
       data => {
         urlPayment = data.url;
         console.log('Respuesta exitosa...');
-        this.payOrder();
+        console.log(urlPayment);
         window.location.href = urlPayment;
       },
       error => {
         urlPayment = error.url;
         window.location.href = urlPayment;
-      }
+      },
     );
   }
 
 
 
   payOrder(){
-
-    this.authService.getUserProfile().subscribe({
-      next: (user: User) => {
-        this.idUser = user.id
-        console.log(this.idUser);
-      }
-    })
     let currentDate = new Date();
-    console.log(this.idUser);
-
-    console.log(currentDate);
-    console.log(this.carritoProducts);
-    let productInfo = Array.from(this.carritoProducts.entries()).map(([id, product]) => ({id, count: product.count}));
-    console.log(productInfo);
+    let productInfo = Array.from(this.carritoProducts.entries())
+    .map(([id, product]) => ({id, count: product.count}));
+      console.log(productInfo);
 
     let order: Order = {
       totalPrice: this.totalFinal,
@@ -95,8 +89,9 @@ export class ProductsListComponent {
       createdAt: new Date(),
       products: productInfo,
       user: {
-        id: 10,
+        id: this.idUser,
       }
+
   };
 
     this.paymentService.payOrderwithPaypal(order).subscribe({
