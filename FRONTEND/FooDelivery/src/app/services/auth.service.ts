@@ -57,6 +57,9 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('user');
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem('user');
     this.isLoggedInSubject.next(false);
   }
   register(user: User): Observable<any> {

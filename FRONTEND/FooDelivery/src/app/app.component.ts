@@ -1,11 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'; // Importar Router y NavigationEnd
+import { Component, OnInit, inject, signal } from '@angular/core';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router'; // Importar Router y NavigationEnd
 import { PrimeNGConfig } from 'primeng/api';
-import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { ToastModule } from "primeng/toast";
-import { AuthService } from "./services/auth.service";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { AuthService } from './services/auth.service';
 import { User } from './services/user';
 
 @Component({
@@ -17,12 +23,12 @@ import { User } from './services/user';
     RouterLink,
     RouterLinkActive,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   authService = inject(AuthService);
   private primengConfig = inject(PrimeNGConfig);
   menuOption: string = '';
@@ -65,6 +71,7 @@ export class AppComponent implements OnInit{
     this.menuOption = menuOption;
   }
   logout() {
+    this.user = undefined;
     this.authService.logout();
   }
 }
