@@ -1,21 +1,17 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
-import { PaymentService } from "../../service/payment.service";
-import { DataPayment } from "../../common/data-payment";
+import { Component} from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { throws } from "assert";
-import {RouterLink} from "@angular/router";
-
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-purchase-success',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule,RouterLink],
   templateUrl: './purchase-success.component.html',
   styleUrl: './purchase-success.component.css'
 })
 export class PurchaseSuccessComponent {
   order: any;
-  totalPrice: any;
+  totalPrice!: number;
 
   ngOnInit() {
     const orderData = sessionStorage.getItem('order');
@@ -24,4 +20,5 @@ export class PurchaseSuccessComponent {
       this.totalPrice = JSON.parse(orderData).totalPrice;
     }
   }
+
 }

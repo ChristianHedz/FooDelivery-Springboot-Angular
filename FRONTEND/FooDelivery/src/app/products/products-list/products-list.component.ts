@@ -80,10 +80,13 @@ export class ProductsListComponent {
 
   payOrder(){
     if (this.carritoProducts.size === 0) {
-      Swal.fire('Error!','No puedes realizar el pago porque tu pedido está vacío.','warning');
+      Swal.fire('Pedido Vacio!','No puedes realizar el pago porque tu pedido está vacío.','warning');
       return;
     }
     this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 5000);
     let productInfo = Array.from(this.carritoProducts.entries())
     .map(([id, product]) => ({id, quantity: product.count}));
     let order: Order = {
@@ -100,7 +103,6 @@ export class ProductsListComponent {
     this.paymentService.createOrder(order).subscribe({
       next: (data) => {
         console.log(data);
-        console.log({data});
         sessionStorage.setItem('order', JSON.stringify(data));
       }
     });
