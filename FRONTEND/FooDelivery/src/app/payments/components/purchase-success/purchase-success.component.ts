@@ -1,16 +1,15 @@
-import { Component,inject} from "@angular/core";
+import { Component} from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Router } from '@angular/router';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-purchase-success',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './purchase-success.component.html',
   styleUrl: './purchase-success.component.css'
 })
 export class PurchaseSuccessComponent {
-  private router = inject(Router);
   order: any;
   totalPrice!: number;
 
@@ -22,7 +21,4 @@ export class PurchaseSuccessComponent {
     }
   }
 
-  goFollowUp(){
-    this.router.navigateByUrl('/profile');
-  }
 }
