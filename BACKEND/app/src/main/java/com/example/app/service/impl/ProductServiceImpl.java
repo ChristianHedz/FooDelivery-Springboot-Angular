@@ -1,14 +1,17 @@
-package com.example.app.service;
+package com.example.app.service.impl;
 
 import com.example.app.dto.product.ProductPromotionMessagesDto;
 import com.example.app.dto.product.ProductWithPromoDto;
 import com.example.app.exception.product.ProductNotFoundException;
 import com.example.app.exception.promotion.PromotionNotFoundException;
 import com.example.app.mapper.ProductMapper;
+import com.example.app.model.Category;
 import com.example.app.model.Product;
 import com.example.app.model.Promotion;
+import com.example.app.repository.CategoryRepository;
 import com.example.app.repository.ProductRepository;
 import com.example.app.repository.PromotionRepository;
+import com.example.app.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +25,9 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
-
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private PromotionRepository promotionRepository;
+    private final ProductRepository productRepository;
+    private final PromotionRepository promotionRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -43,7 +44,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product save(Product product) {
-        return productRepository.save(product);
+        if (product.getCategory() != null && product.getCategory().getId() != null) {
+            Long categoryId = product.getCategory().getId().longValue();
+            Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+            if (categoryOptional.isPresent()) {
+                product.setCategory(categoryOptional.get());
+                return productRepository.save(product);
+            } else {
+                throw new IllegalArgumentException("Specified category does not exist");
+            }
+        } else {
+            throw new IllegalArgumentException("Category is required for the product");
+        }
     }
 
     @Override
@@ -62,6 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Optional<Product> delete(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()){
