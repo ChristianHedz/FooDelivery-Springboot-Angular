@@ -4,11 +4,13 @@ import {
 } from '@abacritt/angularx-social-login';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginGoogleComponent } from '../login-google/login-google.component';
+import {MessageService} from "primeng/api";
+import {getFirstMessageOfError} from "../../shared/utils/messages-values";
 
 @Component({
   selector: 'app-login',
@@ -25,6 +27,7 @@ import { LoginGoogleComponent } from '../login-google/login-google.component';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  private messageService = inject(MessageService);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,18 +49,30 @@ export class LoginComponent {
   }
 
   login(): void {
+
     if (this.loginForm.valid) {
-      console.log('Formulario válido, enviando datos...');
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
-        () => {},
-        (error) => {
+  () => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Bienvenido',
+            detail: "Inicio de sesión exitoso",
+          });
+        },
+  ({ error }) => {
           console.error('Error en el inicio de sesión:', error);
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: '¡Error al iniciar sesión!',
+            detail: !error ? "Ocurrio un problema al intentar iniciar sesión. " : getFirstMessageOfError(error.messages),
+          });
         }
       );
-    } else {
-      console.log('Formulario inválido, no se puede enviar.');
     }
+
   }
 
   facebookLogin(): void {
