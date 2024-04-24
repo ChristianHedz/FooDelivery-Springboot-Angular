@@ -130,7 +130,7 @@
       <span class="pi pi-refresh cursor-pointer text-green-500" (click)="refreshOrders()"></span>
     </div>
 
-    <div *ngFor="let order of currentOrders">
+    <div class="card mb-3" *ngFor="let order of currentOrders">
 
       <div class="flex align-items-center gap-2">
         <div class="text-700 font-medium">Id:</div>
@@ -174,7 +174,8 @@
       <!-- BARRA DE PROGRESO -->
 
       <div [class]="'mt-4 progress-bar ' + statusBarClass()">
-        <div class="progress" [style.width]="progressWidth()"></div>
+<!--        <div class="progress" [style.width]="progressWidth()"></div>-->
+        <div class="progress" [style.width]="setProgress(order)"></div>
       </div>
 
       <div class="container mb-4">
