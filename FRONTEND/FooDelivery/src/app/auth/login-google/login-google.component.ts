@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-google',
@@ -22,6 +23,7 @@ export class LoginGoogleComponent implements OnInit{
       next: (result) => {
         this.authService.googleLogin(result.idToken).subscribe((res) => {
           if (res.token) {
+            Swal.fire('Bienvenido!', 'Has iniciado sesión correctamente', 'success');
             this.router.navigateByUrl('/home');
           }
         });

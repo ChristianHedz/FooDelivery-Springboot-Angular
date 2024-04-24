@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UrlPaypalResponse } from '../common/url-paypal-response';
 import { DataPayment } from '../common/data-payment';
 import { Order } from '../../services/order';
@@ -12,13 +12,11 @@ import { OrderResponse } from '../../admin-dashboard/interfaces/order.interface'
 })
 export class PaymentService {
   private baseUrl = 'https://foodelivery-d2d7a5204308.herokuapp.com';
-  private _authStatus = signal<boolean>(false);
-  public authStatus  = computed(() => this._authStatus());
 
   constructor(private http: HttpClient, private authService:AuthService) { }
 
   getUrlPaypalPayment(dataPayment: DataPayment):Observable<UrlPaypalResponse>{
-    return this.http.post<UrlPaypalResponse>(this.baseUrl + '/api/payments', dataPayment)
+    return this.http.post<UrlPaypalResponse>(this.baseUrl + '/api/payments', dataPayment);
   }
 
   createOrder(order: Order):Observable<OrderResponse>{
