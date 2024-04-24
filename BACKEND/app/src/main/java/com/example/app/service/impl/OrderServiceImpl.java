@@ -130,4 +130,12 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(orderRepository.save(order));
     }
 
+    public void updateStatusLatestOrder() {
+        Order order = orderRepository.findTopByOrderByIdDesc();
+        if (order != null) {
+            order.setStatus(StatusOrder.IN_PROGRESS);
+            orderRepository.save(order);
+        }
+    }
+
 }

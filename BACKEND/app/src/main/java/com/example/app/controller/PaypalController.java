@@ -2,6 +2,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.user.DataPayment;
 import com.example.app.dto.user.URLPaypalResponse;
+import com.example.app.service.OrderService;
 import com.example.app.service.PaypalService;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PaypalController {
 
     private final PaypalService paypalService;
+    private final OrderService orderService;
     @Value("${paypal.successUrl}")
     private String PAYPAL_SUCCESS_URL;
     @Value("${paypal.cancelUrl}")
@@ -78,6 +80,7 @@ public class PaypalController {
             throws PayPalRESTException{
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")){
+                orderService.updateStatusLatestOrder();
                 return new RedirectView(HOME_URL + "/purchase");
             }
         return new RedirectView(HOME_URL);

@@ -5,6 +5,7 @@ import { User } from '../services/user';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { socialUser } from './socialUser';
+import { Order } from './order';
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +57,11 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('user');
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem('user');
     this.isLoggedInSubject.next(false);
   }
-
   register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/users`, user);
   }
@@ -115,6 +118,21 @@ export class AuthService {
     return this.http.put<any>(`${this.baseUrl}/users`, user, { headers: this.addTokenToHeaders() });
   }
 
+
+  getUserOrders(): Observable<Order[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.get<Order[]>(`${this.baseUrl}/orders/user`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error al obtener las órdenes del usuario:', error);
+        throw error;
+      })
+    );
+  }
+
+
   private getStorage(): Storage | null {
     if (typeof window !== 'undefined') {
       return sessionStorage;
@@ -131,7 +149,24 @@ export class AuthService {
         map(user => user && user.role === 'ADMIN'),
         switchMap(isAdmin => of(storage.getItem(this.tokenKey) !== null && isAdmin)),
         catchError(error => {
-          console.error('Error al obtener el perfil del usuario:', error);
+          return of(false);
+        })
+
+      );
+    }
+
+    return of(false);
+
+  }
+
+  isAnyUserAuthenticated() {
+    const storage = this.getStorage();
+
+    if (storage) {
+      return this.getUserProfile().pipe(
+        map(user => user && (user.role === 'ADMIN' || user.role === 'CUSTOMER' || user.role === 'DELIVERY')),
+        switchMap(isAnyUser => of(storage.getItem(this.tokenKey) !== null && isAnyUser)),
+        catchError(error => {
           return of(false);
         })
 

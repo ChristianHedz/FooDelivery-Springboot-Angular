@@ -1,1 +1,360 @@
-<p>product-list works!</p>
+<section class="container-fluid">
+  <h1 class="text-center mx-title my-4 fw-semibold">
+    ¡Haz que tu día sea mejor con una
+    <span class="text-orange">hamburguesa</span> recién preparada!
+  </h1>
+</section>
+
+<section class="row container-fluid my-5">
+  <div class="col container-fluid mx-3 mt-3">
+    <h3 class="fw-bold fs-2">Nuestras hamburguesas</h3>
+    <p class="fw-medium fs-4 mt-4">Promos</p>
+    <div class="row justify-content-evenly gap-2 mb-5">
+      @for (product of newProducts; track $index || product.id) { @if ($index <
+      2) {
+      <!-- inicio de la card -->
+      <div class="d-inline-flex gap-2 shadow max-container mb-4">
+        <img
+          src="{{ product.img }}"
+          alt="image-burger"
+          class="my-auto rounded-4 image-size"
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+          (click)="openModal(product)"
+        />
+        <div
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+          (click)="openModal(product)"
+        >
+          <p class="mb-1 fw-semibold">{{ product.name }}</p>
+          <p class="fs-7 fw-medium mb-1">{{ product.description }}</p>
+          <p class="fw-bold">${{ product.price }}</p>
+        </div>
+        <div
+          class="d-flex flex-column align-items-center justify-content-center px-3"
+        >
+          <div
+            class="d-inline-flex justify-content-center border border-black rounded-pill"
+          >
+            <div class="flex-row btn-group align-items-center">
+              <button
+                class="btn-light border-0 bg-transparent"
+                (click)="decrement(product.id)"
+              >
+                -
+              </button>
+              <span class="mx-3">{{ product.count }}</span>
+              <button
+                class="btn-light border-0 bg-transparent"
+                (click)="increment(product.id)"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <p class="text-orange d-flex align-items-center gap-1 fw-bold mt-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-star-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+              />
+            </svg>
+            <span class="text-black">4.6</span>
+          </p>
+        </div>
+      </div>
+      <!-- final de la card -->
+      } }
+    </div>
+    <h3 class="fw-medium fs-4 mb-3">Hamburguesas</h3>
+    <div class="row justify-content-evenly gap-2 mb-5">
+      @for (product of newProducts; track $index || product.id) {
+      <!-- inicio de la card -->
+      <div class="d-inline-flex gap-2 shadow max-container mb-4">
+        <img
+          src="{{ product.img }}"
+          alt="image-burger"
+          class="my-auto rounded-4 image-size"
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+          (click)="openModal(product)"
+        />
+        <div
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+          (click)="openModal(product)"
+        >
+          <p class="mb-1 fw-semibold">{{ product.name }}</p>
+          <p class="fs-7 fw-medium mb-1">{{ product.description }}</p>
+          <p class="fw-bold">${{ product.price }}</p>
+        </div>
+        <div
+          class="d-flex flex-column align-items-center justify-content-center px-3"
+        >
+          <div
+            class="d-inline-flex justify-content-center border border-black rounded-pill"
+          >
+            <div class="flex-row btn-group align-items-center">
+              <button
+                class="btn-light border-0 bg-transparent"
+                (click)="decrement(product.id)"
+              >
+                -
+              </button>
+              <span class="mx-3">{{ product.count }}</span>
+              <button
+                class="btn-light border-0 bg-transparent"
+                (click)="increment(product.id)"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <p class="text-orange d-flex align-items-center gap-1 fw-bold mt-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-star-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+              />
+            </svg>
+            <span class="text-black">4.6</span>
+          </p>
+        </div>
+      </div>
+      <!-- final de la card -->
+      }
+    </div>
+  </div>
+  <app-modal-buy
+    class="col-lg-3 mt-3"
+    [products]="newProducts"
+    [incrementMethod]="increment.bind(this)"
+    [decrementMethod]="decrement.bind(this)"
+    [deleteMethod]="deleteProduct.bind(this)"
+    [cantidadDeProductosCarrito]="cantidadDeProductosCarrito"
+    [totalPriceProduct]="precioTotalProductos"
+    [priceTotal]="totalFinal"
+    [priceDelivery]="priceDelivery"
+    [toggleInput]="toggleInput"
+    [showInput]="showInput"
+    [address]="address"
+    [submitAddress]="submitAddress"
+  />
+</section>
+<!-- MODAL PRODUCT -->
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content px-4">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex gap-3">
+          <img
+            src="{{ selectedProduct?.img }}"
+            alt="image burger"
+            class="my-auto rounded-4 image-modal"
+          />
+          <div>
+            <h3 class="modal-title fs-4">{{ selectedProduct?.name }}</h3>
+            <p class="fs-7">{{ selectedProduct?.description }}</p>
+            <div class="d-flex justify-content-around align-items-center">
+              <p
+                class="text-orange d-flex align-items-center gap-1 fw-bold mt-3"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-star-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+                  />
+                </svg>
+                <span class="text-black">4.6</span>
+              </p>
+              <p class="my-auto fs-7 fs-6">
+                Categoria: {{ selectedProduct?.category?.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <form class="row">
+            <h5 class="text-orange fw-bold">Extras</h5>
+            <!-- Columna para los Cheddars -->
+            <div class="col">
+              <div class="form-check">
+                <label for="cheddar" class="form-check-label fw-light">Cheddar</label>
+                <input
+                  type="checkbox"
+                  id="cheddar"
+                  name="extras"
+                  value="cheddar"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="pepinillos" class="form-check-label fw-light">Pepinillos</label>
+                <input
+                  type="checkbox"
+                  id="pepinillos"
+                  name="extras"
+                  value="pepinillos"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="beacon" class="form-check-label fw-light">Beacon</label>
+                <input
+                  type="checkbox"
+                  id="beacon"
+                  name="extras"
+                  value="beacon"
+                  class="form-check-input"
+                />
+              </div>
+            </div>
+            <!-- Columna para los Tomates -->
+            <div class="col">
+              <div class="form-check">
+                <label for="tomate" class="form-check-label fw-light">Tomate</label>
+                <input
+                  type="checkbox"
+                  id="tomate"
+                  name="extras"
+                  value="tomate"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="cebolla" class="form-check-label fw-light">Cebolla Crispy</label>
+                <input
+                  type="checkbox"
+                  id="cebolla"
+                  name="extras"
+                  value="cebolla"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="cebollaM" class="form-check-label fw-light">Cebolla Morada</label>
+                <input
+                  type="checkbox"
+                  id="cebollaM"
+                  name="extras"
+                  value="cebollaM"
+                  class="form-check-input"
+                />
+              </div>
+            </div>
+            <h5 class="text-orange mt-2 fw-bold">Quitar</h5>
+            <!-- Columna para los Cheddars -->
+            <div class="col">
+              <div class="form-check">
+                <label for="cheddar" class="form-check-label fw-light">Sin Cheddar</label>
+                <input
+                  type="checkbox"
+                  id="cheddar"
+                  name="extras"
+                  value="cheddar"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="pepinillos" class="form-check-label fw-light">Sin Pepinillos</label>
+                <input
+                  type="checkbox"
+                  id="pepinillos"
+                  name="extras"
+                  value="pepinillos"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="beacon" class="form-check-label fw-light">Sin Beacon</label>
+                <input
+                  type="checkbox"
+                  id="beacon"
+                  name="extras"
+                  value="beacon"
+                  class="form-check-input"
+                />
+              </div>
+            </div>
+            <!-- Columna para los Tomates -->
+            <div class="col">
+              <div class="form-check">
+                <label for="tomate" class="form-check-label fw-light">Sin Tomate</label>
+                <input
+                  type="checkbox"
+                  id="tomate"
+                  name="extras"
+                  value="tomate"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="cebolla" class="form-check-label fw-light">Sin Cebolla Crispy</label>
+                <input
+                  type="checkbox"
+                  id="cebolla"
+                  name="extras"
+                  value="cebolla"
+                  class="form-check-input"
+                />
+              </div>
+              <div class="form-check">
+                <label for="cebollaM" class="form-check-label fw-light">Sin Cebolla Morada</label>
+                <input
+                  type="checkbox"
+                  id="cebollaM"
+                  name="extras"
+                  value="cebollaM"
+                  class="form-check-input"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-primary bg-btn-orange"
+          data-bs-dismiss="modal"
+          (click)="increment(selectedProduct?.id)"
+        >
+          Agregar al Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

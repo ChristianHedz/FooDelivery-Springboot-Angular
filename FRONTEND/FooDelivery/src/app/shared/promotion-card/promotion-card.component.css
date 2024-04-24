@@ -1,0 +1,78 @@
+@import "primeng/resources/primeng.min.css";
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+::ng-deep .p-card-subtitle {
+  margin-bottom: 0;
+  overflow: hidden;
+  text-wrap: none;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .p-tieredmenu .p-submenu-list { right: 100%; left: unset; }
+
+::ng-deep .p-card-content {
+  padding-top: 1rem;
+  padding-bottom: 0rem;
+}
+
+::ng-deep .p-badge {
+  min-width: 1.5rem;
+}
+
+::ng-deep .p-card-footer {
+  padding-top: 1rem;
+}
+
+::ng-deep .p-card-footer {
+
+  .p-button {
+    display: block;
+    width: 100%;
+
+    &.p-button-outlined {
+      color: var(--primary-900);
+    }
+  }
+
+  .btn--participar .p-button {
+    margin-top: .3rem;
+  }
+
+}
+
+::ng-deep .p-confirm-dialog  i {
+  padding-right: .5rem;
+}
+
+.promo-badge {
+  border-radius: var(--border-radius);
+  padding: 0.25em 0.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.3px;
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+}
+
+.promo-code {
+  background: #C8E6C9;
+  color: #256029;
+}
+
+.description-container {
+  height: 60px;
+  width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
+ .container-crud-btns {
+   display: flex;
+   justify-content: flex-end;
+ }

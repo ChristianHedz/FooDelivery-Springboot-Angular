@@ -66,18 +66,21 @@
           pRipple
           label="Editar"
           icon="pi pi-pencil"
-          class="block w-full bg-gray-400 border-gray-400 mb-2"
+          class="block w-full bg-green-500 border-green-500 mb-2"
           [routerLink]="['/admin/dashboard/usuario', this.user()?.id, 'editar']"
           routerLinkActive="router-link-active"
         ></button>
-        <button
-          pButton
-          pRipple
-          label="Eliminar"
-          icon="pi pi-trash"
-          class="block w-full bg-red-500 border-red-500"
-          (click)="this.confirmDeleteUser()"
-        ></button>
+
+        @if( user()?.role !== 'ADMIN') {
+          <button
+            pButton
+            pRipple
+            label="Eliminar"
+            icon="pi pi-trash"
+            class="block w-full bg-red-500 border-red-500"
+            (click)="this.confirmDeleteUser()"
+          ></button>
+        }
       </section>
     </div>
   </div>

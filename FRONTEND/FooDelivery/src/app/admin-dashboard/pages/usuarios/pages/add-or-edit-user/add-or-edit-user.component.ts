@@ -9,7 +9,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {UserService} from "../../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IFormUser, IUser, UserDTO, UserToUpdate} from "../../../../../core/interfaces/user/User.interface";
+import {IFormUser, IUser, UserDTO, UserToUpdate} from "../../../../interfaces/user.interface";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {MessageService } from "primeng/api";
 import {StyleClassModule} from "primeng/styleclass";
@@ -17,7 +17,7 @@ import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {MessagesModule} from "primeng/messages";
 import {DropdownModule} from "primeng/dropdown";
-import {Roles} from "../../../../../core/interfaces/user/roles.interface";
+import {Roles} from "../../../../interfaces/roles.interface";
 
 type controlType = 'fullName' | 'phone' | 'email' | 'password' | 'role' | `alias`;
 

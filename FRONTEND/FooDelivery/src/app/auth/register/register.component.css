@@ -25,7 +25,7 @@ h2 {
     margin-top: 20px;
     border-radius: 24px;
     max-width: 100%;
-    min-height: 100%;
+    min-height: 97%;
     object-fit: cover;
     object-position:50% center;; 
   }
@@ -86,3 +86,25 @@ h1{font-family: 'Artbrush';
     margin: auto;
 
   }
+
+
+  
+@media (min-width: 768px) and (max-width: 860px){
+  h1{
+    font-size:large;
+    font-size: 40px;
+    font-weight: 80%;
+    line-height: 49.51px;
+    text-align: left;
+  }
+ }
+
+@media (max-width: 767px) {
+  h1{
+    font-size:large;
+    font-size: 40px;
+    font-weight: 80%;
+    line-height: 49.51px;
+    text-align: left;
+    }   
+}

@@ -4,7 +4,7 @@ import { PromotionApiService } from "../../core/api/promotion-api.service";
 import {tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {IPromReq} from "../interfaces/promotion.interface";
+import {IPromDto, IPromoWithProducts, IPromReq} from "../interfaces/promotion.interface";
 
 interface State {
   products: any[],
@@ -33,7 +33,7 @@ export class PromotionService {
       tap( () => this.getAllPromotions()),
       tap((_) => {
         setTimeout(() => {
-          this.router.navigate(['/admin/dashboard/promocion'])
+          this.router.navigate(['/admin/dashboard/promociones'])
         }, 1200);
       }),
       catchError(({ error }) => {
@@ -50,12 +50,13 @@ export class PromotionService {
   }
 
   updatePromotionByAdmin( promotion: IPromReq ) {
-    return this.promotionApiService.updatePromotionByAdmin( promotion ).pipe(
-      tap((response) => this.showMessage("Promoción actualizada exitosamente")),
+    return this. promotionApiService.updatePromotionByAdmin( promotion ).pipe(
+      tap(( promo) => this.showMessage("Promoción actualizada exitosamente")),
       tap( () => this.getAllPromotions()),
       tap((_) => {
         setTimeout(() => {
-          this.goRouteUpdate(promotion!.id);
+          if (promotion.id)
+            this.goRouteUpdate(promotion.id);
         }, 1200);
       }),
       catchError(({ error }) => {
@@ -71,7 +72,7 @@ export class PromotionService {
     );
   }
 
-  confirmDeletePromotion(id: number) {
+  confirmDeletePromotion(promo: IPromDto) {
 
     return this.confirmationService.confirm({
       target: document.body,
@@ -81,7 +82,7 @@ export class PromotionService {
       acceptIcon: 'pi pi-trash',
       rejectIcon: 'none',
       rejectButtonStyleClass: 'p-button-text',
-      accept: () => this.deletePromotion(id).subscribe({
+      accept: () => this.deletePromotion(promo).subscribe({
         next: (response) => {
 
           this.messageService.add({
@@ -104,11 +105,11 @@ export class PromotionService {
     });
   }
 
-  private deletePromotion( promotionId: number ) {
-    return this.promotionApiService.deletePromotionByAdmin( promotionId ).pipe(
+  private deletePromotion( promo: IPromDto ) {
+    return this.promotionApiService.deletePromotionByAdmin( promo ).pipe(
       tap(() => {
         this.promotions.update(( promsArr ) =>
-          promsArr.filter((prom) => prom.id !== promotionId)
+          promsArr.filter((prom) => prom.id !== promo.id)
         );
       }),
       tap((_) => {
@@ -116,8 +117,8 @@ export class PromotionService {
           this.router.navigate(['/admin/dashboard/promociones'])
         }, 1200);
       }),
-      catchError(({ error }) => {
-        console.log('Error al eliminar la promoción: ', error);
+      catchError((res) => {
+        console.log('Error al eliminar la promoción: ', res);
         return throwError( () => "Error al eliminar la promoción");
       })
     );
@@ -148,9 +149,15 @@ export class PromotionService {
       );
   }
 
+  getProductsFromPromo( id: number ): Observable<IPromoWithProducts> {
+    return this.promotionApiService
+      .getProductsFromPromo(id)
+      .pipe(map((response) => response));
+  }
+
   private goRouteUpdate(id: number) {
     this.router.navigate([
-      '/admin/dashboard/promociones',
+      '/admin/dashboard/promocion',
       id,
       'editar',
     ]);

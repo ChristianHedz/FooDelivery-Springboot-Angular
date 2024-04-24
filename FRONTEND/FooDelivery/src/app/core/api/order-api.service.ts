@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environments} from "../../../environments/environments";
 import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth.service";
-import {IOrderReq} from "../../admin-dashboard/interfaces/order.interface";
+import {IOrderReq, OrderResponse, OrderResponseAll} from "../../admin-dashboard/interfaces/order.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,15 @@ export class OrderApiService {
     });
   }
 
-  getAllOrdersOrders(): Observable<any> {
-    return this.http.get<any>(`${this.url}/orders/list`, { headers: this.authService.addTokenToHeaders() });
+  getAllOrders(page: number): Observable<OrderResponseAll> {
+    return this.http.get<OrderResponseAll>(`${this.url}/orders`, { headers: this.authService.addTokenToHeaders() });
+  } //?size=${ 10 }&page=${ page }
+
+  getOrdersByStatus(status: string) {
+    return this.http.get<OrderResponse[]>(`${this.url}/orders/status?status=${status}`, { headers: this.authService.addTokenToHeaders() });
   }
 
+  updateOrderStatus(id: number, status: string) {
+    return this.http.get<any>(`${this.url}/orders/${id}?status=${status}`, { headers: this.authService.addTokenToHeaders() });
+  }
 }

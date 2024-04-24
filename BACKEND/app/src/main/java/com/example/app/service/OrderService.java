@@ -23,4 +23,6 @@ public interface OrderService {
     List<OrderDto> getOrdersByStatusByAdmin(String status);
 
     OrderDto updateOrderStatus(Long id, String status);
+
+    void updateStatusLatestOrder();
 }
