@@ -74,7 +74,7 @@
         <p-avatar [label]="authService.user()!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(authService.user()!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
         {{ authService.user()?.fullName }}
       } @else {
-        <p-avatar [label]="user!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(user!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
+        <p-avatar [label]="user?.fullName ? user!.fullName.split(' ')[0].charAt(0) : 'U'" size="normal" [style]="{'background-color': addColor(user?.fullName ? user!.fullName : 'Usuario Noname'), 'color': '#ffffff'}" shape="circle"></p-avatar>
         {{ user?.fullName }}
       }
     </button>
