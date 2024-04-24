@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IProductDTO } from '../../../admin-dashboard/interfaces/product.interface';
+import { ProductsListComponent } from '../products-list.component';
+
 
 @Component({
   selector: 'app-modal-buy',
@@ -22,7 +24,11 @@ export class ModalBuyComponent {
   @Input() priceDelivery!: number;
   @Input() showInput!: boolean;
   @Input() address!: string;
+  @Output() buttonPayment = new EventEmitter<any>();
 
+  onButtonPayment() {
+    this.buttonPayment.emit(null);
+  }
 
   increment(productId: number | undefined) {
     this.incrementMethod(productId);
@@ -31,4 +37,8 @@ export class ModalBuyComponent {
   decrement(productId: number | undefined) {
     this.decrementMethod(productId);
   }
+
+
+
+
 }

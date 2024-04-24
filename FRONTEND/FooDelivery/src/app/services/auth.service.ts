@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, BehaviorSubject, of, map, switchMap, catchError} from 'rxjs';
 import { User } from '../services/user';
@@ -15,6 +15,7 @@ export class AuthService {
   private tokenKey = 'jwt_token';
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getToken() !== null);
   public isLoggedIn: Observable<boolean> = this.isLoggedInSubject.asObservable();
+  user = signal<User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -28,6 +29,7 @@ export class AuthService {
         this.getUserProfile().subscribe(
           user => {
             console.log('Perfil del usuario:', user);
+            this.user.set(user);
             if (user.role === 'ADMIN') {
               this.router.navigate(['/admin']);
             } else {

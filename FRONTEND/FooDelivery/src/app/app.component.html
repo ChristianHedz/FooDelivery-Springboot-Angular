@@ -64,12 +64,19 @@
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <img
+      <!--<img
         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
         alt="image-profile"
         class="img-fluid img-size rounded-circle me-2"
-      />
-   {{ user?.fullName}}
+      />-->
+
+      @if( authService.user() ) {
+        <p-avatar [label]="authService.user()!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(authService.user()!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
+        {{ authService.user()?.fullName }}
+      } @else {
+        <p-avatar [label]="user!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(user!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
+        {{ user?.fullName }}
+      }
     </button>
     <ul class="dropdown-menu border-top-0" aria-labelledby="dropdownMenuButton">
       <li>
