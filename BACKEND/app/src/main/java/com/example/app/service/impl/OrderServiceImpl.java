@@ -115,4 +115,12 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUser(user).stream().map(orderMapper::toDto).toList();
     }
 
+    @Override
+    public void updateStatusLatestOrder() {
+        Order order = orderRepository.findTopByOrderByIdDesc();
+        if (order != null) {
+            order.setStatus(StatusOrder.IN_PROGRESS);
+            orderRepository.save(order);
+        }
+    }
 }
