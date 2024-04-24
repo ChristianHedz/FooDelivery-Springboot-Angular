@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginGoogleComponent } from '../login-google/login-google.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +48,7 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.valid) {
+      Swal.fire('Bienvenido!', 'Has iniciado sesión correctamente', 'success');
       console.log('Formulario válido, enviando datos...');
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
