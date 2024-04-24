@@ -5,6 +5,7 @@ import { UrlPaypalResponse } from '../common/url-paypal-response';
 import { DataPayment } from '../common/data-payment';
 import { Order } from '../../services/order';
 import { AuthService } from '../../services/auth.service';
+import { OrderResponse } from '../../admin-dashboard/interfaces/order.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,12 @@ export class PaymentService {
   constructor(private http: HttpClient, private authService:AuthService) { }
 
   getUrlPaypalPayment(dataPayment: DataPayment):Observable<UrlPaypalResponse>{
-    return this.http.post<UrlPaypalResponse>(this.baseUrl + '/api/payments', dataPayment);
+    return this.http.post<UrlPaypalResponse>(this.baseUrl + '/api/payments', dataPayment)
   }
 
-  payOrderwithPaypal(order: Order):Observable<Order>{
-    console.log(order.user.id);
+  createOrder(order: Order):Observable<OrderResponse>{
     const jwt = sessionStorage.getItem("jwt_token");
-    console.log(jwt);
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + jwt);
-    return this.http.post<Order>(this.baseUrl + '/orders',order,{headers})
+    return this.http.post<OrderResponse>(this.baseUrl + '/orders',order,{headers})
   }
 }

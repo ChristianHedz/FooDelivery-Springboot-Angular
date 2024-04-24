@@ -10,6 +10,7 @@ import { Order, PaymentMethod, StatusOrder } from '../../services/order';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../services/user';
 import { DataPayment } from '../../payments/common/data-payment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -22,6 +23,7 @@ export class ProductsListComponent {
   private paymentService = inject(PaymentService);
   private productService = inject(ProductService);
   private authService = inject(AuthService);
+  private router = inject(Router)
   products: IProductDTO[] = [];
   newProducts: IProductDTO[] = [];
   carritoProducts: Map<number, IProductDTO> = new Map();
@@ -33,6 +35,7 @@ export class ProductsListComponent {
   address: string = 'Caseros 3445 (N)';
   selectedProduct?: IProductDTO;
   idUser!: number;
+  productQuantity!: number;
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -49,7 +52,6 @@ export class ProductsListComponent {
       next: (user: User) => {
         this.idUser = user.id
         console.log(this.idUser);
-
       }
     })
   }
@@ -63,8 +65,6 @@ export class ProductsListComponent {
     this.paymentService.getUrlPaypalPayment(dataPayment).subscribe(
       data => {
         urlPayment = data.url;
-        console.log('Respuesta exitosa...');
-        console.log(urlPayment);
         window.location.href = urlPayment;
       },
       error => {
@@ -77,9 +77,8 @@ export class ProductsListComponent {
 
 
   payOrder(){
-    let currentDate = new Date();
     let productInfo = Array.from(this.carritoProducts.entries())
-    .map(([id, product]) => ({id, count: product.count}));
+    .map(([id, product]) => ({id, quantity: product.count}));
       console.log(productInfo);
 
     let order: Order = {
@@ -91,17 +90,17 @@ export class ProductsListComponent {
       user: {
         id: this.idUser,
       }
+    };
 
-  };
-
-    this.paymentService.payOrderwithPaypal(order).subscribe({
+    this.paymentService.createOrder(order).subscribe({
       next: (data) => {
         console.log(data);
         console.log({data});
+        sessionStorage.setItem('order', JSON.stringify(data));
       }
     });
 
-
+    this.payOrderWithPaypal();
   }
 
   mapProducts() {
