@@ -1,14 +1,13 @@
 import {
-  SocialAuthService,
   FacebookLoginProvider,
+  SocialAuthService,
 } from '@abacritt/angularx-social-login';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { LoginGoogleComponent } from '../login-google/login-google.component';
 
 @Component({
