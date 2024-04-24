@@ -11,6 +11,7 @@ import { User } from '../../services/user';
 import { DataPayment } from '../../payments/common/data-payment';
 import { Router } from '@angular/router';
 import { NgxSpinnerService,NgxSpinnerModule } from "ngx-spinner";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -78,6 +79,10 @@ export class ProductsListComponent {
   }
 
   payOrder(){
+    if (this.carritoProducts.size === 0) {
+      Swal.fire('Error!','No puedes realizar el pago porque tu pedido está vacío.','warning');
+      return;
+    }
     this.spinner.show();
     let productInfo = Array.from(this.carritoProducts.entries())
     .map(([id, product]) => ({id, quantity: product.count}));
