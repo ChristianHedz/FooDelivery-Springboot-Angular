@@ -13,6 +13,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from './services/auth.service';
 import { User } from './services/user';
+import {AvatarModule} from "primeng/avatar";
+import {stringToColor} from "./shared/utils/stringToColor";
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,7 @@ import { User } from './services/user';
     RouterLinkActive,
     ConfirmDialogModule,
     ToastModule,
+    AvatarModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -35,7 +38,7 @@ export class AppComponent implements OnInit {
   showNavbarAndFooter: boolean = true;
   userLoginOn: boolean = false;
   title = 'FooDelivery';
-  user: User | undefined;
+  user: User | null = null;
 
   constructor(private router: Router, private http: HttpClient) {
     this.primengConfig.ripple = true;
@@ -71,7 +74,11 @@ export class AppComponent implements OnInit {
     this.menuOption = menuOption;
   }
   logout() {
-    this.user = undefined;
+    this.user = null;
     this.authService.logout();
+  }
+
+  addColor(colorHex: string) {
+    return stringToColor(colorHex);
   }
 }

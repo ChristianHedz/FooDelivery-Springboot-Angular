@@ -1,26 +1,26 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 order-2 order-md-1">
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" >
         <div class="row g-3 align-items-center">
           <div class="row-container">
             <a routerLink="/home">
-              <img id="logoimg" src="../../../assets/logo.png" />
+              <img class="object-fit-cover" id="logoimg" src="../../../assets/logo.png" />
             </a>
             <h1 class="row-g2 align-items-right">FoodDelivery</h1>
           </div>
           <h4>¡Bienvenido de Nuevo!</h4>
-          <h6>¡Ingresá y disfrutá de una hamburguesa!</h6>
+          <h6>¡Ingresa y disfruta de una hamburguesa!</h6>
         </div>
         <!--email-->
-        <div class="row g-3 align-items-center">
-          <div class="col-md-12" id="email">
-            <label for="inputEmail" class="col-form-label">Email</label>
-            <div class="input-group">
+        <div class="row g-3 text-left">
+          <div class="col-12" id="email">
+            <label for="inputEmail" class="col-form-label w-100">Email</label>
+            <div class="input-group w-100">
               <input
                 type="email"
                 id="inputEmail"
-                class="form-control"
+                class="form-control w-100"
                 formControlName="email"
                 placeholder="ejemplo@gmail.com"
               />
@@ -47,8 +47,8 @@
         </div>
 
         <!--password-->
-        <div class="row g-3 align-items-center">
-          <div class="col-md-12" id="password">
+        <div class="row g-3 text-left">
+          <div class="col-12" id="password">
             <label for="inputPassword" class="col-form-label">Contraseña</label>
             <div class="input-group">
               <input
@@ -89,22 +89,22 @@
         </div>
 
         <!--contraseña olvidaste-->
-        <div class="row g-3 align-items-center mt-2">
-          <div class="col-auto" style="margin-left: auto" id="olvidaste">
-            <a href="#">¿Olvidaste tu contraseña?</a>
+        <div class="mt-2 text-right w-100">
+          <div id="olvidaste">
+            <a class="w-100" href="#">¿Olvidaste tu contraseña?</a>
           </div>
         </div>
-        <div class="row g-3 mt-2" id="iniciar">
+        <div class="w-100 mt-3" id="iniciar">
           <div
-            class="col-auto d-flex justify-content-center align-items-center"
+            class="w-100 d-flex justify-content-center align-items-center"
             id="botonInit"
           >
             <button
               type="submit"
-              class="btn-color btn btn-primary text-center"
+              class="btn-color btn btn-primary text-center border-0 w-100"
               [disabled]="loginForm.invalid"
             >
-              <a href="/home">Iniciar Sesión</a>
+              Iniciar Sesión
             </button>
           </div>
         </div>
@@ -118,7 +118,7 @@
         <div class="">
           <button
             type="button"
-            class="btn btn-primary-light border w-50 m-auto my-2"
+            class="btn btn-primary-light border w-27 m-auto my-2"
             (click)="facebookLogin()"
           >
             <svg
@@ -154,7 +154,7 @@
         </div>
 
         <!-- regístrate -->
-        <div class="row g-3 justify-content-center">
+        <div class="row g-3 justify-content-center mt-3">
           <div class="col-auto" id="registrate">
             <span
               >¿No estás registrado? <a href="/register">Registrate</a></span

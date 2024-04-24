@@ -69,7 +69,6 @@ Foodelivery es una aplicación web que brinda a los restaurantes la capacidad de
 | Integrantes | Linkedin | Github |
 | ------------ | ------------ | ------------ |
 | Marco Virinni |[![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/marco-virinni/)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alanapolitana)|
-| Hiram Chavez | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hiram-chavez-24126831/)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JustLearningMX)|
 | Nicolas Ramos | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dario-nicolas-ramos)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nicoramo2s)
  
 #### Backend
@@ -79,6 +78,11 @@ Foodelivery es una aplicación web que brinda a los restaurantes la capacidad de
 | Rodys Rodríguez |[![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rodys-rodriguez?) |[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](http://github.com/rodys2003)  |
 | Luciano Molina | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/luciano-molina-/) |[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Luciano-A1) |
 | David Frías | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](http://www.linkedin.com/in/david-frias-ruiz) |[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Adavidfr) |
+
+#### Fullstack
+| Integrantes | Linkedin | Github |
+| ------------ | ------------ | ------------ |
+| Hiram Chavez | [![Linkedin](    https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hiram-chavez-24126831/)  | [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JustLearningMX)|
   
 #### QA
 | Integrantes | Linkedin | Github |
