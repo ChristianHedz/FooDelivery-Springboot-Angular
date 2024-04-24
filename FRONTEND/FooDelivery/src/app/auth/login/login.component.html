@@ -34,12 +34,12 @@
                 <span
                   class="form-text text-danger"
                   *if="loginForm.get('email').errors?.required"
-                  >Email is required</span
+                  >Email es requerido</span
                 >
                 <span
                   class="form-text text-danger"
                   *if="loginForm.get('email').errors?.email"
-                  >Invalid email</span
+                  >Email inválido</span
                 >
               </div>
             </div>
@@ -56,7 +56,7 @@
                 id="inputPassword"
                 class="form-control"
                 formControlName="password"
-                placeholder="Enter your password"
+                placeholder="Ingresa tu contraseña"
               />
               <div
                 *if="
@@ -68,17 +68,17 @@
                 <span
                   class="form-text text-danger"
                   *if="loginForm.get('password').errors?.required"
-                  >Password is required</span
+                  >La contraseña es requerida</span
                 >
                 <span
                   class="form-text text-danger"
                   *if="loginForm.get('password').errors?.minlength"
-                  >Password must be at least 8 characters</span
+                  >La contraseña debe tener al menos 8 caracteres</span
                 >
                 <span
                   class="form-text text-danger"
                   *if="loginForm.get('password').errors?.maxlength"
-                  >Password cannot be more than 20 characters</span
+                  >La contraseña no puede ser mayor a 20 caracteres</span
                 >
               </div>
             </div>

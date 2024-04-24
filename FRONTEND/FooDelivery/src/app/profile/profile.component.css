@@ -55,6 +55,16 @@
   background-color: #0069d9;
 }
 
+#profileID{
+  padding: 50px;
+}
+@media (min-width: 768px){
+  #botonesProfile{
+  padding-left: 50px;
+  padding-top: 100px;
+}
+ }
+
 .profile-image {
   width: 100px;
   height: 100px;
@@ -117,19 +127,6 @@
   align-items: center;
 }
 
-
-/*
-.progress-bar {
-  display: flexbox;
-
-}
-
-.base {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
- */
 .progress-bar {
   position: relative;
   height: 4px;
