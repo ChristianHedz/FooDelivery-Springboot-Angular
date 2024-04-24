@@ -15,7 +15,8 @@ type = "pacman" [fullScreen] = "true"><p style="color: white" > Cargando... </p>
       @for (product of newProducts; track $index || product.id) { @if ($index <
       2) {
       <!-- inicio de la card -->
-      <div class="d-inline-flex gap-2 shadow max-container mb-4">
+<!--      <div class="d-inline-flex gap-2 shadow max-container mb-4">-->
+        <div class="grid gap-2 shadow mb-4 col-12 md:col-6">
         <img
           src="{{ product.img }}"
           alt="image-burger"
@@ -79,7 +80,8 @@ type = "pacman" [fullScreen] = "true"><p style="color: white" > Cargando... </p>
     <div class="row justify-content-evenly gap-2 mb-5">
       @for (product of newProducts; track $index || product.id) {
       <!-- inicio de la card -->
-      <div class="d-inline-flex gap-2 shadow max-container mb-4">
+<!--        <div class="d-inline-flex gap-2 shadow max-container mb-4">-->
+        <div class="grid gap-3 shadow mb-4 col-12 md:col-6">
         <img
           src="{{ product.img }}"
           alt="image-burger"

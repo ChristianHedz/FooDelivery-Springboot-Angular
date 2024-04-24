@@ -1,7 +1,7 @@
 
 form{
     margin: 10px;
-    text-align: center; 
+    text-align: center;
 }
 img {
   margin-top: 20px;
@@ -9,7 +9,7 @@ img {
   max-width: 100%;
   min-height: 97%;
   object-fit: cover;
-  object-position:50% center;; 
+  object-position:50% center;;
 }
 #logoimg{
     max-width: 103.17px;
@@ -17,12 +17,12 @@ img {
 }
 .row-container {
   display: flex;
-  align-items: center; 
+  align-items: center;
    margin-top: -10px;
 }
 .row-container img {
   width: 100px;
-  height: auto; 
+  height: auto;
 
 }
 @font-face {
@@ -51,31 +51,41 @@ h6{margin-top: -100px;}
     font-size: larger;
   }
 .input-group {
-    width: 100%; 
+    width: 100%;
   }
-  
+
 .col-md-12 {
     display: flex;
     flex-direction: column;
     max-width: 82%;
-    justify-content: left; 
+    justify-content: left;
   }
 .col-form-label {
     align-self: flex-start;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
   }
 
 #email{margin-top: -30px; }
 /* #password{margin-top: 10px;} */
-#olvidaste{margin: -10px;
-padding-right: 70px;}
+#olvidaste{
+  /*margin: -10px;
+  padding-right: 70px;*/
+}
+
 #botonInit{
 display: flex;
-padding-right: 100px;
+/*padding-right: 100px;*/
 }
 #google{margin-bottom: 12px;
 margin-top: 12px; display: flex; justify-content: center;}
-#iniciar{padding-left: 90px; display: flex; justify-content: center;}
+#iniciar {
+  /*padding-left: 90px;*/
+  display: flex;
+  justify-content: center;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+}
 
 #registrate{margin-top: 20px;
 display: flex;
@@ -104,5 +114,5 @@ justify-content: center;}
     font-weight: 80%;
     line-height: 49.51px;
     text-align: left;
-    }   
+    }
 }

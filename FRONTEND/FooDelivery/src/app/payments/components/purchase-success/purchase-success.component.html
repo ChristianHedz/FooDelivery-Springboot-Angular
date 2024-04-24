@@ -2,7 +2,7 @@
   <div class="container my-5">
     <div class="row">
       <div class="col-md-4">
-        <img src="https://source.unsplash.com/1100x800/?burger" class="img-fluid rounded h-100" alt="Burger Image">
+        <img src="https://source.unsplash.com/1100x800/?burger" class="img-fluid rounded h-100 object-fit-cover" alt="Burger Image">
       </div>
       <div class="col-md-8">
         <div class="card">
@@ -27,7 +27,7 @@
                 <div class="card mb-3 ">
                   <div class="row no-gutters mb-1 shadow " *ngFor="let product of order">
                     <div class="col-md-2">
-                      <img [src]="product.product.img" class="card-img img-fluid w-100 h-100" alt="Burger">
+                      <img [src]="product.product.img" class="card-img img-fluid w-100 h-100 object-fit-cover" alt="Burger">
                     </div>
                     <div class="col-md-4 col-xl-6">
                       <div class="card-body">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-md-3 col-xl-2">
                       <div class="card-body">
-                        <h6 class="card-title text-center">Cantidad</h6>
+                        <h6 class="card-title text-center">Cant.</h6>
                         <p class="card-text text-center fw-light">{{product.quantity}}</p>
                       </div>
                     </div>
@@ -68,7 +68,12 @@
 
             </div>
             <div class="text-right d-flex justify-content-center my-4">
-              <button class="btn btn-warning text-white p-2">Ir al Seguimiento</button>
+              <button
+                class="btn btn-warning text-white p-2"
+                [routerLink]="['/profile']"
+              >
+                Ir al Seguimiento
+              </button>
             </div>
           </div>
         </div>

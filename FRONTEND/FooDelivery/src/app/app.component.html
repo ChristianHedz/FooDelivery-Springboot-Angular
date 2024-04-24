@@ -1,5 +1,6 @@
 @if(showNavbarAndFooter){
-<nav class="navbar navbar-expand-lg flex-box">
+<!--<nav class="navbar navbar-expand-lg flex-box border-1 border-red-100">-->
+  <nav class="navbar navbar-expand-lg flex flex-column lg:flex-row lg:justify-content-around">
   <a
     class="navbar-brand"
     routerLink=""
@@ -8,7 +9,7 @@
   >
     <img src="../../../assets/LogoLogo.png" alt="logo" />
   </a>
-  <ul class="navbar-nav navigation">
+  <ul class="navbar-nav navigation flex flex-row mb-2 lg:mb-0">
     <li class="nav-item">
       <a
         class="nav-link"
@@ -74,7 +75,7 @@
         <p-avatar [label]="authService.user()!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(authService.user()!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
         {{ authService.user()?.fullName }}
       } @else {
-        <p-avatar [label]="user!.fullName.split(' ')[0].charAt(0)" size="normal" [style]="{'background-color': addColor(user!.fullName), 'color': '#ffffff'}" shape="circle"></p-avatar>
+        <p-avatar [label]="user?.fullName ? user!.fullName.split(' ')[0].charAt(0) : 'U'" size="normal" [style]="{'background-color': addColor(user?.fullName ? user!.fullName : 'Usuario Noname'), 'color': '#ffffff'}" shape="circle"></p-avatar>
         {{ user?.fullName }}
       }
     </button>
@@ -166,8 +167,7 @@
 
 @if (showNavbarAndFooter) {
 <footer class="footer">
-  <div class="container">
-    <hr />
+  <div class="my-5 container">
     <div class="row">
       <div class="col-md-2">
         <h4>Company</h4>
@@ -264,7 +264,7 @@
 </footer>
 }
 
-<div class="card flex justify-content-center">
+<div class="flex justify-content-center">
   <p-toast key="toast"></p-toast>
   <p-confirmDialog></p-confirmDialog>
 </div>
