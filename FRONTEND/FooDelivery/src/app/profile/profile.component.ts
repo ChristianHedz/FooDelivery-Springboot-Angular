@@ -31,8 +31,6 @@ export class ProfileComponent implements OnInit {
   currentOrders: Order[] = [];
   orderHistory: Order[] = [];
   statusOrder = StatusOrder;
-  // progressWidth: string = '0%';
-  progressWidth = signal('0%');
 
   statusBarClass = signal('');
   statusTextClass = signal('text-orange-500');
@@ -47,7 +45,7 @@ export class ProfileComponent implements OnInit {
   }
 
   // Actualiza la barra de progreso cuando se recibe el estado de la orden
-  updateProgress(status: StatusOrder): void {
+  updateProgress(status: StatusOrder): string {
     const progressPercentage: Record<string, string> = {
       [StatusOrder.IN_PROGRESS]: '40%',
       [StatusOrder.ON_ROUTE]: '67%',
@@ -56,13 +54,11 @@ export class ProfileComponent implements OnInit {
     };
 
     if (status in StatusOrder) {
-      this.statusBarClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_bar' : '');
-      this.statusTextClass.set((Number(StatusOrder[status]) === 3) ? 'canceled_text' : 'text-orange-500');
-      this.svgStrokeColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FA8232');
-      this.svgFillColor.set((Number(StatusOrder[status]) === 3) ? 'darkred' : '#FD7E14');
       const statusString = StatusOrder[status];
-      this.progressWidth.set(progressPercentage[statusString]);
+      return progressPercentage[statusString];
     }
+
+    return '0%';
 
   }
 
@@ -70,14 +66,19 @@ export class ProfileComponent implements OnInit {
   getUserOrders(): void {
     this.authService.getUserOrders().subscribe(
       (orders: Order[]) => {
-        this.currentOrders = orders.filter(order => order.status !== StatusOrder.DELIVERED && order.status !== StatusOrder.CANCELED);
+        const statusCanceled: string = StatusOrder[StatusOrder.CANCELED];
+        const statusDelivered: string = StatusOrder[StatusOrder.DELIVERED];
+        this.currentOrders = orders.filter(order => order.status.toString() !== statusCanceled && order.status.toString() !== statusDelivered);
         this.orderHistory = orders;
-        this.updateProgress(orders[0].status);
       },
       (error) => {
         console.error('Error fetching user orders:', error);
       }
     );
+  }
+
+  setProgress(order: Order) {
+    return this.updateProgress(order.status);
   }
 
   getUserProfile(): void {
@@ -128,7 +129,6 @@ export class ProfileComponent implements OnInit {
   }
 
   refreshOrders() {
-    console.log('Refresingh orders...');
     this.getUserOrders();
   }
 }
