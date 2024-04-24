@@ -1,9 +1,6 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
-import { PaymentService } from "../../service/payment.service";
-import { DataPayment } from "../../common/data-payment";
+import { Component,inject} from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { throws } from "assert";
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-purchase-success',
@@ -13,8 +10,9 @@ import { throws } from "assert";
   styleUrl: './purchase-success.component.css'
 })
 export class PurchaseSuccessComponent {
+  private router = inject(Router);
   order: any;
-  totalPrice: any;
+  totalPrice!: number;
 
   ngOnInit() {
     const orderData = sessionStorage.getItem('order');
@@ -22,5 +20,9 @@ export class PurchaseSuccessComponent {
       this.order = JSON.parse(orderData).products;
       this.totalPrice = JSON.parse(orderData).totalPrice;
     }
+  }
+
+  goFollowUp(){
+    this.router.navigateByUrl('/profile');
   }
 }
