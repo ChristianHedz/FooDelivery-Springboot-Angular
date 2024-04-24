@@ -3,9 +3,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.product.ProductPromotionMessagesDto;
 import com.example.app.dto.product.ProductWithPromoDto;
-import com.example.app.model.Category;
 import com.example.app.model.Product;
-import com.example.app.repository.CategoryRepository;
 import com.example.app.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -35,7 +32,6 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService service;
-    private final CategoryRepository categoryRepository;
 
     @Operation(
             summary = "List all products.",

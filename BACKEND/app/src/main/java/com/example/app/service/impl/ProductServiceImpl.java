@@ -13,7 +13,6 @@ import com.example.app.repository.ProductRepository;
 import com.example.app.repository.PromotionRepository;
 import com.example.app.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
