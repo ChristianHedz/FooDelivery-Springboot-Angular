@@ -1,5 +1,6 @@
+
 export interface Order {
-    id: number;
+    id?: number;
     totalPrice: number;
     paymentMethod: PaymentMethod;
     status: StatusOrder;
@@ -9,7 +10,7 @@ export interface Order {
     };
     products: {
       id: number;
-      quantity: number;
+      count?: number;
     }[];
     promotion?: {
       id: number;
