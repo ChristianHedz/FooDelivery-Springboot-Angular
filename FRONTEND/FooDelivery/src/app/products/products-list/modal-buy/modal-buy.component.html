@@ -90,5 +90,9 @@
     <p class="fs-4 fw-bold">Total</p>
     <p class="fs-4 text-orange fw-bold">${{ priceTotal }}</p>
   </div>
-  <button class="btn btn-primary" (click)="onButtonPayment()">Pagar con paypal</button>
+  <div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-primary fw-medium text-center px-5" (click)="onButtonPayment()">
+      Pagar con <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="PayPal" width="50" height="30" >
+    </button>
+  </div>
 </div>

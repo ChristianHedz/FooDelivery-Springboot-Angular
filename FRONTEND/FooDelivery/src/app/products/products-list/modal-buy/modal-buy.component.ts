@@ -2,12 +2,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IProductDTO } from '../../../admin-dashboard/interfaces/product.interface';
 import { ProductsListComponent } from '../products-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab,faPaypal } from '@fortawesome/free-brands-svg-icons';
 
+library.add(fab);
 
 @Component({
   selector: 'app-modal-buy',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,FontAwesomeModule],
   templateUrl: './modal-buy.component.html',
   styleUrl: './modal-buy.component.css',
 })

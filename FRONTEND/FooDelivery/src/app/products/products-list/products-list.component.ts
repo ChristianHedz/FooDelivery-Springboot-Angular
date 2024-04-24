@@ -4,25 +4,27 @@ import { ProductService } from '../services/product.service';
 import { IProductDTO } from '../../admin-dashboard/interfaces/product.interface';
 import { ModalBuyComponent } from './modal-buy/modal-buy.component';
 import { FormsModule } from '@angular/forms';
-import { error, log } from 'console';
 import { PaymentService } from '../../payments/service/payment.service';
 import { Order, PaymentMethod, StatusOrder } from '../../services/order';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../services/user';
 import { DataPayment } from '../../payments/common/data-payment';
 import { Router } from '@angular/router';
+import { NgxSpinnerService,NgxSpinnerModule } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
-  imports: [ModalBuyComponent, FormsModule],
+  imports: [ModalBuyComponent, FormsModule,NgxSpinnerModule],
 })
 export class ProductsListComponent {
   private paymentService = inject(PaymentService);
   private productService = inject(ProductService);
   private authService = inject(AuthService);
+  private spinner = inject(NgxSpinnerService);
   private router = inject(Router)
   products: IProductDTO[] = [];
   newProducts: IProductDTO[] = [];
@@ -56,6 +58,7 @@ export class ProductsListComponent {
     })
   }
 
+
   payOrderWithPaypal(){
     let urlPayment;
     let dataPayment = new DataPayment ('PAYPAL', this.totalFinal.toString(), 'USD', 'COMPRA');
@@ -74,16 +77,13 @@ export class ProductsListComponent {
     );
   }
 
-
-
   payOrder(){
+    this.spinner.show();
     let productInfo = Array.from(this.carritoProducts.entries())
     .map(([id, product]) => ({id, quantity: product.count}));
-      console.log(productInfo);
-
     let order: Order = {
       totalPrice: this.totalFinal,
-      status: StatusOrder.IN_PROGRESS,
+      status: StatusOrder.CANCELED,
       paymentMethod: PaymentMethod.PAYPAL,
       createdAt: new Date(),
       products: productInfo,
