@@ -1,22 +1,22 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-8" id="profileID">
       <br>
-      <h2>Perfil</h2>
+      <h2>Perfil</h2><br>
       <div class="card mb-3">
 
         <div class="card-body">
 
-          <h3 class="card-title">Informacion Personal</h3>
+          <h3 class="card-title">Información Personal</h3>
           <div class="row">
             <div class="col-md-4">
               <figure> <!-- waiting atribute of db --><!-- {{ editedProfileImage }} -->
                 <img src="https://img.freepik.com/premium-photo/high-angle-friends-eating-pizza_23-2151231321.jpg?w=900" alt="Profile Picture" class="profile-image img-fluid" *ngIf="!isEditing">
-                <input class="form-control" type="text" [(ngModel)]="editedProfileImage" *ngIf="isEditing" placeholder="URL de la imagen de perfil">
-              </figure>
+<!--                 <input class="form-control" type="text" [(ngModel)]="editedProfileImage" *ngIf="isEditing" placeholder="URL de la imagen de perfil">
+ -->              </figure>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
               <div class="info-row">
                 <span class="info-label"></span>
                 <input class="form-control" type="text" [(ngModel)]="editedFullName" *ngIf="isEditing">
@@ -50,7 +50,7 @@
     </div>
 
    <!--  BOTONES PUNTOS y PEDIDOS -->
-    <div class="col-md-3"><br><br>
+    <div class="col-md-4" id="botonesProfile"><br>
       <button class="btn btn-primary w-100 mb-2" id="btn1">
 
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +110,7 @@
 
 
     <div class="col-md-3">
-      <button class="btn btn-primary" id="btnIf"  (click)="showCurrentOrders()">Ordenes en Curso</button>
+      <button class="btn btn-primary" id="btnIf"  (click)="showCurrentOrders()">Órdenes en Curso</button>
       <button class="btn btn-primary" id="btnIf" (click)="showOrderHistory()">Historial de Pedidos</button>
     </div>
 
@@ -126,7 +126,7 @@
   <div class="card mb-3 p-3">
     <!-- Contenido de la primera pantalla -->
     <div class="flex justify-content-between">
-      <p class="font-bold text-2xl mb-1">Ordenes en Curso</p>
+      <p class="font-bold text-2xl mb-1">Órdenes en Curso</p>
       <span class="pi pi-refresh cursor-pointer text-green-500" (click)="refreshOrders()"></span>
     </div>
 
@@ -154,7 +154,7 @@
 
       <!-- Agregar información del producto, cantidad y fecha -->
 
-      <div class="flex align-items-center gap-2">
+    <!--   <div class="flex align-items-center gap-2">
         <div class="text-700 font-medium">Tiempo previsto de llegada en:</div>
         <div class="text-500 font-medium">
           {{
@@ -163,7 +163,7 @@
                 'Desconocido'
           }}
         </div>
-      </div>
+      </div> -->
 
       <div class="flex align-items-center gap-2">
         <div class="text-700 font-medium">Estado:</div>
