@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.ibb.co/ZRQ6bCD/image.png" alt="image" border="0" height="300px"/>
+<img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihb1zlcryNYz9JU0MmIvrnxQ0iXMcOVM1itI7l4XcVG5UdAvqmhRRpMSEsHAw6wh57OyK0hNVS-vs2F3b2iUTQPZ4ZLyh8Rm0g=w1280-h551-rw-v1" alt="image" border="0" height="300px"/>
 </p>
 <h1 align="center">
 Bienvenidos a FooDelivery
@@ -95,6 +95,7 @@ Foodelivery es una aplicación web que brinda a los restaurantes la capacidad de
 ### Documentacion
 
 - [Pruebas de QA](https://docs.google.com/spreadsheets/d/1jd1tSutWYVDoAbdzmniX0eTQI8JV4LmACfGdjTqbNZ4/edit?usp=sharing)
+- [Diseño en Figma](https://www.figma.com/file/jwF2GJ9a33Rl9Qg7SGIN9j/Pages?type=design&node-id=2-3&mode=design&t=gsz6avq9xuqKtPS7-0)
 
 <br/>
 
