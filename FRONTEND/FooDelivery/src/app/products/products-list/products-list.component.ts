@@ -83,6 +83,10 @@ export class ProductsListComponent {
       Swal.fire('Pedido Vacio!','No puedes realizar el pago porque tu pedido está vacío.','warning');
       return;
     }
+    if(sessionStorage.getItem("jwt_token") === null){
+      Swal.fire('Error!','Inicia sesion para realizar un pedido','warning')
+      return;
+    }
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
