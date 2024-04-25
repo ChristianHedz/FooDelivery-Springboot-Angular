@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihb1zlcryNYz9JU0MmIvrnxQ0iXMcOVM1itI7l4XcVG5UdAvqmhRRpMSEsHAw6wh57OyK0hNVS-vs2F3b2iUTQPZ4ZLyh8Rm0g=w1280-h551-rw-v1" alt="image" border="0" width="890" height="150"/>
+<img src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihb1zlcryNYz9JU0MmIvrnxQ0iXMcOVM1itI7l4XcVG5UdAvqmhRRpMSEsHAw6wh57OyK0hNVS-vs2F3b2iUTQPZ4ZLyh8Rm0g=w1280-h551-rw-v1" alt="image" border="0" width="100%" height="150"/>
 </p>
 <h1 align="center">
 Bienvenidos a FooDelivery
