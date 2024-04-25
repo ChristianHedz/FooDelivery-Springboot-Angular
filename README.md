@@ -92,6 +92,12 @@ Foodelivery es una aplicación web que brinda a los restaurantes la capacidad de
 
 <br/>
 
+### Documentacion
+
+- [Pruebas de QA](https://docs.google.com/spreadsheets/d/1jd1tSutWYVDoAbdzmniX0eTQI8JV4LmACfGdjTqbNZ4/edit?usp=sharing)
+
+<br/>
+
 ## Agradecimientos
 
 - [NoCountry](https://www.nocountry.tech/)
