@@ -1,160 +1,282 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8" id="profileID">
-      <br>
-      <h2>Perfil</h2><br>
-      <div class="card mb-3">
-
+      <br />
+      <h2>Perfil</h2>
+      <br />
+      <div class="card mb-3 py-3 px-4">
         <div class="card-body">
-
-          <h3 class="card-title">Información Personal</h3>
+          <h3 class="card-title mb-4">Información Personal</h3>
           <div class="row">
             <div class="col-md-4">
-              <figure> <!-- waiting atribute of db --><!-- {{ editedProfileImage }} -->
-                <img src="https://img.freepik.com/premium-photo/high-angle-friends-eating-pizza_23-2151231321.jpg?w=900" alt="Profile Picture" class="profile-image img-fluid" *ngIf="!isEditing">
-<!--                 <input class="form-control" type="text" [(ngModel)]="editedProfileImage" *ngIf="isEditing" placeholder="URL de la imagen de perfil">
- -->              </figure>
+              <figure>
+                <img
+                  src="https://img.freepik.com/premium-photo/high-angle-friends-eating-pizza_23-2151231321.jpg?w=900"
+                  alt="Profile Picture"
+                  class="profile-image img-fluid"
+                  *ngIf="!isEditing"
+                />
+              </figure>
             </div>
 
             <div class="col-md-6">
               <div class="info-row">
                 <span class="info-label"></span>
-                <input class="form-control" type="text" [(ngModel)]="editedFullName" *ngIf="isEditing">
-                <span *ngIf="!isEditing"><strong>{{ user?.fullName }}</strong></span>
-     <p>Caseros 3445, La Plata Argentina</p>          </div>
+                <input
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="editedFullName"
+                  *ngIf="isEditing"
+                />
+                <span *ngIf="!isEditing"
+                  ><strong>{{ user?.fullName }}</strong></span
+                >
+                <p>Caseros 3445, La Plata Argentina</p>
+              </div>
 
               <div class="info-row">
-                <span class="info-label">Alias :   </span>
-                <input class="form-control" type="text" [(ngModel)]="editedAlias" *ngIf="isEditing">
+                <span class="info-label">Alias : </span>
+                <input
+                  class="form-control"
+                  type="text"
+                  [(ngModel)]="editedAlias"
+                  *ngIf="isEditing"
+                />
                 <span *ngIf="!isEditing">{{ user?.alias }}</span>
               </div>
 
               <div class="info-row">
                 <span class="info-label">Phone:</span>
-<!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedPhone" *ngIf="isEditing">
- -->                <span *ngIf="!isEditing">{{ user?.phone }}</span>
+                <!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedPhone" *ngIf="isEditing">
+ -->
+                <span *ngIf="!isEditing">{{ user?.phone }}</span>
               </div>
 
               <div class="info-row">
                 <span class="info-label">Email:</span>
-<!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedEmail" *ngIf="isEditing">
- -->                <span *ngIf="!isEditing">{{ user?.email }}</span>
+                <!--                 <input class="info-value form-control" type="text" [(ngModel)]="editedEmail" *ngIf="isEditing">
+ -->
+                <span *ngIf="!isEditing">{{ user?.email }}</span>
               </div>
             </div>
           </div>
-          <button class="btn-modify" *ngIf="!isEditing" (click)="enableEdit()">Modificar</button>
-          <button class="btn-save" *ngIf="isEditing" (click)="saveChanges()">Guardar</button>
-
+          <button class="btn-modify" *ngIf="!isEditing" (click)="enableEdit()">
+            Modificar
+          </button>
+          <button class="btn-save" *ngIf="isEditing" (click)="saveChanges()">
+            Guardar
+          </button>
         </div>
       </div>
     </div>
 
-   <!--  BOTONES PUNTOS y PEDIDOS -->
-    <div class="col-md-4" id="botonesProfile"><br>
+    <!--  BOTONES PUNTOS y PEDIDOS -->
+    <div class="col-md-4" id="botonesProfile">
+      <br />
       <button class="btn btn-primary w-100 mb-2" id="btn1">
-
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="56" height="56" rx="2" fill="white"/>
-          <path opacity="0.2" d="M21.2375 25.9248L17.3125 30.6248C17.2136 30.7402 17.1439 30.8776 17.1091 31.0255C17.0743 31.1734 17.0754 31.3275 17.1125 31.4748L18.65 38.4373C18.6871 38.6028 18.7657 38.7561 18.8784 38.8829C18.991 39.0097 19.1341 39.1057 19.2941 39.162C19.4541 39.2182 19.6258 39.2328 19.793 39.2045C19.9602 39.1761 20.1175 39.1057 20.25 38.9998L24 35.9998C21.8 32.1748 21.0875 28.8123 21.2375 25.9248Z" fill="#2DA5F3"/>
-          <path opacity="0.2" d="M34.6875 25.8379L38.6125 30.5504C38.7114 30.6658 38.7812 30.8031 38.816 30.9511C38.8508 31.099 38.8496 31.253 38.8125 31.4004L37.275 38.3504C37.2396 38.5169 37.1622 38.6717 37.0502 38.8C36.9382 38.9282 36.7953 39.0258 36.6351 39.0834C36.4749 39.141 36.3026 39.1567 36.1345 39.129C35.9665 39.1014 35.8083 39.0313 35.675 38.9254L31.925 35.9254C34.125 32.0879 34.8375 28.7254 34.6875 25.8379Z" fill="#2DA5F3"/>
-          <path d="M30 40H26" stroke="#2DA5F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M27.375 14.4747C25 16.3747 17.0625 23.9747 24 35.9997H32C38.8 23.9747 30.975 16.3872 28.625 14.4747C28.4497 14.3283 28.2285 14.248 28 14.248C27.7715 14.248 27.5503 14.3283 27.375 14.4747Z" stroke="#2DA5F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M21.2375 25.9248L17.3125 30.6248C17.2136 30.7402 17.1439 30.8776 17.1091 31.0255C17.0743 31.1734 17.0754 31.3275 17.1125 31.4748L18.65 38.4373C18.6871 38.6028 18.7657 38.7561 18.8784 38.8829C18.991 39.0097 19.1341 39.1057 19.2941 39.162C19.4541 39.2182 19.6258 39.2328 19.793 39.2045C19.9602 39.1761 20.1175 39.1057 20.25 38.9998L24 35.9998" stroke="#2DA5F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M34.6875 25.8252L38.6875 30.6252C38.7864 30.7406 38.8561 30.878 38.8909 31.0259C38.9258 31.1738 38.9246 31.3278 38.8875 31.4752L37.35 38.4377C37.3129 38.6032 37.2343 38.7565 37.1216 38.8833C37.009 39.0101 36.8659 39.1061 36.7059 39.1623C36.5459 39.2186 36.3742 39.2332 36.207 39.2049C36.0398 39.1765 35.8825 39.1061 35.75 39.0002L32 36.0002" stroke="#2DA5F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M28 25.5C28.8284 25.5 29.5 24.8284 29.5 24C29.5 23.1716 28.8284 22.5 28 22.5C27.1716 22.5 26.5 23.1716 26.5 24C26.5 24.8284 27.1716 25.5 28 25.5Z" fill="#2DA5F3"/>
-          </svg>
+        <svg
+          width="56"
+          height="56"
+          viewBox="0 0 56 56"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="56" height="56" rx="2" fill="white" />
+          <path
+            opacity="0.2"
+            d="M21.2375 25.9248L17.3125 30.6248C17.2136 30.7402 17.1439 30.8776 17.1091 31.0255C17.0743 31.1734 17.0754 31.3275 17.1125 31.4748L18.65 38.4373C18.6871 38.6028 18.7657 38.7561 18.8784 38.8829C18.991 39.0097 19.1341 39.1057 19.2941 39.162C19.4541 39.2182 19.6258 39.2328 19.793 39.2045C19.9602 39.1761 20.1175 39.1057 20.25 38.9998L24 35.9998C21.8 32.1748 21.0875 28.8123 21.2375 25.9248Z"
+            fill="#2DA5F3"
+          />
+          <path
+            opacity="0.2"
+            d="M34.6875 25.8379L38.6125 30.5504C38.7114 30.6658 38.7812 30.8031 38.816 30.9511C38.8508 31.099 38.8496 31.253 38.8125 31.4004L37.275 38.3504C37.2396 38.5169 37.1622 38.6717 37.0502 38.8C36.9382 38.9282 36.7953 39.0258 36.6351 39.0834C36.4749 39.141 36.3026 39.1567 36.1345 39.129C35.9665 39.1014 35.8083 39.0313 35.675 38.9254L31.925 35.9254C34.125 32.0879 34.8375 28.7254 34.6875 25.8379Z"
+            fill="#2DA5F3"
+          />
+          <path
+            d="M30 40H26"
+            stroke="#2DA5F3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M27.375 14.4747C25 16.3747 17.0625 23.9747 24 35.9997H32C38.8 23.9747 30.975 16.3872 28.625 14.4747C28.4497 14.3283 28.2285 14.248 28 14.248C27.7715 14.248 27.5503 14.3283 27.375 14.4747Z"
+            stroke="#2DA5F3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M21.2375 25.9248L17.3125 30.6248C17.2136 30.7402 17.1439 30.8776 17.1091 31.0255C17.0743 31.1734 17.0754 31.3275 17.1125 31.4748L18.65 38.4373C18.6871 38.6028 18.7657 38.7561 18.8784 38.8829C18.991 39.0097 19.1341 39.1057 19.2941 39.162C19.4541 39.2182 19.6258 39.2328 19.793 39.2045C19.9602 39.1761 20.1175 39.1057 20.25 38.9998L24 35.9998"
+            stroke="#2DA5F3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M34.6875 25.8252L38.6875 30.6252C38.7864 30.7406 38.8561 30.878 38.8909 31.0259C38.9258 31.1738 38.9246 31.3278 38.8875 31.4752L37.35 38.4377C37.3129 38.6032 37.2343 38.7565 37.1216 38.8833C37.009 39.0101 36.8659 39.1061 36.7059 39.1623C36.5459 39.2186 36.3742 39.2332 36.207 39.2049C36.0398 39.1765 35.8825 39.1061 35.75 39.0002L32 36.0002"
+            stroke="#2DA5F3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M28 25.5C28.8284 25.5 29.5 24.8284 29.5 24C29.5 23.1716 28.8284 22.5 28 22.5C27.1716 22.5 26.5 23.1716 26.5 24C26.5 24.8284 27.1716 25.5 28 25.5Z"
+            fill="#2DA5F3"
+          />
+        </svg>
         <span class="badge badge-pill badge-primary float-right">100</span>
         Puntos
       </button>
 
       <button class="btn btn-warning w-100 mb-2" id="btn2">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="56" height="56" rx="2" fill="white"/>
-          <path opacity="0.2" d="M16 38V19C16 18.7348 16.1054 18.4804 16.2929 18.2929C16.4804 18.1054 16.7348 18 17 18H39C39.2652 18 39.5196 18.1054 39.7071 18.2929C39.8946 18.4804 40 18.7348 40 19V38L36 36L32 38L28 36L24 38L20 36L16 38Z" fill="#FA8232"/>
-          <path d="M21.5 25H34.5" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M21.5 29H34.5" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M16 38V19C16 18.7348 16.1054 18.4804 16.2929 18.2929C16.4804 18.1054 16.7348 18 17 18H39C39.2652 18 39.5196 18.1054 39.7071 18.2929C39.8946 18.4804 40 18.7348 40 19V38L36 36L32 38L28 36L24 38L20 36L16 38Z" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <svg
+          width="56"
+          height="56"
+          viewBox="0 0 56 56"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="56" height="56" rx="2" fill="white" />
+          <path
+            opacity="0.2"
+            d="M16 38V19C16 18.7348 16.1054 18.4804 16.2929 18.2929C16.4804 18.1054 16.7348 18 17 18H39C39.2652 18 39.5196 18.1054 39.7071 18.2929C39.8946 18.4804 40 18.7348 40 19V38L36 36L32 38L28 36L24 38L20 36L16 38Z"
+            fill="#FA8232"
+          />
+          <path
+            d="M21.5 25H34.5"
+            stroke="#FA8232"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M21.5 29H34.5"
+            stroke="#FA8232"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M16 38V19C16 18.7348 16.1054 18.4804 16.2929 18.2929C16.4804 18.1054 16.7348 18 17 18H39C39.2652 18 39.5196 18.1054 39.7071 18.2929C39.8946 18.4804 40 18.7348 40 19V38L36 36L32 38L28 36L24 38L20 36L16 38Z"
+            stroke="#FA8232"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
         <span class="badge badge-pill badge-primary float-right">50</span>
         Pedidos Totales
       </button>
 
       <button class="btn btn-success w-100" id="btn3">
-
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="56" height="56" rx="2" fill="white"/>
-          <path opacity="0.2" d="M16.1375 21.3252C16.0469 21.4808 15.9995 21.6577 16 21.8377V34.1627C16.001 34.3407 16.0488 34.5154 16.1388 34.669C16.2288 34.8226 16.3577 34.9498 16.5125 35.0377L27.5125 41.2252C27.6608 41.3099 27.8292 41.3531 28 41.3502L28.1125 28.0002L16.1375 21.3252Z" fill="#2DB324"/>
-          <path d="M40 34.1627V21.8377C39.999 21.6596 39.9512 21.485 39.8612 21.3314C39.7712 21.1778 39.6423 21.0506 39.4875 20.9627L28.4875 14.7752C28.3393 14.6896 28.1711 14.6445 28 14.6445C27.8289 14.6445 27.6607 14.6896 27.5125 14.7752L16.5125 20.9627C16.3577 21.0506 16.2288 21.1778 16.1388 21.3314C16.0488 21.485 16.001 21.6596 16 21.8377V34.1627C16.001 34.3407 16.0488 34.5153 16.1388 34.6689C16.2288 34.8226 16.3577 34.9497 16.5125 35.0377L27.5125 41.2252C27.6607 41.3107 27.8289 41.3558 28 41.3558C28.1711 41.3558 28.3393 41.3107 28.4875 41.2252L39.4875 35.0377C39.6423 34.9497 39.7712 34.8226 39.8612 34.6689C39.9512 34.5153 39.999 34.3407 40 34.1627V34.1627Z" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M34.125 31.0625V24.5625L22 17.875" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M39.8625 21.3252L28.1125 28.0002L16.1375 21.3252" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M28.1125 28L28 41.35" stroke="#2DB324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <svg
+          width="56"
+          height="56"
+          viewBox="0 0 56 56"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="56" height="56" rx="2" fill="white" />
+          <path
+            opacity="0.2"
+            d="M16.1375 21.3252C16.0469 21.4808 15.9995 21.6577 16 21.8377V34.1627C16.001 34.3407 16.0488 34.5154 16.1388 34.669C16.2288 34.8226 16.3577 34.9498 16.5125 35.0377L27.5125 41.2252C27.6608 41.3099 27.8292 41.3531 28 41.3502L28.1125 28.0002L16.1375 21.3252Z"
+            fill="#2DB324"
+          />
+          <path
+            d="M40 34.1627V21.8377C39.999 21.6596 39.9512 21.485 39.8612 21.3314C39.7712 21.1778 39.6423 21.0506 39.4875 20.9627L28.4875 14.7752C28.3393 14.6896 28.1711 14.6445 28 14.6445C27.8289 14.6445 27.6607 14.6896 27.5125 14.7752L16.5125 20.9627C16.3577 21.0506 16.2288 21.1778 16.1388 21.3314C16.0488 21.485 16.001 21.6596 16 21.8377V34.1627C16.001 34.3407 16.0488 34.5153 16.1388 34.6689C16.2288 34.8226 16.3577 34.9497 16.5125 35.0377L27.5125 41.2252C27.6607 41.3107 27.8289 41.3558 28 41.3558C28.1711 41.3558 28.3393 41.3107 28.4875 41.2252L39.4875 35.0377C39.6423 34.9497 39.7712 34.8226 39.8612 34.6689C39.9512 34.5153 39.999 34.3407 40 34.1627V34.1627Z"
+            stroke="#2DB324"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M34.125 31.0625V24.5625L22 17.875"
+            stroke="#2DB324"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M39.8625 21.3252L28.1125 28.0002L16.1375 21.3252"
+            stroke="#2DB324"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M28.1125 28L28 41.35"
+            stroke="#2DB324"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
 
         <span class="badge badge-pill badge-primary float-right">30</span>
         Pedidos Completados
       </button>
     </div>
-
+  </div>
 </div>
-
-</div>
-
-
-
-
-
 
 <div class="container">
   <!-- Botones del switch -->
-  <div class="row mt-3">
-
-
+  <div class="row mt-3 ms-5">
     <div class="col-md-3">
-      <button class="btn btn-primary" id="btnIf"  (click)="showCurrentOrders()">Órdenes en Curso</button>
-      <button class="btn btn-primary" id="btnIf" (click)="showOrderHistory()">Historial de Pedidos</button>
+      <button class="btn btn-primary" id="btnIf" (click)="showCurrentOrders()">
+        Órdenes en Curso
+      </button>
+      <button class="btn btn-primary" id="btnIf" (click)="showOrderHistory()">
+        Historial de Pedidos
+      </button>
     </div>
 
     <div class="col-md-9">
-
-
       <!-- Pantallas de Ordenes en Curso o Historial de Pedidos -->
       <div class="row">
+        <!-- Pantalla de Ordenes en Curso -->
+        <div class="col-md-8" *ngIf="showCurrentOrdersScreen">
+          <div class="card mb-3 p-3">
+            <!-- Contenido de la primera pantalla -->
+            <div class="flex justify-content-between">
+              <p class="font-bold text-2xl mb-1">Órdenes en Curso</p>
+              <span
+                class="pi pi-refresh cursor-pointer text-green-500"
+                (click)="refreshOrders()"
+              ></span>
+            </div>
 
+            <div class="card mb-3" *ngFor="let order of currentOrders">
+              <div class="flex align-items-center gap-2">
+                <div class="text-700 font-medium">Id:</div>
+                <div class="text-500 font-medium">{{ order.id }}</div>
+              </div>
 
-<!-- Pantalla de Ordenes en Curso -->
-<div class="col-md-8" *ngIf="showCurrentOrdersScreen">
-  <div class="card mb-3 p-3">
-    <!-- Contenido de la primera pantalla -->
-    <div class="flex justify-content-between">
-      <p class="font-bold text-2xl mb-1">Órdenes en Curso</p>
-      <span class="pi pi-refresh cursor-pointer text-green-500" (click)="refreshOrders()"></span>
-    </div>
+              <div class="flex align-items-center gap-2">
+                <div class="text-700 font-medium">Total:</div>
+                <div class="text-500 font-medium">
+                  {{ order.totalPrice | currency }}
+                </div>
+              </div>
 
-    <div class="card mb-3" *ngFor="let order of currentOrders">
+              <div class="flex align-items-center gap-2">
+                <div class="text-700 font-medium">Metodo de Pago:</div>
+                <div class="text-500 font-medium">
+                  {{ order.paymentMethod }}
+                </div>
+              </div>
 
-      <div class="flex align-items-center gap-2">
-        <div class="text-700 font-medium">Id:</div>
-        <div class="text-500 font-medium">{{ order.id }}</div>
-      </div>
+              <div class="flex align-items-center gap-2">
+                <div class="text-700 font-medium">Fecha:</div>
+                <div class="text-500 font-medium">
+                  {{ order.createdAt | date : "dd/MMM/YYYY" }}
+                </div>
+              </div>
 
-      <div class="flex align-items-center gap-2">
-        <div class="text-700 font-medium">Total:</div>
-        <div class="text-500 font-medium">{{ order.totalPrice | currency }}</div>
-      </div>
+              <!-- Agregar información del producto, cantidad y fecha -->
 
-      <div class="flex align-items-center gap-2">
-        <div class="text-700 font-medium">Metodo de Pago:</div>
-        <div class="text-500 font-medium">{{ order.paymentMethod }}</div>
-      </div>
-
-      <div class="flex align-items-center gap-2">
-        <div class="text-700 font-medium">Fecha:</div>
-        <div class="text-500 font-medium">{{ order.createdAt | date: 'dd/MMM/YYYY' }} </div>
-      </div>
-
-      <!-- Agregar información del producto, cantidad y fecha -->
-
-    <!--   <div class="flex align-items-center gap-2">
+              <!--   <div class="flex align-items-center gap-2">
         <div class="text-700 font-medium">Tiempo previsto de llegada en:</div>
         <div class="text-500 font-medium">
           {{
@@ -165,118 +287,267 @@
         </div>
       </div> -->
 
-      <div class="flex align-items-center gap-2">
-        <div class="text-700 font-medium">Estado:</div>
-        <div class="text-500 font-medium">{{ order.status }} </div>
-      </div>
-
-
-      <!-- BARRA DE PROGRESO -->
-
-      <div [class]="'mt-4 progress-bar ' + statusBarClass()">
-<!--        <div class="progress" [style.width]="progressWidth()"></div>-->
-        <div class="progress" [style.width]="setProgress(order)"></div>
-      </div>
-
-      <div class="container mb-4">
-          <div class="row">
-            <div class="col flex flex-column align-items-center">
-              <div class="base">
-                <svg class="canceled_svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path [attr.fill]="svgFillColor()" d="M10 27H6C5.73478 27 5.48043 26.8946 5.29289 26.7071C5.10536 26.5196 5 26.2652 5 26V6C5 5.73478 5.10536 5.48043 5.29289 5.29289C5.48043 5.10536 5.73478 5 6 5H10V27Z"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M14 14H22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M14 18H22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M26 5H6C5.44772 5 5 5.44772 5 6V26C5 26.5523 5.44772 27 6 27H26C26.5523 27 27 26.5523 27 26V6C27 5.44772 26.5523 5 26 5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M10 5V27" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+              <div class="flex align-items-center gap-2">
+                <div class="text-700 font-medium">Estado:</div>
+                <div class="text-500 font-medium">{{ order.status }}</div>
               </div>
 
-              <p [class]="statusTextClass() + ' font-semibold'">Orden Cargada</p>
-            </div>
+              <!-- BARRA DE PROGRESO -->
 
-            <div class="col flex flex-column align-items-center">
-              <div class="base">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path [attr.fill]="svgFillColor()" d="M29.2 20.05C29.15 18.9 28.9 16.65 28.1 14.95C26.4 11.35 23.2 8.65 19.45 7.65C19 6.7 18 6 16.8 6H15.25C14.1 6 13.1 6.65 12.65 7.55C7.39999 8.9 3.14999 14.3 2.74999 20.05C1.69999 20.35 0.899994 21.3 0.899994 22.45V23.5C0.899994 24.9 1.99999 26 3.39999 26H28.65C30.05 26 31.15 24.9 31.15 23.5V22.45C31.15 21.3 30.3 20.3 29.2 20.05ZM12.35 10V12.15C12.35 12.75 12.85 13.3 13.5 13.3C14.15 13.3 14.65 12.8 14.65 12.15V8.75C14.65 8.45 14.95 8.2 15.3 8.2H16.85C17.2 8.2 17.5 8.45 17.5 8.75V12.15C17.5 12.75 18 13.3 18.65 13.3C19.3 13.3 19.8 12.8 19.8 12.15V10C22.55 11 24.85 13.1 26.15 15.85C26.7 17.05 26.95 18.7 27.05 19.95H22.35V19.45C22.35 18.85 21.85 18.3 21.2 18.3C20.55 18.3 20.05 18.8 20.05 19.45V19.95H17.2V18.15C17.2 17.55 16.7 17 16.05 17C15.45 17 14.9 17.5 14.9 18.15V19.95H12.05V19.45C12.05 18.85 11.55 18.3 10.9 18.3C10.25 18.3 9.74999 18.8 9.74999 19.45V19.95H4.99999C5.39999 15.6 8.49999 11.45 12.35 10ZM28.9 23.5C28.9 23.65 28.8 23.75 28.65 23.75H3.39999C3.24999 23.75 3.14999 23.65 3.14999 23.5V22.45C3.14999 22.3 3.24999 22.2 3.39999 22.2H28.65C28.8 22.2 28.9 22.3 28.9 22.45V23.5Z"/>
-                  </svg>
+              <div [class]="'mt-4 progress-bar ' + statusBarClass()">
+                <!--        <div class="progress" [style.width]="progressWidth()"></div>-->
+                <div class="progress" [style.width]="setProgress(order)"></div>
               </div>
 
-              <p [class]="statusTextClass() + ' font-semibold'">En Preparación</p>
-            </div>
+              <div class="container mb-4">
+                <div class="row">
+                  <div class="col flex flex-column align-items-center">
+                    <div class="base">
+                      <svg
+                        class="canceled_svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          [attr.fill]="svgFillColor()"
+                          d="M10 27H6C5.73478 27 5.48043 26.8946 5.29289 26.7071C5.10536 26.5196 5 26.2652 5 26V6C5 5.73478 5.10536 5.48043 5.29289 5.29289C5.48043 5.10536 5.73478 5 6 5H10V27Z"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M14 14H22"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M14 18H22"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M26 5H6C5.44772 5 5 5.44772 5 6V26C5 26.5523 5.44772 27 6 27H26C26.5523 27 27 26.5523 27 26V6C27 5.44772 26.5523 5 26 5Z"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M10 5V27"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
 
-              <div class="col flex flex-column align-items-center">
-                <div class="base">
-                  <svg class="canceled_svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.2" d="M22 18H2V23C2 23.2652 2.10536 23.5196 2.29289 23.7071C2.48043 23.8946 2.73478 24 3 24H5.5C5.5 23.2044 5.81607 22.4413 6.37868 21.8787C6.94129 21.3161 7.70435 21 8.5 21C9.29565 21 10.0587 21.3161 10.6213 21.8787C11.1839 22.4413 11.5 23.2044 11.5 24H20.5C20.4997 23.4731 20.6381 22.9553 20.9014 22.4989C21.1648 22.0425 21.5437 21.6635 22 21.4V18Z" fill="#FA8232"/>
-                    <path opacity="0.2" d="M26.5 24C26.5003 23.4732 26.362 22.9557 26.0988 22.4993C25.8356 22.043 25.4569 21.664 25.0008 21.4005C24.5447 21.1369 24.0273 20.9982 23.5005 20.9981C22.9737 20.998 22.4562 21.1366 22 21.4V15H30V23C30 23.2652 29.8946 23.5196 29.7071 23.7071C29.5196 23.8946 29.2652 24 29 24H26.5Z" fill="#FA8232"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M22 10H27.325C27.5242 9.99872 27.7192 10.0577 27.8843 10.1693C28.0494 10.2808 28.1769 10.4397 28.25 10.625L30 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M2 18H22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M23.5 27C25.1569 27 26.5 25.6569 26.5 24C26.5 22.3431 25.1569 21 23.5 21C21.8431 21 20.5 22.3431 20.5 24C20.5 25.6569 21.8431 27 23.5 27Z" stroke-width="2" stroke-miterlimit="10"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M8.5 27C10.1569 27 11.5 25.6569 11.5 24C11.5 22.3431 10.1569 21 8.5 21C6.84315 21 5.5 22.3431 5.5 24C5.5 25.6569 6.84315 27 8.5 27Z" stroke-width="2" stroke-miterlimit="10"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M20.5 24H11.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M5.5 24H3C2.73478 24 2.48043 23.8946 2.29289 23.7071C2.10536 23.5196 2 23.2652 2 23V9C2 8.73478 2.10536 8.48043 2.29289 8.29289C2.48043 8.10536 2.73478 8 3 8H22V21.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path [attr.stroke]="svgStrokeColor()" d="M22 15H30V23C30 23.2652 29.8946 23.5196 29.7071 23.7071C29.5196 23.8946 29.2652 24 29 24H26.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <p [class]="statusTextClass() + ' font-semibold'">
+                      Orden Cargada
+                    </p>
+                  </div>
+
+                  <div class="col flex flex-column align-items-center">
+                    <div class="base">
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          [attr.fill]="svgFillColor()"
+                          d="M29.2 20.05C29.15 18.9 28.9 16.65 28.1 14.95C26.4 11.35 23.2 8.65 19.45 7.65C19 6.7 18 6 16.8 6H15.25C14.1 6 13.1 6.65 12.65 7.55C7.39999 8.9 3.14999 14.3 2.74999 20.05C1.69999 20.35 0.899994 21.3 0.899994 22.45V23.5C0.899994 24.9 1.99999 26 3.39999 26H28.65C30.05 26 31.15 24.9 31.15 23.5V22.45C31.15 21.3 30.3 20.3 29.2 20.05ZM12.35 10V12.15C12.35 12.75 12.85 13.3 13.5 13.3C14.15 13.3 14.65 12.8 14.65 12.15V8.75C14.65 8.45 14.95 8.2 15.3 8.2H16.85C17.2 8.2 17.5 8.45 17.5 8.75V12.15C17.5 12.75 18 13.3 18.65 13.3C19.3 13.3 19.8 12.8 19.8 12.15V10C22.55 11 24.85 13.1 26.15 15.85C26.7 17.05 26.95 18.7 27.05 19.95H22.35V19.45C22.35 18.85 21.85 18.3 21.2 18.3C20.55 18.3 20.05 18.8 20.05 19.45V19.95H17.2V18.15C17.2 17.55 16.7 17 16.05 17C15.45 17 14.9 17.5 14.9 18.15V19.95H12.05V19.45C12.05 18.85 11.55 18.3 10.9 18.3C10.25 18.3 9.74999 18.8 9.74999 19.45V19.95H4.99999C5.39999 15.6 8.49999 11.45 12.35 10ZM28.9 23.5C28.9 23.65 28.8 23.75 28.65 23.75H3.39999C3.24999 23.75 3.14999 23.65 3.14999 23.5V22.45C3.14999 22.3 3.24999 22.2 3.39999 22.2H28.65C28.8 22.2 28.9 22.3 28.9 22.45V23.5Z"
+                        />
+                      </svg>
+                    </div>
+
+                    <p [class]="statusTextClass() + ' font-semibold'">
+                      En Preparación
+                    </p>
+                  </div>
+
+                  <div class="col flex flex-column align-items-center">
+                    <div class="base">
+                      <svg
+                        class="canceled_svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.2"
+                          d="M22 18H2V23C2 23.2652 2.10536 23.5196 2.29289 23.7071C2.48043 23.8946 2.73478 24 3 24H5.5C5.5 23.2044 5.81607 22.4413 6.37868 21.8787C6.94129 21.3161 7.70435 21 8.5 21C9.29565 21 10.0587 21.3161 10.6213 21.8787C11.1839 22.4413 11.5 23.2044 11.5 24H20.5C20.4997 23.4731 20.6381 22.9553 20.9014 22.4989C21.1648 22.0425 21.5437 21.6635 22 21.4V18Z"
+                          fill="#FA8232"
+                        />
+                        <path
+                          opacity="0.2"
+                          d="M26.5 24C26.5003 23.4732 26.362 22.9557 26.0988 22.4993C25.8356 22.043 25.4569 21.664 25.0008 21.4005C24.5447 21.1369 24.0273 20.9982 23.5005 20.9981C22.9737 20.998 22.4562 21.1366 22 21.4V15H30V23C30 23.2652 29.8946 23.5196 29.7071 23.7071C29.5196 23.8946 29.2652 24 29 24H26.5Z"
+                          fill="#FA8232"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M22 10H27.325C27.5242 9.99872 27.7192 10.0577 27.8843 10.1693C28.0494 10.2808 28.1769 10.4397 28.25 10.625L30 15"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M2 18H22"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M23.5 27C25.1569 27 26.5 25.6569 26.5 24C26.5 22.3431 25.1569 21 23.5 21C21.8431 21 20.5 22.3431 20.5 24C20.5 25.6569 21.8431 27 23.5 27Z"
+                          stroke-width="2"
+                          stroke-miterlimit="10"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M8.5 27C10.1569 27 11.5 25.6569 11.5 24C11.5 22.3431 10.1569 21 8.5 21C6.84315 21 5.5 22.3431 5.5 24C5.5 25.6569 6.84315 27 8.5 27Z"
+                          stroke-width="2"
+                          stroke-miterlimit="10"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M20.5 24H11.5"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M5.5 24H3C2.73478 24 2.48043 23.8946 2.29289 23.7071C2.10536 23.5196 2 23.2652 2 23V9C2 8.73478 2.10536 8.48043 2.29289 8.29289C2.48043 8.10536 2.73478 8 3 8H22V21.4"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M22 15H30V23C30 23.2652 29.8946 23.5196 29.7071 23.7071C29.5196 23.8946 29.2652 24 29 24H26.5"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+
+                    <p [class]="statusTextClass() + ' font-semibold'">
+                      En Camino
+                    </p>
+                  </div>
+
+                  <div class="col flex flex-column align-items-center">
+                    <div class="base">
+                      <svg
+                        class="canceled_svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          opacity="0.2"
+                          d="M25 19.1128L20.4 23.7128C20.2746 23.83 20.1227 23.9151 19.9573 23.9608C19.7918 24.0066 19.6178 24.0115 19.45 23.9753L12.2 22.1628C12.0676 22.1259 11.9442 22.062 11.8375 21.9753L5 16.6378L9.075 8.97527L15.4875 7.10027C15.7154 7.03493 15.959 7.05265 16.175 7.15027L20.5 9.11277H17.9125C17.7826 9.11231 17.654 9.13747 17.5339 9.18681C17.4138 9.23614 17.3045 9.30868 17.2125 9.40027L12.3125 14.2878C12.2125 14.3905 12.1354 14.5133 12.0863 14.648C12.0373 14.7827 12.0174 14.9264 12.0281 15.0694C12.0387 15.2123 12.0796 15.3514 12.148 15.4775C12.2164 15.6035 12.3109 15.7135 12.425 15.8003L13.1 16.3128C13.7932 16.8301 14.635 17.1097 15.5 17.1097C16.365 17.1097 17.2068 16.8301 17.9 16.3128L19.5 15.1128L25 19.1128Z"
+                          fill="#FA8232"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M30.0875 15.2251L27 16.7626L23 9.11259L26.125 7.55009C26.3572 7.43171 26.6269 7.40996 26.8751 7.48957C27.1233 7.56919 27.33 7.74371 27.45 7.97509L30.525 13.8626C30.5874 13.9804 30.6255 14.1096 30.6372 14.2424C30.6489 14.3752 30.634 14.509 30.5932 14.636C30.5525 14.7629 30.4867 14.8805 30.3999 14.9816C30.313 15.0828 30.2068 15.1656 30.0875 15.2251V15.2251Z"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M5 16.6375L1.9125 15.0875C1.79362 15.0292 1.68767 14.9477 1.60095 14.8476C1.51422 14.7476 1.4485 14.6311 1.40769 14.5052C1.36687 14.3793 1.3518 14.2464 1.36336 14.1145C1.37493 13.9826 1.41289 13.8544 1.475 13.7375L4.55 7.84999C4.67029 7.61878 4.8761 7.44367 5.12358 7.36195C5.37107 7.28023 5.64069 7.29837 5.875 7.41249L9 8.97499L5 16.6375Z"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M27 16.7627L25 19.1127L20.4 23.7127C20.2746 23.8299 20.1227 23.915 19.9573 23.9608C19.7918 24.0065 19.6178 24.0114 19.45 23.9752L12.2 22.1627C12.0676 22.1258 11.9442 22.062 11.8375 21.9752L5 16.6377"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M25 19.1123L19.5 15.1123L17.9 16.3123C17.2068 16.8297 16.365 17.1092 15.5 17.1092C14.635 17.1092 13.7932 16.8297 13.1 16.3123L12.425 15.7998C12.3109 15.713 12.2164 15.603 12.148 15.477C12.0796 15.351 12.0387 15.2119 12.0281 15.0689C12.0174 14.9259 12.0373 14.7823 12.0863 14.6476C12.1354 14.5128 12.2125 14.39 12.3125 14.2873L17.2125 9.39981C17.3045 9.30822 17.4138 9.23568 17.5339 9.18635C17.654 9.13701 17.7827 9.11186 17.9125 9.11231H23"
+                          stroke="#FA8232"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M9.075 8.97527L15.4875 7.10027C15.7153 7.03493 15.959 7.05265 16.175 7.15027L20.5 9.11277"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          [attr.stroke]="svgStrokeColor()"
+                          d="M14 26.6125L10.2375 25.6625C10.0842 25.6279 9.94221 25.5547 9.825 25.45L7 23"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+
+                    <p [class]="statusTextClass() + ' font-semibold'">
+                      Entregado
+                    </p>
+                  </div>
                 </div>
-
-                <p [class]="statusTextClass() + ' font-semibold'">En Camino</p>
-            </div>
-
-            <div class="col flex flex-column align-items-center">
-              <div class="base">
-                <svg class="canceled_svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.2" d="M25 19.1128L20.4 23.7128C20.2746 23.83 20.1227 23.9151 19.9573 23.9608C19.7918 24.0066 19.6178 24.0115 19.45 23.9753L12.2 22.1628C12.0676 22.1259 11.9442 22.062 11.8375 21.9753L5 16.6378L9.075 8.97527L15.4875 7.10027C15.7154 7.03493 15.959 7.05265 16.175 7.15027L20.5 9.11277H17.9125C17.7826 9.11231 17.654 9.13747 17.5339 9.18681C17.4138 9.23614 17.3045 9.30868 17.2125 9.40027L12.3125 14.2878C12.2125 14.3905 12.1354 14.5133 12.0863 14.648C12.0373 14.7827 12.0174 14.9264 12.0281 15.0694C12.0387 15.2123 12.0796 15.3514 12.148 15.4775C12.2164 15.6035 12.3109 15.7135 12.425 15.8003L13.1 16.3128C13.7932 16.8301 14.635 17.1097 15.5 17.1097C16.365 17.1097 17.2068 16.8301 17.9 16.3128L19.5 15.1128L25 19.1128Z" fill="#FA8232"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M30.0875 15.2251L27 16.7626L23 9.11259L26.125 7.55009C26.3572 7.43171 26.6269 7.40996 26.8751 7.48957C27.1233 7.56919 27.33 7.74371 27.45 7.97509L30.525 13.8626C30.5874 13.9804 30.6255 14.1096 30.6372 14.2424C30.6489 14.3752 30.634 14.509 30.5932 14.636C30.5525 14.7629 30.4867 14.8805 30.3999 14.9816C30.313 15.0828 30.2068 15.1656 30.0875 15.2251V15.2251Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M5 16.6375L1.9125 15.0875C1.79362 15.0292 1.68767 14.9477 1.60095 14.8476C1.51422 14.7476 1.4485 14.6311 1.40769 14.5052C1.36687 14.3793 1.3518 14.2464 1.36336 14.1145C1.37493 13.9826 1.41289 13.8544 1.475 13.7375L4.55 7.84999C4.67029 7.61878 4.8761 7.44367 5.12358 7.36195C5.37107 7.28023 5.64069 7.29837 5.875 7.41249L9 8.97499L5 16.6375Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M27 16.7627L25 19.1127L20.4 23.7127C20.2746 23.8299 20.1227 23.915 19.9573 23.9608C19.7918 24.0065 19.6178 24.0114 19.45 23.9752L12.2 22.1627C12.0676 22.1258 11.9442 22.062 11.8375 21.9752L5 16.6377" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M25 19.1123L19.5 15.1123L17.9 16.3123C17.2068 16.8297 16.365 17.1092 15.5 17.1092C14.635 17.1092 13.7932 16.8297 13.1 16.3123L12.425 15.7998C12.3109 15.713 12.2164 15.603 12.148 15.477C12.0796 15.351 12.0387 15.2119 12.0281 15.0689C12.0174 14.9259 12.0373 14.7823 12.0863 14.6476C12.1354 14.5128 12.2125 14.39 12.3125 14.2873L17.2125 9.39981C17.3045 9.30822 17.4138 9.23568 17.5339 9.18635C17.654 9.13701 17.7827 9.11186 17.9125 9.11231H23" stroke="#FA8232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M9.075 8.97527L15.4875 7.10027C15.7153 7.03493 15.959 7.05265 16.175 7.15027L20.5 9.11277" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path [attr.stroke]="svgStrokeColor()" d="M14 26.6125L10.2375 25.6625C10.0842 25.6279 9.94221 25.5547 9.825 25.45L7 23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
               </div>
 
-              <p [class]="statusTextClass() + ' font-semibold'">Entregado</p>
+              <app-order-items [products]="order.products" />
             </div>
+          </div>
+        </div>
 
+        <!-- Pantalla de Historial de Pedidos -->
+        <div class="col-md-8" *ngIf="showOrderHistoryScreen">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="card-title">Historial de Pedidos</h3>
+              <!-- Tabla con historial de pedidos -->
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>ORDER ID</th>
+                    <th>STATUS</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of orderHistory">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.createdAt | date }}</td>
+                    <td>${{ order.totalPrice }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-
-      <app-order-items [products]="order.products" />
     </div>
   </div>
 </div>
-
-
-
-
-
-<!-- Pantalla de Historial de Pedidos -->
-<div class="col-md-8" *ngIf="showOrderHistoryScreen">
-  <div class="card mb-3">
-    <div class="card-body">
-      <h3 class="card-title">Historial de Pedidos</h3>
-      <!-- Tabla con historial de pedidos -->
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>ORDER ID</th>
-            <th>STATUS</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let order of orderHistory">
-            <td>{{ order.id }}</td>
-            <td>{{ order.status }}</td>
-            <td>{{ order.createdAt | date }}</td>
-            <td>${{ order.totalPrice }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-      </div>
-    </div>
-  </div>
