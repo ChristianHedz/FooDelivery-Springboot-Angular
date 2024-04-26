@@ -14,7 +14,8 @@ public record SignedUserDTO(
   String phone,
   String email,
   String alias,
-  Role role
+  Role role,
+  boolean active
 
 ) implements Serializable {
     public SignedUserDTO {
