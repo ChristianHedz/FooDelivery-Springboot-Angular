@@ -1,0 +1,108 @@
+<form [formGroup]="productForm" class="">
+
+    <h1 class="mt-2">{{ productId ? "Actualizar Producto" : "Nuevo Producto" }}</h1>
+    <p-divider></p-divider>
+
+  <div class="grid">
+
+    <!-- name -->
+    <div class="field col-12 flex flex-column gap-2">
+      <label for="name">Nombre</label>
+      <input
+        pInputText
+        id="name"
+        placeholder="Nombre"
+        formControlName="name"
+      />
+      @if (inputValid('name')) {<small class="text-red-700 font-bold"
+      >El nombre es requerido</small
+      >}
+    </div>
+
+    <!-- img url -->
+    <div class="field col-12 sm:col-9 flex flex-column gap-2">
+      <label for="img">URL de la imagen</label>
+      <input
+        pInputText
+        id="img"
+        placeholder="URL de la imagen"
+        formControlName="img"
+        type="text"
+        (input)="inputImgChange()"
+      />
+      @if (inputValid('img')) {<small class="text-red-700 font-bold"
+      >La URL es requerida</small
+      >}
+    </div>
+
+    <div class="col-12 sm:col-3">
+        <div class="flex justify-content-center align-items-center">
+          <p-image [src]="imgUrl()" class="shadow-4" alt="Image" width="150" [preview]="true"></p-image>
+        </div>
+    </div>
+
+    <!-- description -->
+    <div class="field col-12 flex flex-column gap-2">
+      <label for="description">Descripcion</label>
+      <input
+          pInputText
+          id="description"
+          placeholder="Aregue una descripción"
+          formControlName="description"
+      />
+
+        @if (inputValid('description')) {<small class="text-red-700 font-bold"
+      >La descripción es requerida</small
+      >}
+    </div>
+
+      <!-- price -->
+      <div class="field col-4 flex flex-column gap-2">
+        <label for="price">Precio</label>
+        <p-inputGroup class="w-full">
+
+          <p-inputGroupAddon>$</p-inputGroupAddon>
+
+          <input
+            pInputText
+            id="price"
+            placeholder="Precio"
+            formControlName="price"
+          />
+        </p-inputGroup>
+          @if (inputValid('price')) {
+            <small class="text-red-700 font-bold">
+              El precio es requerido. Solo se permiten números
+            </small>
+          }
+      </div>
+
+      <!-- Category -->
+    <div class="field col-12 md:col-6 flex flex-column gap-2">
+      <label for="category">Categoria</label>
+      <p-dropdown
+        id="category"
+        optionLabel="name"
+        [options]="categories()"
+        formControlName="category"
+        placeholder="Seleccione una categoria"
+      ></p-dropdown>
+      @if (inputValid('category')) {
+        <small class="text-red-700 font-bold">
+          La categoria es requerida
+        </small>
+      }
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700 w-full md:w-4 lg:w-3"
+      [label]="productId ? 'Guardar Cambios' : 'Agregar Producto'"
+      (click)="save()"
+    ></button>
+  </div>
+
+</form>

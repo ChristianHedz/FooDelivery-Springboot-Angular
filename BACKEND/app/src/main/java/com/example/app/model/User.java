@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import java.util.List;
 
@@ -45,18 +43,21 @@ public class User implements UserDetails {
      * While the `Address` entity is the child side of the relationship, so it is the inverse side of the relationship.
      */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
-    /* One User has many Orders (A user row can be referenced by multiple order rows)
-     * The "user_id" column in the "order" table column maps this relationship via a foreign key that references the primary key of the "users" table.
-     * An Order cannot exist without a User, so the CascadeType.ALL and orphanRemoval = true options are set to ensure
-     * that the Order entity is deleted when the User entity is deleted.
-     * The `User` entity is the parent side of the relationship, so it is the owning side of the relationship.
-     * While the `Order` entity is the child side of the relationship, so it is the inverse side of the relationship.
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
-    */
+    //****** Helper Methods for Orders: Keep Both Sides of the Association in SYNC.********/
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        order.setUser(this);
+    }
+
+    public void removeOrder(Order order) {
+        order.setUser(null);
+        this.orders.remove(order);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

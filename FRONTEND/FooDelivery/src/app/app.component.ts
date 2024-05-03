@@ -1,19 +1,84 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { HeaderComponent } from './home/header/header.component';
-import { FooterComponent } from './home/footer/footer.component';
-import { NavComponent } from './home/nav/nav.component';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router'; // Importar Router y NavigationEnd
+import { PrimeNGConfig } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { AuthService } from './services/auth.service';
+import { User } from './services/user';
+import {AvatarModule} from "primeng/avatar";
+import {stringToColor} from "./shared/utils/stringToColor";
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HeaderComponent,FooterComponent,NavComponent],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    ConfirmDialogModule,
+    ToastModule,
+    AvatarModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'FooDelivery';  
-  constructor(private http: HttpClient) {
-   
+export class AppComponent implements OnInit {
+  authService = inject(AuthService);
+  private primengConfig = inject(PrimeNGConfig);
+  menuOption: string = '';
+  showNavbarAndFooter: boolean = true;
+  userLoginOn: boolean = false;
+  title = 'FooDelivery';
+  user: User | null = null;
+
+  constructor(private router: Router, private http: HttpClient) {
+    this.primengConfig.ripple = true;
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/login' || event.url === '/register') {
+          this.showNavbarAndFooter = false;
+        } else {
+          this.authService.isAdminAuthenticated().subscribe((isAdmin) => {
+            this.showNavbarAndFooter = !isAdmin;
+          });
+        }
+      }
+    });
+
+    this.authService.isLoggedIn.subscribe((isLoggedIn) => {
+      this.userLoginOn = isLoggedIn;
+    });
+  }
+  ngOnInit(): void {
+    this.authService.getUserProfile().subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: (error) => {
+        console.error('Error al obtener productos', error);
+      },
+    });
+  }
+
+  onOption(menuOption: string) {
+    this.menuOption = menuOption;
+  }
+  logout() {
+    this.user = null;
+    this.authService.logout();
+  }
+
+  addColor(colorHex: string) {
+    return stringToColor(colorHex);
   }
 }

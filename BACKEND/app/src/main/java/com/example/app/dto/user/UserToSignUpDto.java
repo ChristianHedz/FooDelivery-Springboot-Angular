@@ -21,7 +21,7 @@ public record UserToSignUpDto(
   @Pattern(regexp = "^[0-9]{10,15}$", message = "El número de teléfono deben ser dígitos y longitud entre 10-15")
   String phone,
   @NotBlank(message = "El email es requerido")
-  @Pattern(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}+$", message = "El email no es válido")
+  @Pattern(regexp = "(?i)^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}+$", message = "El email no es válido")
   String email,
   @NotBlank(message = "La contraseña es requerida")
   @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")

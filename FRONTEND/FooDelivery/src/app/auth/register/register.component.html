@@ -1,9 +1,12 @@
    <div class="container">
     <div class="row">
-      <div class="col-md-6"> 
+      <div class="col-md-6  order-2 order-md-1">
         <form [formGroup]="registerForm" (ngSubmit)="register()">
-          <h2>FooDelivery</h2>
-          <h4>¡Mantén la calma y regístrate para comer una hamburguesa!</h4>
+          <div class="row-container">
+            <img id="logoimg" src="../../../assets/logo.png">
+            <h1 class="row-g2 align-items-right"> FoodDelivery</h1>
+            </div>
+          <h5>¡Mantén la calma y regístrate para comer una hamburguesa!</h5>
           <div class="mb-3">
             <label for="inputFullName" class="form-label">Nombre completo</label>
             <input type="text" class="form-control" id="inputFullName" formControlName="fullName" placeholder="Ingresa tu nombre completo">
@@ -39,20 +42,51 @@
             <input type="text" class="form-control" id="inputAlias" formControlName="alias" placeholder="Ingresa tu alias">
             <div *ngIf="registerForm.get('alias')?.invalid && (registerForm.get('alias')?.dirty || registerForm.get('alias')?.touched)">
               <span class="form-text text-danger" *ngIf="registerForm.get('alias')?.errors?.['required']">Alias es obligatorio</span>
-          
+
             </div>
           </div>
-          
-        
-          <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrarse</button>
-          <div class="mt-3">
-            ¿Ya estás registrado? <a href="/login">Inicia sesión</a>
+
+        <div class="row g-3 mt-2" id="registrar">
+        <div class="col-auto d-flex justify-content-center align-items-center" id="botonRegister">
+        <button type="submit" class="btn-color btn btn-primary text-center"  [disabled]="registerForm.invalid">Registrarse</button>
+        </div>
+        </div>
+
+          <div class="separator mx-2 my-2 d-flex justify-content-center">o</div>
+
+          <!-- Google -->
+          <app-login-google></app-login-google>
+
+          <!-- facebook -->
+          <div class="col-auto" id="facebook">
+          <button type="button" class="btn btn-primary-light border w-50 m-auto my-1">
+          <svg width="20" height="20" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_268_959)">
+          <path d="M28.5 14.0625C28.5 6.33051 22.232 0.0625 14.5 0.0625C6.76801 0.0625 0.5 6.33051 0.5 14.0625C0.5 21.0502 5.61957 26.8421 12.3125 27.8924V18.1094H8.75781V14.0625H12.3125V10.9781C12.3125 7.46937 14.4027 5.53125 17.6005 5.53125C19.1318 5.53125 20.7344 5.80469 20.7344 5.80469V9.25H18.9691C17.23 9.25 16.6875 10.3293 16.6875 11.4375V14.0625H20.5703L19.9496 18.1094H16.6875V27.8924C23.3804 26.8421 28.5 21.0502 28.5 14.0625Z" fill="#1877F2"/>
+          <path d="M19.9496 18.1094L20.5703 14.0625H16.6875V11.4375C16.6875 10.3304 17.23 9.25 18.9691 9.25H20.7344V5.80469C20.7344 5.80469 19.1323 5.53125 17.6005 5.53125C14.4027 5.53125 12.3125 7.46938 12.3125 10.9781V14.0625H8.75781V18.1094H12.3125V27.8924C13.762 28.1192 15.238 28.1192 16.6875 27.8924V18.1094H19.9496Z" fill="white"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_268_959">
+          <rect width="28" height="28" fill="white" transform="translate(0.5 0.0625)"/>
+          </clipPath>
+          </defs>
+          </svg>
+          Ingresar con Facebook</button>
           </div>
+
+
+
+          <div class="row g-3 align-items-center mt-2" >
+            <div class="col-auto"id="iniciar">
+            <span>¿Ya estás registrado? <a href="/login">Inicia sesión</a></span>
+            </div>
+            </div>
+
         </form>
       </div>
-      <div class="col-md-6">
-        <img src="https://s3-alpha-sig.figma.com/img/8ea8/8dc3/2a99af4191b8b8da1577b7fc3d281a2e?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JaOTpVPWdyLFhG18SDNwkithDRqUfcJxBWQ081wJGgAtRPps0PZ2WFucQoG~ZMcPSsmHxOnCZHijoDJzM7FH1AfpqvDQNnGNvgIEjcxdUc2HC5QQXQ~XpDlvKJDd3mI~dlt2qBYCinV18biXZLYhShJkYASxhzf1jhvU06cVY-PND0hinus27YQSMoExnF3YH5YQ0tV2IbSSZAckAQ2b3ze86-scVT4WnL0W-iEo96x-JljWyrQb0YxGiL9Wc10SQdFagSV0sUL1cI0Nh7b7QljAeASqYtUqEbGTQ8Rx1aVuG77xfqsq7zy9u9QXNGhTyKrElhC7rIRETm7C10qBgA__" alt="FooDelivery logo">
+      <div class="col-md-6 order-1 order-md-2">
+        <img src="../../../assets/burger.png" alt="FooDelivery logo">
       </div>
     </div>
   </div>
-  
+

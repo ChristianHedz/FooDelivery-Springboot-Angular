@@ -1,6 +1,5 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.address.UserToSaveAddress;
 import com.example.app.dto.user.*;
 import com.example.app.model.User;
 import org.mapstruct.*;
@@ -13,11 +12,13 @@ public interface UserMapper {
 
     User toEntity(SignedUserDTO signedUserDTO);
 
+    User toEntity(UserToSignUpGoogleDto userToSignGoogleUpDto);
+
     SignedUserDTO userToSignedUserDTO(User user);
 
-    User toEntity(UserToLoginDto userToLoginDto);
+    SignedUserGoogleDto userToSignedUserGoogleDto(User user);
 
-    User toEntity(UserToSaveAddress userToSaveAddress);
+    User toEntity(UserToLoginDto userToLoginDto);
 
     UserToLoginDto userToUserToLoginDto(User user);
 
@@ -29,4 +30,6 @@ public interface UserMapper {
 
     UserToUpdateDto userToUserToUpdateDto(User user);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User partialUpdate(SignedUserDTO signedUserDTO, @MappingTarget User user);
 }

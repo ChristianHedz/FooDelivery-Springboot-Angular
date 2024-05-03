@@ -4,12 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { LoginGoogleComponent } from '../login-google/login-google.component';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,LoginGoogleComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -29,8 +30,8 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       alias: ['', Validators.required],
-      role: [''], 
-      active: [true] 
+      role: [''],
+      active: [true]
     });
   }
 
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error al registrar usuario:', error);
-        
+
         }
       });
     } else {

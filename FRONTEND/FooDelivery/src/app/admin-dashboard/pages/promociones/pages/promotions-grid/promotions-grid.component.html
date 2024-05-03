@@ -1,0 +1,26 @@
+<div class="lotterys__list">
+  <section class="p-2">
+    <button
+      pButton
+      pRipple
+      class="bg-primary-700"
+      [routerLink]="['/admin/dashboard/promocion/agregar']"
+    >
+      Nueva promoción
+    </button>
+    <p-divider></p-divider>
+  </section>
+  <section class="p-2 grid">
+    @for (promo of promotionService.promotions(); track $index) {
+      <article class="col-12 sm:col-6 lg:col-4">
+        <promotion-card [promotion]="promo" isAdmin></promotion-card>
+      </article>
+    }@empty {
+      <div class="col-12 flex justify-content-center align-items-center">
+        <p-messages [(value)]="messageNotData" [enableService]="false" [closable]="false"></p-messages>
+      </div>
+    }
+  </section>
+
+</div>
+

@@ -1,43 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { ReactiveFormsModule } from '@angular/forms'; 
-import { HttpClientModule } from '@angular/common/http';
+import {
+  FacebookLoginProvider,
+  SocialAuthService,
+} from '@abacritt/angularx-social-login';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import {Component, inject} from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { LoginGoogleComponent } from '../login-google/login-google.component';
+import {MessageService} from "primeng/api";
+import {getFirstMessageOfError} from "../../shared/utils/messages-values";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule], 
+  imports: [
+    ReactiveFormsModule,
+    HttpClientModule,
+    CommonModule,
+    LoginGoogleComponent,
+    RouterLink
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
+  private messageService = inject(MessageService);
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private socialAuthService: SocialAuthService
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(20),
+        ],
+      ],
     });
   }
 
-  ngOnInit(): void {
-  }
-
   login(): void {
+
     if (this.loginForm.valid) {
-      console.log('Formulario válido, enviando datos...');
+      //Swal.fire('Bienvenido!', 'Has iniciado sesión correctamente', 'success');
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe(
-        () => {},
-        error => {
+  () => {
+          this.messageService.add({
+            key: 'toast',
+            severity: 'success',
+            summary: 'Bienvenido',
+            detail: "Inicio de sesión exitoso",
+          });
+        },
+  ({ error }) => {
           console.error('Error en el inicio de sesión:', error);
+          this.messageService.add({
+            key: 'toast',
+            severity: 'error',
+            summary: '¡Error al iniciar sesión!',
+            detail: !error ? "Ocurrio un problema al intentar iniciar sesión. " : getFirstMessageOfError(error.messages),
+          });
         }
       );
-    } else {
-      console.log('Formulario inválido, no se puede enviar.');
     }
+
+  }
+
+  facebookLogin(): void {
+    this.socialAuthService
+      .signIn(FacebookLoginProvider.PROVIDER_ID)
+      .then((data) => {
+        console.log('inicio');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }

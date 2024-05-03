@@ -1,0 +1,118 @@
+@if (product()) {
+  <div class="">
+      <div class="flex flex-column sm:flex-row my-4 justify-content-start align-items-center gap-4 mb-3 font-bold text-2xl">
+          <div>
+            <p-image [src]="product()?.img" class="shadow-4" alt="Image" width="100" [preview]="true"></p-image>
+          </div>
+          <span class="font-bold">{{ product() && product()?.name ? product()?.name : "NoName" | titlecase }}</span>
+      </div>
+
+    <p-divider></p-divider>
+
+    <div class="grid justify-content-center">
+      <section class="col-12 md:col-9">
+
+        <!-- contenido -->
+        <span class="text-lg font-semibold">{{ product()?.description }}</span>
+        <div class="flex flex-column sm:flex-row my-4">
+          <p class="font-bold mr-3">
+            <p-chip
+              label="{{
+              product()?.price | currency
+            }}"
+            ></p-chip>
+          </p>
+          <p class="font-bold mt-2 sm:mt-0 mr-3">
+            <p-chip
+              label="{{
+              product()?.category?.name
+            }}"
+            ></p-chip>
+          </p>
+        </div>
+
+        <div class="orders my-4">
+            <div class="flex justify-content-between align-items-center">
+                <h5 class="capitalize text-2xl mb-2">Promoción de este producto</h5>
+                <div class="flex flex-wrap gap-1">
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-refresh"
+                        class="p-button-rounded p-button-success p-button-text"
+                        pTooltip="Actualizar promoción"
+                        (click)="updatePromo()"
+                    ></button>
+
+                    <!-- Dialogo para agregar promoción -->
+                    <app-add-promo-dialog
+                            [product]="product()"
+                            (onNewPromo)="onNewPromo($event)"
+                    />
+
+                    <!-- Boton para borrar promoción -->
+                    <button
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-text"
+                            pTooltip="Eliminar promoción"
+                            (click)="deletePromo()"
+                    ></button>
+                </div>
+            </div>
+          <p-divider></p-divider>
+          <div>
+              @if( promotion()?.percentage ) {
+                  <span class="w-full text-right" pBadge [value]="promotion()?.percentage  + '%'"></span>
+              }
+            <p-messages
+              [value]="getMessagePromo()"
+              [enableService]="false"
+              [closable]="false"
+            ></p-messages>
+          </div>
+        </div>
+
+          <div class="orders my-4">
+              <h5 class="capitalize text-2xl mb-2">Pedidos</h5>
+              <p-divider></p-divider>
+              <div class="orders__container--scroll">
+                  <p-messages
+                      [value]="getMessageNotData()"
+                      [enableService]="false"
+                      [closable]="false"
+                  ></p-messages>
+              </div>
+          </div>
+      </section>
+
+      <!-- buttons -->
+      <section class="col-12 md:col-3">
+        <button
+          pButton
+          pRipple
+          label="Editar"
+          icon="pi pi-pencil"
+          class="block w-full bg-gray-400 border-gray-400 mb-2"
+          [routerLink]="['/admin/dashboard/producto', this.product()?.id, 'editar']"
+          routerLinkActive="router-link-active"
+        ></button>
+        <button
+          pButton
+          pRipple
+          label="Eliminar"
+          icon="pi pi-trash"
+          class="block w-full bg-red-500 border-red-500"
+          (click)="this.confirmDeleteProduct()"
+        ></button>
+      </section>
+    </div>
+  </div>
+} @else {
+  <div class="flex justify-content-center">
+    <p class="text-2xl">No se ha encontrado el producto</p>
+  </div>
+}
